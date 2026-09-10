@@ -1,524 +1,2401 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>ROMA Cafe - Firebase Web Inventory & POS</title>
-  
-  <!-- Tailwind CSS -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <!-- FontAwesome -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-  
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            roma: {
-              brown: '#5c3d2e',
-              wood: '#b85c38',
-              lightwood: '#e0c097',
-              cream: '#f7f1e5',
-              dark: '#2d1e18',
-              accent: '#d4a373'
-            }
-          },
-          fontFamily: {
-            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
-          }
-        }
-      }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>ROMA Café Inventory System</title>
+
+<style>
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+    background: #f5f1eb;
+    color: #333;
+}
+
+/* =========================
+   LOGIN
+========================= */
+
+.login-container {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.login-box {
+    background: white;
+    width: 100%;
+    max-width: 400px;
+    padding: 35px;
+    border-radius: 15px;
+    box-shadow: 0 5px 25px rgba(0,0,0,0.15);
+}
+
+.logo {
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.logo h1 {
+    font-size: 35px;
+    letter-spacing: 4px;
+}
+
+.logo p {
+    color: #777;
+    margin-top: 5px;
+}
+
+.form-group {
+    margin-bottom: 18px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 7px;
+    font-weight: bold;
+}
+
+.form-group input,
+.form-group select {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    outline: none;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+    border-color: #333;
+}
+
+.btn {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    background: #333;
+    color: white;
+}
+
+.btn:hover {
+    opacity: 0.9;
+}
+
+.error {
+    color: #c0392b;
+    margin-top: 12px;
+    text-align: center;
+}
+
+/* =========================
+   APP
+========================= */
+
+.app {
+    display: none;
+    min-height: 100vh;
+}
+
+.sidebar {
+    width: 250px;
+    background: #29231f;
+    color: white;
+    position: fixed;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    padding: 25px 15px;
+    z-index: 1000;
+}
+
+.sidebar-logo {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.sidebar-logo h2 {
+    letter-spacing: 4px;
+}
+
+.sidebar-logo p {
+    font-size: 12px;
+    color: #ccc;
+    margin-top: 5px;
+}
+
+.nav-menu {
+    list-style: none;
+}
+
+.nav-menu li {
+    margin-bottom: 8px;
+}
+
+.nav-menu button {
+    width: 100%;
+    padding: 13px;
+    border: none;
+    background: transparent;
+    color: white;
+    text-align: left;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.nav-menu button:hover,
+.nav-menu button.active {
+    background: #51463e;
+}
+
+.logout-btn {
+    margin-top: 25px;
+    background: #8e3b2f !important;
+}
+
+/* =========================
+   MAIN
+========================= */
+
+.main {
+    margin-left: 250px;
+    width: calc(100% - 250px);
+}
+
+.topbar {
+    background: white;
+    padding: 18px 25px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+.topbar h2 {
+    font-size: 22px;
+}
+
+.user-info {
+    font-size: 14px;
+    color: #555;
+}
+
+.content {
+    padding: 25px;
+}
+
+/* =========================
+   MOBILE MENU
+========================= */
+
+.mobile-menu {
+    display: none;
+    font-size: 25px;
+    border: none;
+    background: none;
+    cursor: pointer;
+}
+
+/* =========================
+   PAGES
+========================= */
+
+.page {
+    display: none;
+}
+
+.page.active {
+    display: block;
+}
+
+.page-title {
+    margin-bottom: 20px;
+}
+
+.page-title h2 {
+    font-size: 26px;
+}
+
+.page-title p {
+    color: #777;
+    margin-top: 5px;
+}
+
+/* =========================
+   DASHBOARD CARDS
+========================= */
+
+.cards {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 18px;
+    margin-bottom: 25px;
+}
+
+.card {
+    background: white;
+    padding: 22px;
+    border-radius: 12px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+}
+
+.card h3 {
+    color: #777;
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+
+.card .number {
+    font-size: 30px;
+    font-weight: bold;
+}
+
+/* =========================
+   TABLE
+========================= */
+
+.table-container {
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    overflow-x: auto;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 700px;
+}
+
+th,
+td {
+    padding: 12px;
+    border-bottom: 1px solid #eee;
+    text-align: left;
+}
+
+th {
+    background: #f5f1eb;
+}
+
+tr:hover {
+    background: #fafafa;
+}
+
+/* =========================
+   FORMS
+========================= */
+
+.form-card {
+    background: white;
+    padding: 22px;
+    border-radius: 12px;
+    margin-bottom: 25px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+}
+
+.form-grid .full {
+    grid-column: 1 / -1;
+}
+
+.form-card button {
+    margin-top: 10px;
+}
+
+/* =========================
+   STATUS
+========================= */
+
+.status {
+    padding: 5px 9px;
+    border-radius: 15px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.status.active {
+    background: #d8f3dc;
+    color: #1b6b2a;
+}
+
+.status.low {
+    background: #fff3cd;
+    color: #856404;
+}
+
+.status.out {
+    background: #f8d7da;
+    color: #721c24;
+}
+
+/* =========================
+   MESSAGE
+========================= */
+
+.message {
+    margin-top: 10px;
+    padding: 10px;
+    border-radius: 6px;
+    display: none;
+}
+
+.message.success {
+    display: block;
+    background: #d8f3dc;
+    color: #1b6b2a;
+}
+
+.message.error {
+    display: block;
+    background: #f8d7da;
+    color: #721c24;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width: 1000px) {
+
+    .cards {
+        grid-template-columns: repeat(2, 1fr);
     }
-  </script>
-  <style>
-    body { background-color: #f7f1e5; font-family: 'Plus Jakarta Sans', sans-serif; }
-    ::-webkit-scrollbar { width: 6px; height: 6px; }
-    ::-webkit-scrollbar-track { background: #f7f1e5; }
-    ::-webkit-scrollbar-thumb { background: #b85c38; border-radius: 4px; }
-  </style>
+}
+
+@media (max-width: 768px) {
+
+    .sidebar {
+        transform: translateX(-100%);
+        transition: 0.3s;
+    }
+
+    .sidebar.show {
+        transform: translateX(0);
+    }
+
+    .main {
+        margin-left: 0;
+        width: 100%;
+    }
+
+    .mobile-menu {
+        display: block;
+    }
+
+    .content {
+        padding: 18px;
+    }
+
+    .topbar {
+        padding: 15px 18px;
+    }
+
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .form-grid .full {
+        grid-column: auto;
+    }
+}
+
+@media (max-width: 500px) {
+
+    .cards {
+        grid-template-columns: 1fr;
+    }
+
+    .login-box {
+        padding: 25px;
+    }
+
+    .user-info {
+        display: none;
+    }
+
+    .page-title h2 {
+        font-size: 22px;
+    }
+}
+</style>
 </head>
-<body class="text-roma-dark antialiased h-screen flex flex-col overflow-hidden">
 
-  <!-- AUTHENTICATION OVERLAY -->
-  <div id="auth-modal" class="fixed inset-0 bg-roma-dark/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-    <div class="bg-white rounded-2xl shadow-2xl border border-roma-lightwood max-w-md w-full p-6 space-y-5">
-      <div class="text-center">
-        <div class="w-14 h-14 bg-roma-brown text-roma-cream rounded-full flex items-center justify-center mx-auto text-xl font-bold shadow-lg mb-2">
-          <i class="fa-solid fa-mug-hot"></i>
-        </div>
-        <h2 class="text-2xl font-bold text-roma-brown tracking-tight">ROMA CAFE</h2>
-        <p class="text-xs text-stone-500 mt-0.5">Firebase Connected • Login Safeguards Active</p>
-      </div>
+<body>
 
-      <form id="login-form" onsubmit="handleLogin(event)" class="space-y-4">
-        <div>
-          <label class="block text-xs font-bold text-roma-brown uppercase mb-1">Username / Email</label>
-          <input type="email" id="login-user" required placeholder="manager@romacafe.com" 
-            class="w-full px-4 py-2 text-xs rounded-lg border border-stone-300 focus:outline-none focus:ring-2 focus:ring-roma-wood">
-        </div>
-        <div>
-          <label class="block text-xs font-bold text-roma-brown uppercase mb-1">Password</label>
-          <input type="password" id="login-pass" required placeholder="••••••••" 
-            class="w-full px-4 py-2 text-xs rounded-lg border border-stone-300 focus:outline-none focus:ring-2 focus:ring-roma-wood">
-        </div>
-        <div>
-          <label class="block text-xs font-bold text-roma-brown uppercase mb-1">Role / Scope</label>
-          <select id="login-role" class="w-full px-4 py-2 text-xs rounded-lg border border-stone-300 focus:outline-none focus:ring-2 focus:ring-roma-wood">
-            <option value="Admin">Inventory Manager / Admin</option>
-            <option value="Barista">Barista / Cashier</option>
-          </select>
+<!-- =========================
+     LOGIN PAGE
+========================= -->
+
+<div id="loginPage" class="login-container">
+
+    <div class="login-box">
+
+        <div class="logo">
+            <h1>ROMA</h1>
+            <p>Café Inventory System</p>
         </div>
 
-        <button type="submit" id="login-btn" class="w-full py-2.5 bg-roma-wood hover:bg-roma-brown text-white font-bold text-xs rounded-lg shadow-md transition">
-          <i class="fa-solid fa-lock mr-2"></i> Authenticate Session
+        <div class="form-group">
+            <label>Username</label>
+            <input
+                type="text"
+                id="username"
+                autocomplete="username"
+                placeholder="Enter username"
+            >
+        </div>
+
+        <div class="form-group">
+            <label>Password</label>
+            <input
+                type="password"
+                id="password"
+                autocomplete="current-password"
+                placeholder="Enter password"
+            >
+        </div>
+
+        <button class="btn" onclick="login()">
+            Login
         </button>
-      </form>
-      <p id="login-error" class="text-xs text-red-600 text-center hidden">Authentication failed. Check credentials.</p>
+
+        <div id="loginError" class="error"></div>
+
     </div>
-  </div>
 
-  <!-- MAIN APP CONTAINER -->
-  <div class="flex-1 flex flex-col md:flex-row h-full overflow-hidden">
+</div>
 
-    <!-- NAVIGATION PANE -->
-    <aside class="w-full md:w-64 bg-roma-brown text-roma-cream flex flex-col justify-between shadow-xl z-20">
-      <div>
-        <div class="p-4 border-b border-roma-wood/40 flex items-center justify-between">
-          <div class="flex items-center space-x-3">
-            <div class="w-9 h-9 bg-roma-lightwood text-roma-dark rounded-lg flex items-center justify-center font-bold">
-              <i class="fa-solid fa-coffee text-roma-brown"></i>
-            </div>
-            <div>
-              <h1 class="font-bold text-base leading-tight tracking-wide">ROMA</h1>
-              <p class="text-[10px] text-roma-lightwood">Firebase Live System</p>
-            </div>
-          </div>
-          <button onclick="toggleMobileMenu()" class="md:hidden text-roma-cream text-xl">
-            <i class="fa-solid fa-bars"></i>
-          </button>
+
+<!-- =========================
+     MAIN APPLICATION
+========================= -->
+
+<div id="app" class="app">
+
+    <!-- SIDEBAR -->
+
+    <aside id="sidebar" class="sidebar">
+
+        <div class="sidebar-logo">
+            <h2>ROMA</h2>
+            <p>Café Management</p>
         </div>
 
-        <nav id="nav-menu" class="hidden md:block p-3 space-y-1">
-          <button onclick="switchTab('dashboard')" id="nav-dashboard" class="nav-btn w-full flex items-center space-x-3 px-3 py-2 rounded-lg bg-roma-wood text-white font-medium text-xs">
-            <i class="fa-solid fa-chart-pie w-4"></i><span>1. Dashboard</span>
-          </button>
-          <button onclick="switchTab('pos')" id="nav-pos" class="nav-btn w-full flex items-center space-x-3 px-3 py-2 rounded-lg text-roma-cream hover:bg-roma-wood/50 font-medium text-xs">
-            <i class="fa-solid fa-cash-register w-4"></i><span>2. POS & Orders</span>
-          </button>
-          <button onclick="switchTab('products')" id="nav-products" class="nav-btn w-full flex items-center space-x-3 px-3 py-2 rounded-lg text-roma-cream hover:bg-roma-wood/50 font-medium text-xs">
-            <i class="fa-solid fa-cake-candles w-4"></i><span>3. Menu Catalog</span>
-          </button>
-          <button onclick="switchTab('raw-stock')" id="nav-raw-stock" class="nav-btn w-full flex items-center space-x-3 px-3 py-2 rounded-lg text-roma-cream hover:bg-roma-wood/50 font-medium text-xs">
-            <i class="fa-solid fa-boxes-stacked w-4"></i><span>4. Stock In</span>
-          </button>
-          <button onclick="switchTab('adjustments')" id="nav-adjustments" class="nav-btn w-full flex items-center space-x-3 px-3 py-2 rounded-lg text-roma-cream hover:bg-roma-wood/50 font-medium text-xs">
-            <i class="fa-solid fa-clipboard-check w-4"></i><span>5. Audit Log</span>
-          </button>
-          <button onclick="switchTab('reports')" id="nav-reports" class="nav-btn w-full flex items-center space-x-3 px-3 py-2 rounded-lg text-roma-cream hover:bg-roma-wood/50 font-medium text-xs">
-            <i class="fa-solid fa-file-invoice-dollar w-4"></i><span>6. Sales Reports</span>
-          </button>
-          <button onclick="switchTab('security')" id="nav-security" class="nav-btn w-full flex items-center space-x-3 px-3 py-2 rounded-lg text-roma-cream hover:bg-roma-wood/50 font-medium text-xs">
-            <i class="fa-solid fa-user-shield w-4"></i><span>7. Security & Rules</span>
-          </button>
-        </nav>
-      </div>
+        <ul class="nav-menu">
 
-      <div class="p-3 border-t border-roma-wood/40 bg-roma-dark/30 flex items-center justify-between">
-        <div class="flex items-center space-x-2">
-          <div class="w-7 h-7 rounded-full bg-roma-accent flex items-center justify-center text-roma-dark font-bold text-xs">
-            <span id="user-avatar">?</span>
-          </div>
-          <div>
-            <p id="user-display-name" class="text-xs font-bold text-white">Not Logged In</p>
-            <p id="user-role-badge" class="text-[9px] text-roma-lightwood uppercase">Guest</p>
-          </div>
-        </div>
-        <button onclick="handleLogout()" title="Logout" class="text-stone-400 hover:text-white text-xs">
-          <i class="fa-solid fa-right-from-bracket"></i>
-        </button>
-      </div>
+            <li>
+                <button onclick="showPage('dashboard', this)">
+                    Dashboard
+                </button>
+            </li>
+
+            <li>
+                <button onclick="showPage('products', this)">
+                    Products
+                </button>
+            </li>
+
+            <li>
+                <button onclick="showPage('inventory', this)">
+                    Inventory
+                </button>
+            </li>
+
+            <li>
+                <button onclick="showPage('movement', this)">
+                    Stock Movement
+                </button>
+            </li>
+
+            <li>
+                <button onclick="showPage('sales', this)">
+                    Sales
+                </button>
+            </li>
+
+            <li>
+                <button onclick="showPage('reports', this)">
+                    Reports
+                </button>
+            </li>
+
+            <li>
+                <button
+                    id="auditNav"
+                    onclick="showPage('audit', this)"
+                >
+                    Users / Audit
+                </button>
+            </li>
+
+            <li>
+                <button
+                    class="logout-btn"
+                    onclick="logout()"
+                >
+                    Logout
+                </button>
+            </li>
+
+        </ul>
+
     </aside>
 
-    <!-- MAIN DISPLAY CONTENT -->
-    <main class="flex-1 overflow-y-auto p-4 md:p-6 bg-roma-cream space-y-6">
-      
-      <header class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-3 border-b border-roma-lightwood">
-        <div>
-          <h2 id="page-title" class="text-xl font-bold text-roma-brown">Dashboard Overview</h2>
-          <p class="text-xs text-stone-600">Woodcrafted Province Vibe • Real-time Firestore Sync</p>
-        </div>
-        <div class="flex items-center space-x-3">
-          <span id="sync-status" class="px-2.5 py-1 bg-emerald-100 text-emerald-800 rounded-full text-xs font-semibold flex items-center gap-1">
-            <i class="fa-solid fa-cloud text-emerald-600"></i> Firebase Connected
-          </span>
-        </div>
-      </header>
 
-      <!-- 1. DASHBOARD OVERVIEW -->
-      <section id="tab-dashboard" class="tab-content space-y-4">
-        <div class="grid grid-cols-2 lg:grid-cols-4 gap-3">
-          <div class="bg-white p-3.5 rounded-xl border border-roma-lightwood shadow-sm">
-            <p class="text-[10px] font-bold text-stone-500 uppercase">Today's Revenue</p>
-            <h3 class="text-xl font-bold text-roma-brown mt-0.5">₱<span id="stat-sales">0.00</span></h3>
-          </div>
-          <div class="bg-white p-3.5 rounded-xl border border-roma-lightwood shadow-sm">
-            <p class="text-[10px] font-bold text-stone-500 uppercase">Items Sold</p>
-            <h3 class="text-xl font-bold text-roma-wood mt-0.5"><span id="stat-items">0</span></h3>
-          </div>
-          <div class="bg-white p-3.5 rounded-xl border border-roma-lightwood shadow-sm">
-            <p class="text-[10px] font-bold text-stone-500 uppercase">Low Stock Alert</p>
-            <h3 class="text-xl font-bold text-amber-600 mt-0.5"><span id="stat-alerts">0</span></h3>
-          </div>
-          <div class="bg-white p-3.5 rounded-xl border border-roma-lightwood shadow-sm">
-            <p class="text-[10px] font-bold text-stone-500 uppercase">Database Sync</p>
-            <h3 class="text-xs font-bold text-emerald-700 mt-2">Firestore Active</h3>
-          </div>
-        </div>
+    <!-- MAIN -->
 
-        <div class="bg-white rounded-xl p-4 border border-roma-lightwood shadow-sm space-y-3">
-          <h3 class="font-bold text-xs uppercase text-roma-brown border-b pb-2">Sweet Cakes Stock Status</h3>
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2" id="cake-status-grid"></div>
-        </div>
-      </section>
+    <main class="main">
 
-      <!-- 2. POS & ORDERS -->
-      <section id="tab-pos" class="tab-content hidden grid grid-cols-1 lg:grid-cols-3 gap-4">
-        <div class="lg:col-span-2 space-y-3">
-          <div id="pos-items-grid" class="grid grid-cols-2 sm:grid-cols-3 gap-2.5 max-h-[480px] overflow-y-auto"></div>
-        </div>
-        <div class="bg-white rounded-xl p-4 border border-roma-lightwood shadow-sm flex flex-col justify-between h-[480px]">
-          <div>
-            <h3 class="font-bold text-xs text-roma-brown border-b pb-2 flex justify-between">
-              <span>Current Cart</span>
-              <span class="text-stone-400">#ORD-LIVE</span>
-            </h3>
-            <div id="cart-items-list" class="my-3 space-y-2 max-h-[260px] overflow-y-auto divide-y divide-stone-100">
-              <p class="text-xs text-stone-400 text-center py-8">Cart is empty.</p>
-            </div>
-          </div>
-          <div class="border-t border-roma-lightwood pt-2 space-y-1.5">
-            <div class="flex justify-between font-bold text-base text-roma-brown"><span>Total</span><span id="cart-total">₱0.00</span></div>
-            <button onclick="processCheckout()" class="w-full py-2.5 bg-emerald-700 text-white font-bold rounded-lg text-xs hover:bg-emerald-800">
-              Checkout & Update Firestore
+        <header class="topbar">
+
+            <button
+                class="mobile-menu"
+                onclick="toggleSidebar()"
+            >
+                ☰
             </button>
-          </div>
-        </div>
-      </section>
 
-      <!-- 3. MENU CATALOG -->
-      <section id="tab-products" class="tab-content hidden space-y-3">
-        <div class="bg-white rounded-xl border border-roma-lightwood overflow-hidden shadow-sm">
-          <table class="w-full text-left text-xs">
-            <thead class="bg-roma-brown text-roma-cream uppercase text-[10px]">
-              <tr>
-                <th class="p-2.5">Product</th>
-                <th class="p-2.5">Category</th>
-                <th class="p-2.5">Price</th>
-                <th class="p-2.5">Stock</th>
-              </tr>
-            </thead>
-            <tbody id="products-table-body" class="divide-y divide-stone-100"></tbody>
-          </table>
-        </div>
-      </section>
+            <h2 id="topTitle">
+                Dashboard
+            </h2>
 
-      <!-- 4. STOCK IN -->
-      <section id="tab-raw-stock" class="tab-content hidden space-y-3">
-        <div class="bg-white rounded-xl p-4 border border-roma-lightwood shadow-sm">
-          <h3 class="font-bold text-xs text-roma-brown uppercase mb-2">Replenish Product Stock</h3>
-          <form onsubmit="handleStockIn(event)" class="grid grid-cols-1 sm:grid-cols-3 gap-2">
-            <select id="stock-product-select" class="p-2 border text-xs rounded"></select>
-            <input type="number" id="stock-qty-input" placeholder="Quantity Added" required class="p-2 border text-xs rounded">
-            <button type="submit" class="py-2 bg-roma-wood text-white font-bold text-xs rounded">Update Stock in Cloud</button>
-          </form>
-        </div>
-      </section>
+            <div id="userInfo" class="user-info"></div>
 
-      <!-- 5. AUDIT LOG -->
-      <section id="tab-adjustments" class="tab-content hidden space-y-3">
-        <div class="bg-white rounded-xl border border-roma-lightwood overflow-hidden shadow-sm">
-          <div class="p-3 bg-stone-50 font-bold text-xs text-roma-brown border-b">Firestore Audit Trail</div>
-          <table class="w-full text-left text-xs">
-            <thead class="bg-stone-100 uppercase text-[10px]">
-              <tr>
-                <th class="p-2.5">Timestamp</th>
-                <th class="p-2.5">Action</th>
-                <th class="p-2.5">Details</th>
-                <th class="p-2.5">User</th>
-              </tr>
-            </thead>
-            <tbody id="audit-logs-body" class="divide-y divide-stone-100"></tbody>
-          </table>
-        </div>
-      </section>
+        </header>
 
-      <!-- 6. SALES REPORTS -->
-      <section id="tab-reports" class="tab-content hidden space-y-3">
-        <div class="bg-white rounded-xl p-4 border border-roma-lightwood shadow-sm">
-          <h3 class="font-bold text-xs text-roma-brown uppercase">Sales Transactions</h3>
-          <div id="sales-report-list" class="mt-3 text-xs space-y-2"></div>
-        </div>
-      </section>
 
-      <!-- 7. SECURITY & RULES -->
-      <section id="tab-security" class="tab-content hidden space-y-4">
-        <div class="bg-white rounded-xl p-4 border border-roma-lightwood shadow-sm space-y-2">
-          <h3 class="font-bold text-xs text-roma-brown uppercase">Firebase Architecture Active</h3>
-          <p class="text-xs text-stone-600">The app is synced with Firebase Firestore and authenticated via Firebase Auth SDK v10.</p>
-        </div>
-      </section>
+        <section class="content">
+
+
+            <!-- =====================
+                 DASHBOARD
+            ====================== -->
+
+            <div id="dashboard" class="page active">
+
+                <div class="page-title">
+                    <h2>Dashboard</h2>
+                    <p>
+                        Welcome to ROMA Café Inventory System.
+                    </p>
+                </div>
+
+                <div class="cards">
+
+                    <div class="card">
+                        <h3>Total Products</h3>
+                        <div
+                            class="number"
+                            id="totalProducts"
+                        >
+                            0
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <h3>Total Stock</h3>
+                        <div
+                            class="number"
+                            id="totalStock"
+                        >
+                            0
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <h3>Low Stock</h3>
+                        <div
+                            class="number"
+                            id="lowStock"
+                        >
+                            0
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <h3>Inventory Value</h3>
+                        <div
+                            class="number"
+                            id="inventoryValue"
+                        >
+                            ₱0.00
+                        </div>
+                    </div>
+
+                </div>
+
+
+                <div class="table-container">
+
+                    <h3>ROMA Café</h3>
+
+                    <br>
+
+                    <p>
+                        Modern and cozy, with a touch of
+                        province charm — wood details crafted
+                        from coconut trees give ROMA a warm,
+                        local feel.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- =====================
+                 PRODUCTS
+            ====================== -->
+
+            <div id="products" class="page">
+
+                <div class="page-title">
+                    <h2>Products</h2>
+                    <p>Manage ROMA Café products.</p>
+                </div>
+
+
+                <div class="form-card">
+
+                    <h3>Add Product</h3>
+
+                    <br>
+
+                    <div class="form-grid">
+
+                        <div class="form-group">
+                            <label>Product Name</label>
+                            <input
+                                id="productName"
+                                type="text"
+                                placeholder="Example: Sweet Cake"
+                            >
+                        </div>
+
+                        <div class="form-group">
+                            <label>Category</label>
+
+                            <select id="productCategory">
+
+                                <option value="Cake">
+                                    Cake
+                                </option>
+
+                                <option value="Coffee">
+                                    Coffee
+                                </option>
+
+                                <option value="Other">
+                                    Other
+                                </option>
+
+                            </select>
+
+                        </div>
+
+
+                        <div class="form-group">
+                            <label>Variant</label>
+
+                            <input
+                                id="productVariant"
+                                type="text"
+                                placeholder="Example: Caramel"
+                            >
+
+                        </div>
+
+
+                        <div class="form-group">
+                            <label>Price</label>
+
+                            <input
+                                id="productPrice"
+                                type="number"
+                                min="0"
+                                step="0.01"
+                                placeholder="0.00"
+                            >
+
+                        </div>
+
+
+                        <div class="form-group">
+                            <label>Initial Stock</label>
+
+                            <input
+                                id="productStock"
+                                type="number"
+                                min="0"
+                                placeholder="0"
+                            >
+
+                        </div>
+
+
+                        <div class="form-group">
+                            <label>Reorder Level</label>
+
+                            <input
+                                id="productReorder"
+                                type="number"
+                                min="0"
+                                placeholder="5"
+                            >
+
+                        </div>
+
+
+                        <div class="form-group">
+                            <label>Supplier</label>
+
+                            <input
+                                id="productSupplier"
+                                type="text"
+                                placeholder="Supplier"
+                            >
+
+                        </div>
+
+                    </div>
+
+
+                    <button
+                        class="btn"
+                        onclick="addProduct()"
+                    >
+                        Add Product
+                    </button>
+
+                    <div
+                        id="productMessage"
+                        class="message"
+                    ></div>
+
+                </div>
+
+
+                <div class="table-container">
+
+                    <table>
+
+                        <thead>
+
+                            <tr>
+                                <th>Product</th>
+                                <th>Category</th>
+                                <th>Variant</th>
+                                <th>Price</th>
+                                <th>Stock</th>
+                                <th>Status</th>
+                            </tr>
+
+                        </thead>
+
+                        <tbody id="productsTable">
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+
+            <!-- =====================
+                 INVENTORY
+            ====================== -->
+
+            <div id="inventory" class="page">
+
+                <div class="page-title">
+
+                    <h2>Inventory</h2>
+
+                    <p>
+                        Monitor stock levels and reorder needs.
+                    </p>
+
+                </div>
+
+
+                <div class="table-container">
+
+                    <table>
+
+                        <thead>
+
+                            <tr>
+                                <th>Product</th>
+                                <th>Category</th>
+                                <th>Variant</th>
+                                <th>Stock</th>
+                                <th>Reorder Level</th>
+                                <th>Status</th>
+                            </tr>
+
+                        </thead>
+
+                        <tbody id="inventoryTable">
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+
+            <!-- =====================
+                 STOCK MOVEMENT
+            ====================== -->
+
+            <div id="movement" class="page">
+
+                <div class="page-title">
+
+                    <h2>Stock Movement</h2>
+
+                    <p>
+                        Record stock-in and stock-out transactions.
+                    </p>
+
+                </div>
+
+
+                <div class="form-card">
+
+                    <div class="form-grid">
+
+                        <div class="form-group">
+
+                            <label>Product</label>
+
+                            <select id="movementProduct">
+                            </select>
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label>Movement Type</label>
+
+                            <select id="movementType">
+
+                                <option value="IN">
+                                    Stock In
+                                </option>
+
+                                <option value="OUT">
+                                    Stock Out
+                                </option>
+
+                            </select>
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label>Quantity</label>
+
+                            <input
+                                id="movementQuantity"
+                                type="number"
+                                min="1"
+                            >
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label>Reason</label>
+
+                            <input
+                                id="movementReason"
+                                type="text"
+                                placeholder="Reason"
+                            >
+
+                        </div>
+
+                    </div>
+
+
+                    <button
+                        class="btn"
+                        onclick="saveMovement()"
+                    >
+                        Save Movement
+                    </button>
+
+
+                    <div
+                        id="movementMessage"
+                        class="message"
+                    ></div>
+
+                </div>
+
+            </div>
+
+
+            <!-- =====================
+                 SALES
+            ====================== -->
+
+            <div id="sales" class="page">
+
+                <div class="page-title">
+
+                    <h2>Sales</h2>
+
+                    <p>
+                        Record café sales.
+                    </p>
+
+                </div>
+
+
+                <div class="form-card">
+
+                    <div class="form-grid">
+
+                        <div class="form-group">
+
+                            <label>Product</label>
+
+                            <select id="saleProduct">
+                            </select>
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label>Quantity</label>
+
+                            <input
+                                id="saleQuantity"
+                                type="number"
+                                min="1"
+                            >
+
+                        </div>
+
+                    </div>
+
+
+                    <button
+                        class="btn"
+                        onclick="recordSale()"
+                    >
+                        Record Sale
+                    </button>
+
+
+                    <div
+                        id="saleMessage"
+                        class="message"
+                    ></div>
+
+                </div>
+
+            </div>
+
+
+            <!-- =====================
+                 REPORTS
+            ====================== -->
+
+            <div id="reports" class="page">
+
+                <div class="page-title">
+
+                    <h2>Reports</h2>
+
+                    <p>
+                        View recorded sales.
+                    </p>
+
+                </div>
+
+
+                <div class="table-container">
+
+                    <table>
+
+                        <thead>
+
+                            <tr>
+                                <th>Date</th>
+                                <th>Product</th>
+                                <th>Quantity</th>
+                                <th>Total</th>
+                                <th>Cashier</th>
+                            </tr>
+
+                        </thead>
+
+                        <tbody id="salesTable">
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+
+            <!-- =====================
+                 AUDIT
+            ====================== -->
+
+            <div id="audit" class="page">
+
+                <div class="page-title">
+
+                    <h2>Users / Audit</h2>
+
+                    <p>
+                        Administrator audit logs.
+                    </p>
+
+                </div>
+
+
+                <div class="table-container">
+
+                    <table>
+
+                        <thead>
+
+                            <tr>
+                                <th>Date</th>
+                                <th>User</th>
+                                <th>Action</th>
+                                <th>Module</th>
+                                <th>Details</th>
+                            </tr>
+
+                        </thead>
+
+                        <tbody id="auditTable">
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+
+        </section>
 
     </main>
-  </div>
 
-  <!-- FIREBASE SDK v10 MODULE INTEGRATION -->
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-    import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-    import { getFirestore, collection, doc, setDoc, updateDoc, addDoc, onSnapshot, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+</div>
 
-    // ROMA Cafe Firebase Credentials
-    const firebaseConfig = {
-      apiKey: "AIzaSyAyqoEqUub81F78SOY2Nfp2kcltlvpd7Ks",
-      authDomain: "roma-cafe-inventory.firebaseapp.com",
-      projectId: "roma-cafe-inventory",
-      storageBucket: "roma-cafe-inventory.firebasestorage.app",
-      messagingSenderId: "815304756557",
-      appId: "1:815304756557:web:3f419a454c0646a5e5bb04",
-      measurementId: "G-CHCL80QQ6P"
+
+<script>
+
+/* =====================================================
+   ROMA APPS SCRIPT WEB APP URL
+===================================================== */
+
+const API_URL =
+"https://script.google.com/macros/s/AKfycbwWKGsbrpRGI-kcof7kmDTHk7wfUKLIcC3C_HtkMHMXo74h2LU-FXDzuSDwD8Tsp9w/exec";
+
+
+/* =====================================================
+   SESSION
+===================================================== */
+
+let sessionToken =
+sessionStorage.getItem("romaToken");
+
+let currentUser =
+JSON.parse(
+    sessionStorage.getItem("romaUser") || "null"
+);
+
+let products = [];
+
+
+/* =====================================================
+   API REQUEST
+===================================================== */
+
+async function apiRequest(action, data = {}) {
+
+    try {
+
+        const response =
+            await fetch(API_URL, {
+
+                method: "POST",
+
+                headers: {
+                    "Content-Type": "text/plain;charset=utf-8"
+                },
+
+                body: JSON.stringify({
+                    action: action,
+                    token: sessionToken,
+                    ...data
+                })
+
+            });
+
+
+        const result =
+            await response.json();
+
+
+        if (!result.success) {
+
+            throw new Error(
+                result.message || "Request failed."
+            );
+
+        }
+
+
+        return result;
+
+    } catch (error) {
+
+        console.error(error);
+
+        throw error;
+
+    }
+
+}
+
+
+/* =====================================================
+   LOGIN
+===================================================== */
+
+async function login() {
+
+    const username =
+        document
+        .getElementById("username")
+        .value
+        .trim();
+
+    const password =
+        document
+        .getElementById("password")
+        .value;
+
+
+    const errorBox =
+        document.getElementById("loginError");
+
+
+    errorBox.textContent = "";
+
+
+    if (!username || !password) {
+
+        errorBox.textContent =
+            "Please enter username and password.";
+
+        return;
+
+    }
+
+
+    try {
+
+        const result =
+            await apiRequest(
+                "login",
+                {
+                    username: username,
+                    password: password
+                }
+            );
+
+
+        sessionToken =
+            result.token;
+
+        currentUser =
+            result.user;
+
+
+        sessionStorage.setItem(
+            "romaToken",
+            sessionToken
+        );
+
+
+        sessionStorage.setItem(
+            "romaUser",
+            JSON.stringify(currentUser)
+        );
+
+
+        openApplication();
+
+
+    } catch (error) {
+
+        errorBox.textContent =
+            error.message ||
+            "Login failed.";
+
+    }
+
+}
+
+
+/* =====================================================
+   OPEN APPLICATION
+===================================================== */
+
+function openApplication() {
+
+    document
+        .getElementById("loginPage")
+        .style.display = "none";
+
+
+    document
+        .getElementById("app")
+        .style.display = "block";
+
+
+    document
+        .getElementById("userInfo")
+        .textContent =
+        currentUser.username +
+        " • " +
+        currentUser.role;
+
+
+    if (
+        currentUser.role !== "ADMIN"
+    ) {
+
+        document
+            .getElementById("auditNav")
+            .style.display = "none";
+
+    }
+
+
+    loadDashboard();
+
+    loadProducts();
+
+}
+
+
+/* =====================================================
+   LOGOUT
+===================================================== */
+
+async function logout() {
+
+    try {
+
+        if (sessionToken) {
+
+            await apiRequest(
+                "logout"
+            );
+
+        }
+
+    } catch (error) {
+
+        console.error(error);
+
+    }
+
+
+    sessionStorage.removeItem(
+        "romaToken"
+    );
+
+    sessionStorage.removeItem(
+        "romaUser"
+    );
+
+
+    sessionToken = null;
+    currentUser = null;
+
+
+    location.reload();
+
+}
+
+
+/* =====================================================
+   NAVIGATION
+===================================================== */
+
+function showPage(pageId, button) {
+
+    document
+        .querySelectorAll(".page")
+        .forEach(page => {
+
+            page.classList.remove(
+                "active"
+            );
+
+        });
+
+
+    document
+        .getElementById(pageId)
+        .classList.add("active");
+
+
+    document
+        .querySelectorAll(".nav-menu button")
+        .forEach(btn => {
+
+            btn.classList.remove(
+                "active"
+            );
+
+        });
+
+
+    if (button) {
+
+        button.classList.add(
+            "active"
+        );
+
+    }
+
+
+    const titles = {
+
+        dashboard: "Dashboard",
+        products: "Products",
+        inventory: "Inventory",
+        movement: "Stock Movement",
+        sales: "Sales",
+        reports: "Reports",
+        audit: "Users / Audit"
+
     };
 
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
-    const db = getFirestore(app);
 
-    let currentUser = null;
-    let products = [];
-    let cart = [];
+    document
+        .getElementById("topTitle")
+        .textContent =
+        titles[pageId] || "ROMA";
 
-    // Check Auth State
-    onAuthStateChanged(auth, (user) => {
-      if (user) {
-        currentUser = user;
-        document.getElementById('user-display-name').innerText = user.email.split('@')[0];
-        document.getElementById('user-avatar').innerText = user.email.charAt(0).toUpperCase();
-        document.getElementById('auth-modal').classList.add('hidden');
-        listenToCloudData();
-      } else {
-        document.getElementById('auth-modal').classList.remove('hidden');
-      }
+
+    if (pageId === "dashboard") {
+
+        loadDashboard();
+
+    }
+
+
+    if (pageId === "products") {
+
+        loadProducts();
+
+    }
+
+
+    if (pageId === "inventory") {
+
+        loadInventory();
+
+    }
+
+
+    if (pageId === "movement") {
+
+        loadProducts();
+
+    }
+
+
+    if (pageId === "sales") {
+
+        loadProducts();
+
+    }
+
+
+    if (pageId === "reports") {
+
+        loadSales();
+
+    }
+
+
+    if (pageId === "audit") {
+
+        loadAudit();
+
+    }
+
+
+    if (
+        window.innerWidth <= 768
+    ) {
+
+        toggleSidebar();
+
+    }
+
+}
+
+
+/* =====================================================
+   MOBILE SIDEBAR
+===================================================== */
+
+function toggleSidebar() {
+
+    document
+        .getElementById("sidebar")
+        .classList.toggle("show");
+
+}
+
+
+/* =====================================================
+   HTML SECURITY
+===================================================== */
+
+function escapeHTML(value) {
+
+    if (value === null ||
+        value === undefined) {
+
+        return "";
+
+    }
+
+
+    return String(value)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+
+}
+
+
+/* =====================================================
+   DASHBOARD
+===================================================== */
+
+async function loadDashboard() {
+
+    try {
+
+        const result =
+            await apiRequest(
+                "dashboard"
+            );
+
+
+        document
+            .getElementById("totalProducts")
+            .textContent =
+            result.totalProducts || 0;
+
+
+        document
+            .getElementById("totalStock")
+            .textContent =
+            result.totalStock || 0;
+
+
+        document
+            .getElementById("lowStock")
+            .textContent =
+            result.lowStock || 0;
+
+
+        document
+            .getElementById("inventoryValue")
+            .textContent =
+            "₱" +
+            Number(
+                result.inventoryValue || 0
+            ).toLocaleString(
+                "en-PH",
+                {
+                    minimumFractionDigits: 2
+                }
+            );
+
+    } catch (error) {
+
+        console.error(error);
+
+    }
+
+}
+
+
+/* =====================================================
+   LOAD PRODUCTS
+===================================================== */
+
+async function loadProducts() {
+
+    try {
+
+        const result =
+            await apiRequest(
+                "getProducts"
+            );
+
+
+        products =
+            result.products || [];
+
+
+        renderProducts();
+
+        renderInventory();
+
+        populateProductSelects();
+
+
+    } catch (error) {
+
+        console.error(error);
+
+    }
+
+}
+
+
+/* =====================================================
+   RENDER PRODUCTS
+===================================================== */
+
+function renderProducts() {
+
+    const table =
+        document.getElementById(
+            "productsTable"
+        );
+
+
+    table.innerHTML = "";
+
+
+    products.forEach(product => {
+
+        const stock =
+            Number(product.stock || 0);
+
+        const reorder =
+            Number(product.reorderLevel || 0);
+
+
+        let status =
+            '<span class="status active">Active</span>';
+
+
+        if (stock <= 0) {
+
+            status =
+                '<span class="status out">Out of Stock</span>';
+
+        } else if (
+            stock <= reorder
+        ) {
+
+            status =
+                '<span class="status low">Low Stock</span>';
+
+        }
+
+
+        const row =
+            document.createElement("tr");
+
+
+        row.innerHTML = `
+
+            <td>
+                ${escapeHTML(product.name)}
+            </td>
+
+            <td>
+                ${escapeHTML(product.category)}
+            </td>
+
+            <td>
+                ${escapeHTML(product.variant)}
+            </td>
+
+            <td>
+                ₱${Number(product.price || 0).toFixed(2)}
+            </td>
+
+            <td>
+                ${stock}
+            </td>
+
+            <td>
+                ${status}
+            </td>
+
+        `;
+
+
+        table.appendChild(row);
+
     });
 
-    // Login Handler
-    window.handleLogin = async (e) => {
-      e.preventDefault();
-      const email = document.getElementById('login-user').value;
-      const pass = document.getElementById('login-pass').value;
-      try {
-        await signInWithEmailAndPassword(auth, email, pass);
-      } catch (err) {
-        document.getElementById('login-error').classList.remove('hidden');
-      }
-    };
+}
 
-    window.handleLogout = () => signOut(auth);
 
-    // Live Real-Time Firestore Sync
-    function listenToCloudData() {
-      // Products Listener
-      onSnapshot(collection(db, "products"), (snapshot) => {
-        products = [];
-        snapshot.forEach((doc) => products.push({ id: doc.id, ...doc.data() }));
-        
-        // Populate default products if database is empty
-        if (products.length === 0) seedInitialProducts();
-        
-        renderProducts();
-        renderDashboard();
-        renderPOS();
-      });
+/* =====================================================
+   RENDER INVENTORY
+===================================================== */
 
-      // Audits Listener
-      onSnapshot(collection(db, "audits"), (snapshot) => {
-        const tbody = document.getElementById('audit-logs-body');
-        tbody.innerHTML = '';
-        snapshot.forEach((doc) => {
-          const a = doc.data();
-          tbody.innerHTML += `
-            <tr>
-              <td class="p-2.5 text-stone-400">${a.timestamp ? new Date(a.timestamp.toDate()).toLocaleTimeString() : 'Just now'}</td>
-              <td class="p-2.5 font-bold">${a.type}</td>
-              <td class="p-2.5">${a.details}</td>
-              <td class="p-2.5 text-stone-500">${a.user}</td>
-            </tr>
-          `;
+function renderInventory() {
+
+    const table =
+        document.getElementById(
+            "inventoryTable"
+        );
+
+
+    table.innerHTML = "";
+
+
+    products.forEach(product => {
+
+        const stock =
+            Number(product.stock || 0);
+
+        const reorder =
+            Number(product.reorderLevel || 0);
+
+
+        let status =
+            '<span class="status active">Normal</span>';
+
+
+        if (stock <= 0) {
+
+            status =
+                '<span class="status out">Out of Stock</span>';
+
+        } else if (
+            stock <= reorder
+        ) {
+
+            status =
+                '<span class="status low">Low Stock</span>';
+
+        }
+
+
+        const row =
+            document.createElement("tr");
+
+
+        row.innerHTML = `
+
+            <td>
+                ${escapeHTML(product.name)}
+            </td>
+
+            <td>
+                ${escapeHTML(product.category)}
+            </td>
+
+            <td>
+                ${escapeHTML(product.variant)}
+            </td>
+
+            <td>
+                ${stock}
+            </td>
+
+            <td>
+                ${reorder}
+            </td>
+
+            <td>
+                ${status}
+            </td>
+
+        `;
+
+
+        table.appendChild(row);
+
+    });
+
+}
+
+
+/* =====================================================
+   PRODUCT SELECTS
+===================================================== */
+
+function populateProductSelects() {
+
+    const selects = [
+
+        document.getElementById(
+            "movementProduct"
+        ),
+
+        document.getElementById(
+            "saleProduct"
+        )
+
+    ];
+
+
+    selects.forEach(select => {
+
+        if (!select) return;
+
+
+        select.innerHTML =
+            '<option value="">Select Product</option>';
+
+
+        products.forEach(product => {
+
+            const option =
+                document.createElement(
+                    "option"
+                );
+
+
+            option.value =
+                product.id;
+
+
+            option.textContent =
+                product.name +
+                " - " +
+                product.variant;
+
+
+            select.appendChild(option);
+
         });
-      });
 
-      // Sales Listener
-      onSnapshot(collection(db, "sales"), (snapshot) => {
-        let totalRev = 0;
-        let totalItems = 0;
-        const list = document.getElementById('sales-report-list');
-        list.innerHTML = '';
+    });
 
-        snapshot.forEach((doc) => {
-          const s = doc.data();
-          totalRev += s.total;
-          totalItems += s.itemCount;
-          list.innerHTML += `
-            <div class="p-2 bg-white rounded border flex justify-between">
-              <span>Order #${doc.id.slice(0, 6)} (${s.itemCount} items)</span>
-              <span class="font-bold text-emerald-800">₱${s.total.toFixed(2)}</span>
-            </div>
-          `;
-        });
+}
 
-        document.getElementById('stat-sales').innerText = totalRev.toFixed(2);
-        document.getElementById('stat-items').innerText = totalItems;
-      });
-    }
 
-    async function seedInitialProducts() {
-      const items = [
-        { name: "Caramel Sweet Cake", category: "cake", price: 140, stock: 12 },
-        { name: "Carrot Sweet Cake", category: "cake", price: 135, stock: 8 },
-        { name: "Red Velvet Sweet Cake", category: "cake", price: 150, stock: 15 },
-        { name: "Blueberry Sweet Cake", category: "cake", price: 145, stock: 5 },
-        { name: "Triple Choco Sweet Cake", category: "cake", price: 150, stock: 10 },
-        { name: "Espresso (Mindanao Blend)", category: "coffee", price: 90, stock: 100 }
-      ];
-      for (const item of items) {
-        await addDoc(collection(db, "products"), item);
-      }
-    }
+/* =====================================================
+   ADD PRODUCT
+===================================================== */
 
-    function renderProducts() {
-      const tbody = document.getElementById('products-table-body');
-      const select = document.getElementById('stock-product-select');
-      tbody.innerHTML = '';
-      select.innerHTML = '';
+async function addProduct() {
 
-      products.forEach(p => {
-        tbody.innerHTML += `
-          <tr>
-            <td class="p-2.5 font-bold">${p.name}</td>
-            <td class="p-2.5 uppercase text-[10px]">${p.category}</td>
-            <td class="p-2.5">₱${p.price.toFixed(2)}</td>
-            <td class="p-2.5">${p.stock}</td>
-          </tr>
-        `;
-        select.innerHTML += `<option value="${p.id}">${p.name} (Current: ${p.stock})</option>`;
-      });
-    }
+    const product = {
 
-    function renderDashboard() {
-      const grid = document.getElementById('cake-status-grid');
-      grid.innerHTML = '';
-      let lowAlerts = 0;
+        name:
+            document
+            .getElementById("productName")
+            .value
+            .trim(),
 
-      products.filter(p => p.category === 'cake').forEach(c => {
-        if (c.stock <= 5) lowAlerts++;
-        grid.innerHTML += `
-          <div class="p-2 bg-stone-50 rounded border flex justify-between text-xs">
-            <span class="font-bold text-roma-brown">${c.name}</span>
-            <span class="px-2 py-0.5 ${c.stock <= 5 ? 'bg-amber-100 text-amber-800' : 'bg-emerald-100 text-emerald-800'} rounded font-bold">${c.stock} slices</span>
-          </div>
-        `;
-      });
-      document.getElementById('stat-alerts').innerText = lowAlerts;
-    }
+        category:
+            document
+            .getElementById("productCategory")
+            .value,
 
-    function renderPOS() {
-      const grid = document.getElementById('pos-items-grid');
-      grid.innerHTML = '';
-      products.forEach(p => {
-        grid.innerHTML += `
-          <div onclick="window.addToCart('${p.id}')" class="bg-white p-2.5 rounded-lg border border-roma-lightwood hover:border-roma-wood cursor-pointer">
-            <p class="font-bold text-xs text-stone-800">${p.name}</p>
-            <p class="text-[10px] text-roma-brown font-bold mt-1">₱${p.price.toFixed(2)} (${p.stock} left)</p>
-          </div>
-        `;
-      });
-    }
+        variant:
+            document
+            .getElementById("productVariant")
+            .value
+            .trim(),
 
-    window.addToCart = (id) => {
-      const p = products.find(prod => prod.id === id);
-      if (p.stock <= 0) return alert('Out of stock!');
-      cart.push(p);
-      
-      const cartList = document.getElementById('cart-items-list');
-      cartList.innerHTML = '';
-      let total = 0;
-      cart.forEach(item => {
-        total += item.price;
-        cartList.innerHTML += `<div class="flex justify-between text-xs"><span>${item.name}</span><span>₱${item.price.toFixed(2)}</span></div>`;
-      });
-      document.getElementById('cart-total').innerText = `₱${total.toFixed(2)}`;
+        price:
+            Number(
+                document
+                .getElementById("productPrice")
+                .value
+            ),
+
+        stock:
+            Number(
+                document
+                .getElementById("productStock")
+                .value
+            ),
+
+        reorderLevel:
+            Number(
+                document
+                .getElementById("productReorder")
+                .value
+            ),
+
+        supplier:
+            document
+            .getElementById("productSupplier")
+            .value
+            .trim()
+
     };
 
-    window.processCheckout = async () => {
-      if (!cart.length) return alert('Cart empty!');
-      const total = cart.reduce((a, b) => a + b.price, 0);
 
-      // Save Sale
-      await addDoc(collection(db, "sales"), {
-        total: total,
-        itemCount: cart.length,
-        timestamp: serverTimestamp()
-      });
+    const message =
+        document.getElementById(
+            "productMessage"
+        );
 
-      // Deduct stock in Firestore
-      for (const item of cart) {
-        const docRef = doc(db, "products", item.id);
-        await updateDoc(docRef, { stock: item.stock - 1 });
-      }
 
-      // Log Audit
-      await addDoc(collection(db, "audits"), {
-        type: "POS_SALE",
-        details: `Order processed: ₱${total.toFixed(2)}`,
-        user: currentUser.email,
-        timestamp: serverTimestamp()
-      });
+    message.className =
+        "message";
 
-      cart = [];
-      document.getElementById('cart-items-list').innerHTML = '<p class="text-xs text-stone-400 text-center py-8">Cart is empty.</p>';
-      document.getElementById('cart-total').innerText = '₱0.00';
-      alert('Sale committed to Cloud!');
-    };
 
-    window.handleStockIn = async (e) => {
-      e.preventDefault();
-      const pId = document.getElementById('stock-product-select').value;
-      const qty = parseInt(document.getElementById('stock-qty-input').value);
-      const product = products.find(p => p.id === pId);
+    if (
+        !product.name ||
+        !product.variant ||
+        !product.price
+    ) {
 
-      await updateDoc(doc(db, "products", pId), { stock: product.stock + qty });
-      await addDoc(collection(db, "audits"), {
-        type: "STOCK_IN",
-        details: `Added ${qty} units to ${product.name}`,
-        user: currentUser.email,
-        timestamp: serverTimestamp()
-      });
+        message.textContent =
+            "Please complete the required fields.";
 
-      alert('Stock successfully updated!');
-      document.getElementById('stock-qty-input').value = '';
-    };
+        message.classList.add(
+            "error"
+        );
 
-    window.switchTab = (tabId) => {
-      document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
-      document.querySelectorAll('.nav-btn').forEach(el => el.classList.remove('bg-roma-wood', 'text-white'));
-      document.getElementById(`tab-${tabId}`).classList.remove('hidden');
-      document.getElementById(`nav-${tabId}`).classList.add('bg-roma-wood', 'text-white');
-    };
+        return;
 
-    window.toggleMobileMenu = () => {
-      document.getElementById('nav-menu').classList.toggle('hidden');
-    };
-  </script>
+    }
+
+
+    try {
+
+        await apiRequest(
+            "addProduct",
+            {
+                product: product
+            }
+        );
+
+
+        message.textContent =
+            "Product added successfully.";
+
+        message.classList.add(
+            "success"
+        );
+
+
+        document
+            .getElementById("productName")
+            .value = "";
+
+        document
+            .getElementById("productVariant")
+            .value = "";
+
+        document
+            .getElementById("productPrice")
+            .value = "";
+
+        document
+            .getElementById("productStock")
+            .value = "";
+
+        document
+            .getElementById("productReorder")
+            .value = "";
+
+        document
+            .getElementById("productSupplier")
+            .value = "";
+
+
+        await loadProducts();
+
+        await loadDashboard();
+
+
+    } catch (error) {
+
+        message.textContent =
+            error.message;
+
+        message.classList.add(
+            "error"
+        );
+
+    }
+
+}
+
+
+/* =====================================================
+   STOCK MOVEMENT
+===================================================== */
+
+async function saveMovement() {
+
+    const productId =
+        document
+        .getElementById("movementProduct")
+        .value;
+
+
+    const type =
+        document
+        .getElementById("movementType")
+        .value;
+
+
+    const quantity =
+        Number(
+            document
+            .getElementById("movementQuantity")
+            .value
+        );
+
+
+    const reason =
+        document
+        .getElementById("movementReason")
+        .value
+        .trim();
+
+
+    const message =
+        document.getElementById(
+            "movementMessage"
+        );
+
+
+    message.className =
+        "message";
+
+
+    if (
+        !productId ||
+        quantity <= 0
+    ) {
+
+        message.textContent =
+            "Please select a product and enter a valid quantity.";
+
+        message.classList.add(
+            "error"
+        );
+
+        return;
+
+    }
+
+
+    try {
+
+        await apiRequest(
+            "stockMovement",
+            {
+                productId: productId,
+                type: type,
+                quantity: quantity,
+                reason: reason
+            }
+        );
+
+
+        message.textContent =
+            "Stock movement recorded successfully.";
+
+        message.classList.add(
+            "success"
+        );
+
+
+        document
+            .getElementById(
+                "movementQuantity"
+            )
+            .value = "";
+
+
+        document
+            .getElementById(
+                "movementReason"
+            )
+            .value = "";
+
+
+        await loadProducts();
+
+        await loadDashboard();
+
+
+    } catch (error) {
+
+        message.textContent =
+            error.message;
+
+        message.classList.add(
+            "error"
+        );
+
+    }
+
+}
+
+
+/* =====================================================
+   SALES
+===================================================== */
+
+async function recordSale() {
+
+    const productId =
+        document
+        .getElementById("saleProduct")
+        .value;
+
+
+    const quantity =
+        Number(
+            document
+            .getElementById("saleQuantity")
+            .value
+        );
+
+
+    const message =
+        document.getElementById(
+            "saleMessage"
+        );
+
+
+    message.className =
+        "message";
+
+
+    if (
+        !productId ||
+        quantity <= 0
+    ) {
+
+        message.textContent =
+            "Please select a product and enter a valid quantity.";
+
+        message.classList.add(
+            "error"
+        );
+
+        return;
+
+    }
+
+
+    try {
+
+        await apiRequest(
+            "recordSale",
+            {
+                productId: productId,
+                quantity: quantity
+            }
+        );
+
+
+        message.textContent =
+            "Sale recorded successfully.";
+
+        message.classList.add(
+            "success"
+        );
+
+
+        document
+            .getElementById(
+                "saleQuantity"
+            )
+            .value = "";
+
+
+        await loadProducts();
+
+        await loadDashboard();
+
+        await loadSales();
+
+
+    } catch (error) {
+
+        message.textContent =
+            error.message;
+
+        message.classList.add(
+            "error"
+        );
+
+    }
+
+}
+
+
+/* =====================================================
+   LOAD SALES
+===================================================== */
+
+async function loadSales() {
+
+    try {
+
+        const result =
+            await apiRequest(
+                "getSales"
+            );
+
+
+        const table =
+            document.getElementById(
+                "salesTable"
+            );
+
+
+        table.innerHTML = "";
+
+
+        (result.sales || []).forEach(
+            sale => {
+
+                const row =
+                    document.createElement(
+                        "tr"
+                    );
+
+
+                row.innerHTML = `
+
+                    <td>
+                        ${escapeHTML(
+                            sale.timestamp
+                        )}
+                    </td>
+
+                    <td>
+                        ${escapeHTML(
+                            sale.productName
+                        )}
+                    </td>
+
+                    <td>
+                        ${escapeHTML(
+                            sale.quantity
+                        )}
+                    </td>
+
+                    <td>
+                        ₱${Number(
+                            sale.total || 0
+                        ).toFixed(2)}
+                    </td>
+
+                    <td>
+                        ${escapeHTML(
+                            sale.cashier
+                        )}
+                    </td>
+
+                `;
+
+
+                table.appendChild(row);
+
+            }
+        );
+
+
+    } catch (error) {
+
+        console.error(error);
+
+    }
+
+}
+
+
+/* =====================================================
+   LOAD AUDIT LOGS
+===================================================== */
+
+async function loadAudit() {
+
+    if (
+        !currentUser ||
+        currentUser.role !== "ADMIN"
+    ) {
+
+        return;
+
+    }
+
+
+    try {
+
+        const result =
+            await apiRequest(
+                "getAuditLogs"
+            );
+
+
+        const table =
+            document.getElementById(
+                "auditTable"
+            );
+
+
+        table.innerHTML = "";
+
+
+        (result.logs || []).forEach(
+            log => {
+
+                const row =
+                    document.createElement(
+                        "tr"
+                    );
+
+
+                row.innerHTML = `
+
+                    <td>
+                        ${escapeHTML(
+                            log.timestamp
+                        )}
+                    </td>
+
+                    <td>
+                        ${escapeHTML(
+                            log.user
+                        )}
+                    </td>
+
+                    <td>
+                        ${escapeHTML(
+                            log.action
+                        )}
+                    </td>
+
+                    <td>
+                        ${escapeHTML(
+                            log.module
+                        )}
+                    </td>
+
+                    <td>
+                        ${escapeHTML(
+                            log.details
+                        )}
+                    </td>
+
+                `;
+
+
+                table.appendChild(row);
+
+            }
+        );
+
+
+    } catch (error) {
+
+        console.error(error);
+
+    }
+
+}
+
+
+/* =====================================================
+   AUTO LOGIN CHECK
+===================================================== */
+
+window.addEventListener(
+    "DOMContentLoaded",
+    async function() {
+
+        if (
+            sessionToken &&
+            currentUser
+        ) {
+
+            try {
+
+                await apiRequest(
+                    "dashboard"
+                );
+
+
+                openApplication();
+
+
+            } catch (error) {
+
+                sessionStorage.removeItem(
+                    "romaToken"
+                );
+
+                sessionStorage.removeItem(
+                    "romaUser"
+                );
+
+                sessionToken = null;
+                currentUser = null;
+
+            }
+
+        }
+
+    }
+);
+
+</script>
+
 </body>
 </html>
