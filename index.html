@@ -1,58 +1,79 @@
 ```html
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#111827">
-  <meta name="description" content="ROMA Cafe Inventory Management System">
-  <title>ROMA Cafe | Inventory Management</title>
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <meta
+    name="theme-color"
+    content="#6f4e37"
+  >
+
+  <meta
+    name="description"
+    content="ROMA Cafe Inventory Management System"
+  >
+
+  <title>ROMA Cafe | Inventory System</title>
+
+
+  <!-- =====================================================
+       CSS
+  ====================================================== -->
 
   <style>
-    /* =========================================================
-       ROMA CAFE INVENTORY SYSTEM
-       Single-file GitHub frontend
-       ========================================================= */
 
     :root {
-      --bg: #f5f7fb;
+
+      --brown: #6f4e37;
+      --brown-dark: #4b3325;
+
+      --cream: #faf7f2;
+
       --white: #ffffff;
-      --dark: #111827;
-      --dark-2: #1f2937;
-      --text: #172033;
-      --muted: #6b7280;
-      --line: #e5e7eb;
 
-      --gold: #b7791f;
-      --gold-dark: #8b5e16;
-      --gold-light: #fff7e8;
+      --text: #29231f;
 
-      --green: #15803d;
-      --green-light: #dcfce7;
+      --muted: #776e67;
 
-      --red: #dc2626;
-      --red-light: #fee2e2;
+      --border: #e8e0d8;
 
-      --orange: #d97706;
-      --orange-light: #fef3c7;
+      --danger: #b42318;
 
-      --blue: #2563eb;
-      --blue-light: #dbeafe;
+      --success: #16834b;
+
+      --warning: #b56b00;
+
+      --info: #2563eb;
+
+      --shadow:
+        0 8px 30px rgba(52, 38, 28, .08);
 
       --radius: 16px;
-      --shadow: 0 10px 30px rgba(17, 24, 39, 0.08);
+
     }
+
 
     * {
+
       box-sizing: border-box;
+
+      margin: 0;
+
+      padding: 0;
+
     }
 
-    html {
-      scroll-behavior: smooth;
-    }
 
     body {
-      margin: 0;
+
       font-family:
         Inter,
         ui-sans-serif,
@@ -61,1867 +82,1996 @@
         BlinkMacSystemFont,
         "Segoe UI",
         sans-serif;
-      background: var(--bg);
-      color: var(--text);
+
+      background:
+        var(--cream);
+
+      color:
+        var(--text);
+
     }
+
 
     button,
     input,
     select,
     textarea {
+
       font: inherit;
+
     }
+
 
     button {
+
       cursor: pointer;
+
     }
+
 
     .hidden {
+
       display: none !important;
+
     }
 
-    /* =========================================================
+
+    .muted {
+
+      color: var(--muted);
+
+    }
+
+
+    /* =====================================================
        AUTHENTICATION
-       ========================================================= */
+    ====================================================== */
 
     .auth-screen {
+
       min-height: 100vh;
-      min-height: 100dvh;
 
       display: grid;
+
       place-items: center;
 
-      padding: 20px;
+      padding: 24px;
 
       background:
-        radial-gradient(
-          circle at top right,
-          #f6d69b,
-          transparent 35%
-        ),
         linear-gradient(
           135deg,
-          #ffffff,
-          #f4f1eb
+          #4b3325,
+          #8a6548
         );
+
     }
 
+
     .auth-card {
-      width: min(430px, 100%);
 
-      background: var(--white);
+      width: min(420px, 100%);
 
-      border: 1px solid var(--line);
+      background:
+        var(--white);
 
       border-radius: 24px;
 
-      padding: 30px;
-
-      box-shadow: var(--shadow);
-    }
-
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .logo {
-      width: 48px;
-      height: 48px;
-
-      display: grid;
-      place-items: center;
-
-      border-radius: 15px;
-
-      background: var(--dark);
-      color: #f6d69b;
-
-      font-weight: 900;
-      font-size: 20px;
-    }
-
-    .brand h1 {
-      margin: 0;
-
-      font-size: 20px;
-    }
-
-    .brand p {
-      margin: 2px 0 0;
-
-      color: var(--muted);
-
-      font-size: 13px;
-    }
-
-    .auth-card h2 {
-      margin: 28px 0 7px;
-    }
-
-    .auth-description {
-      color: var(--muted);
-
-      font-size: 14px;
-
-      line-height: 1.6;
-
-      margin-top: 0;
-    }
-
-    .field {
-      margin: 15px 0;
-    }
-
-    .field label {
-      display: block;
-
-      margin-bottom: 7px;
-
-      font-size: 13px;
-
-      font-weight: 700;
-    }
-
-    .field input,
-    .field select,
-    .field textarea {
-      width: 100%;
-
-      padding: 12px 13px;
-
-      border: 1px solid #d1d5db;
-
-      border-radius: 11px;
-
-      outline: none;
-
-      background: #fff;
-
-      color: var(--text);
-    }
-
-    .field textarea {
-      min-height: 90px;
-
-      resize: vertical;
-    }
-
-    .field input:focus,
-    .field select:focus,
-    .field textarea:focus {
-      border-color: var(--gold);
-
-      box-shadow:
-        0 0 0 3px
-        rgba(183, 121, 31, 0.14);
-    }
-
-    .btn {
-      border: 0;
-
-      padding: 11px 15px;
-
-      border-radius: 11px;
-
-      font-weight: 800;
-
-      transition: 0.2s ease;
-    }
-
-    .btn:hover {
-      transform: translateY(-1px);
-    }
-
-    .btn:disabled {
-      opacity: 0.55;
-
-      cursor: not-allowed;
-
-      transform: none;
-    }
-
-    .btn-primary {
-      width: 100%;
-
-      background: var(--dark);
-
-      color: white;
-    }
-
-    .btn-gold {
-      background: var(--gold);
-
-      color: white;
-    }
-
-    .btn-gold:hover {
-      background: var(--gold-dark);
-    }
-
-    .btn-ghost {
-      background: #f3f4f6;
-
-      color: var(--text);
-    }
-
-    .btn-danger {
-      background: var(--red-light);
-
-      color: #991b1b;
-    }
-
-    .btn-blue {
-      background: var(--blue-light);
-
-      color: #1d4ed8;
-    }
-
-    .alert {
-      padding: 10px 12px;
-
-      border-radius: 10px;
-
-      font-size: 13px;
-
-      margin: 12px 0;
-
-      line-height: 1.5;
-    }
-
-    .alert-error {
-      color: #b91c1c;
-
-      background: #fef2f2;
-
-      border: 1px solid #fecaca;
-    }
-
-    .alert-success {
-      color: #166534;
-
-      background: #f0fdf4;
-
-      border: 1px solid #bbf7d0;
-    }
-
-    /* =========================================================
-       TOP BAR
-       ========================================================= */
-
-    .topbar {
-      height: 68px;
-
-      background: var(--dark);
-
-      color: white;
-
-      display: flex;
-
-      align-items: center;
-
-      justify-content: space-between;
-
-      padding: 0 22px;
-
-      position: sticky;
-
-      top: 0;
-
-      z-index: 50;
-    }
-
-    .topbar .brand p {
-      color: #cbd5e1;
-    }
-
-    .top-actions {
-      display: flex;
-
-      align-items: center;
-
-      gap: 10px;
-    }
-
-    .menu-button {
-      display: none;
-
-      background: transparent;
-
-      color: white;
-
-      border: 0;
-
-      font-size: 25px;
-    }
-
-    .avatar {
-      width: 36px;
-      height: 36px;
-
-      border-radius: 50%;
-
-      display: grid;
-
-      place-items: center;
-
-      background: #f6d69b;
-
-      color: var(--dark);
-
-      font-weight: 900;
-    }
-
-    .user-name {
-      font-size: 13px;
-
-      font-weight: 700;
-    }
-
-    .user-role {
-      font-size: 11px;
-
-      color: #cbd5e1;
-    }
-
-    /* =========================================================
-       LAYOUT
-       ========================================================= */
-
-    .layout {
-      display: flex;
-
-      min-height:
-        calc(100vh - 68px);
-      min-height:
-        calc(100dvh - 68px);
-    }
-
-    .sidebar {
-      width: 245px;
-
-      flex-shrink: 0;
-
-      background: white;
-
-      border-right: 1px solid var(--line);
-
-      padding: 18px 12px;
-
-      position: sticky;
-
-      top: 68px;
-
-      height:
-        calc(100vh - 68px);
-      height:
-        calc(100dvh - 68px);
-
-      overflow-y: auto;
-    }
-
-    .nav-label {
-      font-size: 10px;
-
-      font-weight: 900;
-
-      color: #9ca3af;
-
-      text-transform: uppercase;
-
-      padding: 12px 12px 8px;
-
-      letter-spacing: 0.08em;
-    }
-
-    .nav {
-      display: grid;
-
-      gap: 5px;
-    }
-
-    .nav button {
-      display: flex;
-
-      align-items: center;
-
-      gap: 11px;
-
-      padding: 12px;
-
-      border-radius: 11px;
-
-      border: 0;
-
-      background: transparent;
-
-      color: #4b5563;
-
-      text-align: left;
-
-      font-weight: 700;
-    }
-
-    .nav button:hover {
-      background: #f8fafc;
-    }
-
-    .nav button.active {
-      background: var(--gold-light);
-
-      color: var(--gold-dark);
-    }
-
-    .nav-icon {
-      width: 22px;
-
-      text-align: center;
-    }
-
-    .main {
-      flex: 1;
-
-      min-width: 0;
-
-      padding: 24px;
-    }
-
-    /* =========================================================
-       PAGE HEADER
-       ========================================================= */
-
-    .page-head {
-      display: flex;
-
-      align-items: center;
-
-      justify-content: space-between;
-
-      gap: 15px;
-
-      margin-bottom: 20px;
-    }
-
-    .page-head h2 {
-      margin: 0;
-
-      font-size: 24px;
-    }
-
-    .page-head p {
-      margin: 5px 0 0;
-
-      color: var(--muted);
-
-      font-size: 13px;
-    }
-
-    .head-actions {
-      display: flex;
-
-      align-items: center;
-
-      gap: 8px;
-
-      flex-wrap: wrap;
-    }
-
-    /* =========================================================
-       CARDS
-       ========================================================= */
-
-    .grid {
-      display: grid;
-
-      grid-template-columns:
-        repeat(4, minmax(0, 1fr));
-
-      gap: 15px;
-    }
-
-    .card {
-      background: white;
-
-      border: 1px solid var(--line);
-
-      border-radius: var(--radius);
-
-      padding: 18px;
-
-      box-shadow:
-        0 2px 8px
-        rgba(0, 0, 0, 0.025);
-    }
-
-    .stat {
-      display: flex;
-
-      align-items: flex-start;
-
-      justify-content: space-between;
-
-      gap: 12px;
-    }
-
-    .stat small {
-      color: var(--muted);
-
-      font-weight: 700;
-    }
-
-    .stat strong {
-      display: block;
-
-      margin-top: 8px;
-
-      font-size: 28px;
-    }
-
-    .stat-icon {
-      width: 42px;
-      height: 42px;
-
-      display: grid;
-
-      place-items: center;
-
-      border-radius: 13px;
-
-      background: var(--gold-light);
-
-      font-size: 18px;
-    }
-
-    .section-grid {
-      display: grid;
-
-      grid-template-columns:
-        1.4fr 0.8fr;
-
-      gap: 15px;
-
-      margin-top: 15px;
-    }
-
-    .card-title {
-      display: flex;
-
-      align-items: center;
-
-      justify-content: space-between;
-
-      gap: 10px;
-
-      margin-bottom: 15px;
-    }
-
-    .card-title h3 {
-      margin: 0;
-
-      font-size: 16px;
-    }
-
-    .muted {
-      color: var(--muted);
-    }
-
-    /* =========================================================
-       TABLES
-       ========================================================= */
-
-    .table-wrap {
-      overflow-x: auto;
-
-      border: 1px solid var(--line);
-
-      border-radius: 13px;
-    }
-
-    .table {
-      width: 100%;
-
-      min-width: 650px;
-
-      border-collapse: collapse;
-    }
-
-    .table th,
-    .table td {
-      padding: 12px 13px;
-
-      border-bottom: 1px solid var(--line);
-
-      text-align: left;
-
-      font-size: 13px;
-
-      white-space: nowrap;
-    }
-
-    .table th {
-      background: #f9fafb;
-
-      color: #6b7280;
-
-      font-size: 11px;
-
-      text-transform: uppercase;
-
-      letter-spacing: 0.03em;
-    }
-
-    .table tr:last-child td {
-      border-bottom: 0;
-    }
-
-    .badge {
-      display: inline-flex;
-
-      align-items: center;
-
-      padding: 4px 8px;
-
-      border-radius: 999px;
-
-      font-size: 11px;
-
-      font-weight: 800;
-    }
-
-    .badge-green {
-      background: var(--green-light);
-
-      color: #166534;
-    }
-
-    .badge-red {
-      background: var(--red-light);
-
-      color: #991b1b;
-    }
-
-    .badge-orange {
-      background: var(--orange-light);
-
-      color: #92400e;
-    }
-
-    .badge-blue {
-      background: var(--blue-light);
-
-      color: #1d4ed8;
-    }
-
-    .badge-gray {
-      background: #f3f4f6;
-
-      color: #4b5563;
-    }
-
-    .low-stock {
-      color: #b91c1c;
-
-      font-weight: 900;
-    }
-
-    .empty {
-      padding: 35px;
-
-      text-align: center;
-
-      color: var(--muted);
-    }
-
-    /* =========================================================
-       SEARCH
-       ========================================================= */
-
-    .search {
-      width: min(280px, 100%);
-
-      padding: 10px 12px;
-
-      border: 1px solid var(--line);
-
-      border-radius: 10px;
-
-      background: white;
-
-      outline: none;
-    }
-
-    .search:focus {
-      border-color: var(--gold);
-    }
-
-    .filters {
-      display: flex;
-
-      align-items: center;
-
-      gap: 8px;
-
-      flex-wrap: wrap;
-
-      margin-bottom: 13px;
-    }
-
-    /* =========================================================
-       MODAL
-       ========================================================= */
-
-    .modal-backdrop {
-      position: fixed;
-
-      inset: 0;
-
-      z-index: 100;
-
-      display: grid;
-
-      place-items: center;
-
-      padding: 18px;
-
-      background:
-        rgba(17, 24, 39, 0.55);
-    }
-
-    .modal {
-      width: min(580px, 100%);
-
-      max-height: 90dvh;
-
-      overflow-y: auto;
-
-      background: white;
-
-      border-radius: 20px;
-
-      padding: 22px;
+      padding: 36px;
 
       box-shadow:
         0 25px 70px
-        rgba(0, 0, 0, 0.2);
+        rgba(0, 0, 0, .25);
+
     }
 
-    .modal-head {
-      display: flex;
 
-      align-items: center;
+    .brand-mark {
 
-      justify-content: space-between;
+      width: 58px;
 
-      margin-bottom: 5px;
+      height: 58px;
+
+      border-radius: 16px;
+
+      background:
+        var(--brown);
+
+      color:
+        white;
+
+      display: grid;
+
+      place-items: center;
+
+      font-size: 30px;
+
+      font-weight: 800;
+
+      margin-bottom: 18px;
+
     }
 
-    .modal-head h3 {
+
+    .brand-mark.small {
+
+      width: 42px;
+
+      height: 42px;
+
+      border-radius: 12px;
+
+      font-size: 22px;
+
       margin: 0;
+
     }
 
-    .close-button {
-      width: 34px;
-      height: 34px;
+
+    .auth-card h1 {
+
+      margin-bottom: 4px;
+
+    }
+
+
+    .auth-card form {
+
+      margin-top: 26px;
+
+    }
+
+
+    label {
+
+      display: block;
+
+      font-size: 13px;
+
+      font-weight: 700;
+
+      margin:
+        15px 0 7px;
+
+    }
+
+
+    input,
+    select,
+    textarea {
+
+      width: 100%;
+
+      padding:
+        12px 13px;
+
+      border:
+        1px solid var(--border);
+
+      border-radius: 10px;
+
+      background:
+        white;
+
+      color:
+        var(--text);
+
+      outline: none;
+
+    }
+
+
+    input:focus,
+    select:focus,
+    textarea:focus {
+
+      border-color:
+        var(--brown);
+
+      box-shadow:
+        0 0 0 3px
+        rgba(111, 78, 55, .1);
+
+    }
+
+
+    .btn {
 
       border: 0;
 
-      border-radius: 9px;
+      border-radius: 10px;
 
-      background: #f3f4f6;
+      padding:
+        11px 15px;
 
-      font-size: 20px;
+      font-weight: 700;
+
+      transition:
+        .2s;
+
     }
 
+
+    .btn.primary {
+
+      background:
+        var(--brown);
+
+      color:
+        white;
+
+    }
+
+
+    .btn.primary:hover {
+
+      background:
+        var(--brown-dark);
+
+    }
+
+
+    .btn.ghost {
+
+      background:
+        #f3eee9;
+
+      color:
+        var(--brown-dark);
+
+    }
+
+
+    .btn.danger {
+
+      background:
+        #fff0ee;
+
+      color:
+        var(--danger);
+
+    }
+
+
+    .btn.success {
+
+      background:
+        #eaf8f0;
+
+      color:
+        var(--success);
+
+    }
+
+
+    .btn.full {
+
+      width: 100%;
+
+      margin-top: 16px;
+
+    }
+
+
+    .otp-info {
+
+      padding:
+        12px;
+
+      background:
+        #f5f0eb;
+
+      border-radius:
+        10px;
+
+      font-size:
+        13px;
+
+      color:
+        #5c4d42;
+
+    }
+
+
+    /* =====================================================
+       APPLICATION
+    ====================================================== */
+
+    .app {
+
+      min-height:
+        100vh;
+
+      display:
+        flex;
+
+    }
+
+
+    /* =====================================================
+       SIDEBAR
+    ====================================================== */
+
+    .sidebar {
+
+      width:
+        250px;
+
+      background:
+        white;
+
+      border-right:
+        1px solid var(--border);
+
+      position:
+        fixed;
+
+      inset:
+        0 auto 0 0;
+
+      z-index:
+        20;
+
+      padding:
+        22px 14px;
+
+      display:
+        flex;
+
+      flex-direction:
+        column;
+
+    }
+
+
+    .sidebar-brand {
+
+      display:
+        flex;
+
+      align-items:
+        center;
+
+      gap:
+        10px;
+
+      padding:
+        0 8px 22px;
+
+      border-bottom:
+        1px solid var(--border);
+
+    }
+
+
+    .sidebar-brand small {
+
+      display:
+        block;
+
+      color:
+        var(--muted);
+
+      font-size:
+        11px;
+
+      margin-top:
+        2px;
+
+    }
+
+
+    nav {
+
+      padding-top:
+        18px;
+
+      display:
+        grid;
+
+      gap:
+        6px;
+
+    }
+
+
+    .nav-link {
+
+      border:
+        0;
+
+      background:
+        transparent;
+
+      text-align:
+        left;
+
+      padding:
+        12px 13px;
+
+      border-radius:
+        10px;
+
+      color:
+        #5e554e;
+
+      font-weight:
+        700;
+
+      display:
+        flex;
+
+      gap:
+        12px;
+
+      align-items:
+        center;
+
+    }
+
+
+    .nav-link:hover,
+    .nav-link.active {
+
+      background:
+        #f2ebe4;
+
+      color:
+        var(--brown);
+
+    }
+
+
+    .sidebar-footer {
+
+      margin-top:
+        auto;
+
+      border-top:
+        1px solid var(--border);
+
+      padding-top:
+        15px;
+
+    }
+
+
+    #user-chip {
+
+      font-size:
+        12px;
+
+      margin-bottom:
+        8px;
+
+      padding:
+        8px;
+
+      border-radius:
+        10px;
+
+      background:
+        #f8f5f2;
+
+    }
+
+
+    /* =====================================================
+       MAIN
+    ====================================================== */
+
+    .main {
+
+      margin-left:
+        250px;
+
+      width:
+        calc(100% - 250px);
+
+      padding:
+        25px;
+
+    }
+
+
+    .topbar {
+
+      display:
+        flex;
+
+      align-items:
+        center;
+
+      gap:
+        16px;
+
+      margin-bottom:
+        24px;
+
+    }
+
+
+    .topbar h2 {
+
+      margin:
+        0;
+
+    }
+
+
+    .topbar p {
+
+      margin:
+        3px 0 0;
+
+    }
+
+
+    .topbar .btn {
+
+      margin-left:
+        auto;
+
+    }
+
+
+    .icon-btn {
+
+      display:
+        none;
+
+      border:
+        0;
+
+      background:
+        white;
+
+      border-radius:
+        10px;
+
+      padding:
+        10px;
+
+    }
+
+
+    /* =====================================================
+       CARDS
+    ====================================================== */
+
+    .cards {
+
+      display:
+        grid;
+
+      grid-template-columns:
+        repeat(4, 1fr);
+
+      gap:
+        16px;
+
+      margin-bottom:
+        18px;
+
+    }
+
+
+    .card {
+
+      background:
+        var(--white);
+
+      border:
+        1px solid var(--border);
+
+      border-radius:
+        var(--radius);
+
+      padding:
+        19px;
+
+      box-shadow:
+        var(--shadow);
+
+    }
+
+
+    .metric {
+
+      font-size:
+        28px;
+
+      font-weight:
+        800;
+
+      margin-top:
+        7px;
+
+    }
+
+
+    .metric-label {
+
+      font-size:
+        13px;
+
+      color:
+        var(--muted);
+
+    }
+
+
+    .grid-2 {
+
+      display:
+        grid;
+
+      grid-template-columns:
+        1.2fr .8fr;
+
+      gap:
+        18px;
+
+    }
+
+
+    .section-head {
+
+      display:
+        flex;
+
+      justify-content:
+        space-between;
+
+      align-items:
+        center;
+
+      gap:
+        12px;
+
+      margin-bottom:
+        15px;
+
+    }
+
+
+    .section-head h3 {
+
+      margin:
+        0;
+
+    }
+
+
+    .toolbar {
+
+      display:
+        flex;
+
+      gap:
+        9px;
+
+      flex-wrap:
+        wrap;
+
+      margin-bottom:
+        15px;
+
+    }
+
+
+    .toolbar input {
+
+      max-width:
+        300px;
+
+    }
+
+
+    /* =====================================================
+       TABLE
+    ====================================================== */
+
+    .table-wrap {
+
+      overflow:
+        auto;
+
+      border:
+        1px solid var(--border);
+
+      border-radius:
+        12px;
+
+    }
+
+
+    table {
+
+      width:
+        100%;
+
+      border-collapse:
+        collapse;
+
+      min-width:
+        760px;
+
+      background:
+        white;
+
+    }
+
+
+    th,
+    td {
+
+      text-align:
+        left;
+
+      padding:
+        12px 13px;
+
+      border-bottom:
+        1px solid var(--border);
+
+      font-size:
+        13px;
+
+    }
+
+
+    th {
+
+      background:
+        #faf8f6;
+
+      color:
+        #5f574f;
+
+      font-size:
+        12px;
+
+      text-transform:
+        uppercase;
+
+      letter-spacing:
+        .03em;
+
+    }
+
+
+    tr:last-child td {
+
+      border-bottom:
+        0;
+
+    }
+
+
+    .low-row {
+
+      background:
+        #fffaf4;
+
+    }
+
+
+    /* =====================================================
+       BADGES
+    ====================================================== */
+
+    .badge {
+
+      display:
+        inline-flex;
+
+      padding:
+        5px 8px;
+
+      border-radius:
+        999px;
+
+      font-size:
+        11px;
+
+      font-weight:
+        800;
+
+    }
+
+
+    .badge.success {
+
+      background:
+        #eaf8f0;
+
+      color:
+        var(--success);
+
+    }
+
+
+    .badge.warning {
+
+      background:
+        #fff4df;
+
+      color:
+        var(--warning);
+
+    }
+
+
+    .badge.danger {
+
+      background:
+        #fff0ee;
+
+      color:
+        var(--danger);
+
+    }
+
+
+    /* =====================================================
+       MODAL
+    ====================================================== */
+
+    .modal-backdrop {
+
+      position:
+        fixed;
+
+      inset:
+        0;
+
+      background:
+        rgba(22, 16, 11, .55);
+
+      display:
+        grid;
+
+      place-items:
+        center;
+
+      padding:
+        20px;
+
+      z-index:
+        50;
+
+    }
+
+
+    .modal {
+
+      background:
+        white;
+
+      border-radius:
+        18px;
+
+      width:
+        min(560px, 100%);
+
+      max-height:
+        90vh;
+
+      overflow:
+        auto;
+
+      padding:
+        24px;
+
+    }
+
+
+    .modal-head {
+
+      display:
+        flex;
+
+      justify-content:
+        space-between;
+
+      align-items:
+        center;
+
+    }
+
+
+    .modal-head h3 {
+
+      margin:
+        0;
+
+    }
+
+
+    .close {
+
+      border:
+        0;
+
+      background:
+        #f3eee9;
+
+      border-radius:
+        8px;
+
+      padding:
+        7px 10px;
+
+    }
+
+
     .form-grid {
-      display: grid;
+
+      display:
+        grid;
 
       grid-template-columns:
         1fr 1fr;
 
-      gap: 4px 12px;
+      gap:
+        0 14px;
+
     }
 
-    .full {
-      grid-column: 1 / -1;
+
+    .form-actions {
+
+      display:
+        flex;
+
+      gap:
+        10px;
+
+      justify-content:
+        flex-end;
+
+      margin-top:
+        20px;
+
     }
 
-    .modal-actions {
-      display: flex;
 
-      justify-content: flex-end;
+    .form-actions .btn {
 
-      gap: 8px;
+      margin:
+        0;
 
-      margin-top: 16px;
     }
 
-    /* =========================================================
+
+    /* =====================================================
+       REPORTS
+    ====================================================== */
+
+    .report-grid {
+
+      display:
+        grid;
+
+      grid-template-columns:
+        repeat(3, 1fr);
+
+      gap:
+        15px;
+
+    }
+
+
+    .stat-line {
+
+      display:
+        flex;
+
+      justify-content:
+        space-between;
+
+      padding:
+        10px 0;
+
+      border-bottom:
+        1px solid var(--border);
+
+    }
+
+
+    .empty {
+
+      text-align:
+        center;
+
+      padding:
+        35px;
+
+      color:
+        var(--muted);
+
+    }
+
+
+    /* =====================================================
        TOAST
-       ========================================================= */
+    ====================================================== */
 
     .toast {
-      position: fixed;
 
-      right: 20px;
+      position:
+        fixed;
 
-      bottom: 20px;
+      right:
+        18px;
 
-      z-index: 200;
+      bottom:
+        18px;
 
-      max-width: 360px;
+      z-index:
+        100;
 
-      padding: 12px 15px;
+      padding:
+        13px 16px;
 
-      border-radius: 11px;
+      min-width:
+        240px;
 
-      background: var(--dark);
+      animation:
+        toastIn .25s ease;
 
-      color: white;
-
-      box-shadow: var(--shadow);
-
-      font-size: 13px;
     }
 
-    /* =========================================================
-       MOBILE NAVIGATION
-       ========================================================= */
 
-    .mobile-nav {
-      display: none;
+    @keyframes toastIn {
+
+      from {
+
+        opacity:
+          0;
+
+        transform:
+          translateY(10px);
+
+      }
+
+      to {
+
+        opacity:
+          1;
+
+        transform:
+          translateY(0);
+
+      }
+
     }
 
-    /* =========================================================
-       RESPONSIVE
-       ========================================================= */
 
-    @media (max-width: 1050px) {
-      .grid {
+    /* =====================================================
+       MOBILE
+    ====================================================== */
+
+    @media (max-width: 1000px) {
+
+      .cards {
+
         grid-template-columns:
-          repeat(2, minmax(0, 1fr));
+          repeat(2, 1fr);
+
       }
 
-      .section-grid {
-        grid-template-columns: 1fr;
-      }
-    }
 
-    @media (max-width: 760px) {
+      .grid-2 {
 
-      .topbar {
-        padding: 0 14px;
+        grid-template-columns:
+          1fr;
+
       }
 
-      .menu-button {
-        display: block;
-      }
 
-      .user-name,
-      .user-role {
-        display: none;
-      }
+      .report-grid {
 
-      .sidebar {
-        position: fixed;
-
-        left: 0;
-
-        top: 68px;
-
-        bottom: 0;
-
-        height: auto;
-
-        z-index: 45;
-
-        transform:
-          translateX(-105%);
-
-        transition: 0.2s ease;
-
-        box-shadow:
-          10px 0 30px
-          rgba(0, 0, 0, 0.12);
-      }
-
-      .sidebar.open {
-        transform:
-          translateX(0);
-      }
-
-      .main {
-        padding:
-          16px
-          14px
-          84px;
-      }
-
-      .page-head {
-        align-items: flex-start;
-
-        flex-direction: column;
-      }
-
-      .page-head h2 {
-        font-size: 21px;
-      }
-
-      .head-actions {
-        width: 100%;
-      }
-
-      .head-actions .search {
-        flex: 1;
-
-        width: auto;
-      }
-
-      .grid {
         grid-template-columns:
           1fr 1fr;
 
-        gap: 10px;
       }
 
-      .card {
-        padding: 14px;
+    }
+
+
+    @media (max-width: 760px) {
+
+      .sidebar {
+
+        transform:
+          translateX(-100%);
+
+        transition:
+          .2s;
+
+        box-shadow:
+          0 0 30px
+          rgba(0, 0, 0, .15);
+
       }
 
-      .stat strong {
-        font-size: 23px;
+
+      .sidebar.open {
+
+        transform:
+          translateX(0);
+
       }
 
-      .mobile-nav {
-        display: grid;
 
-        position: fixed;
+      .main {
 
-        left: 0;
+        margin-left:
+          0;
 
-        right: 0;
+        width:
+          100%;
 
-        bottom: 0;
+        padding:
+          16px;
 
-        z-index: 60;
+      }
 
-        height: 64px;
 
-        padding-bottom:
-          env(safe-area-inset-bottom);
+      .icon-btn {
+
+        display:
+          block;
+
+      }
+
+
+      .topbar {
+
+        align-items:
+          flex-start;
+
+      }
+
+
+      .topbar h2 {
+
+        font-size:
+          20px;
+
+      }
+
+
+      .topbar .btn {
+
+        padding:
+          9px 11px;
+
+      }
+
+
+      .cards {
 
         grid-template-columns:
-          repeat(4, 1fr);
+          1fr 1fr;
 
-        background: white;
+        gap:
+          10px;
 
-        border-top: 1px solid var(--line);
       }
 
-      .mobile-nav button {
-        border: 0;
 
-        background: white;
+      .card {
 
-        color: #6b7280;
+        padding:
+          14px;
 
-        font-size: 10px;
-
-        font-weight: 800;
       }
 
-      .mobile-nav button.active {
-        color: var(--gold-dark);
+
+      .metric {
+
+        font-size:
+          23px;
+
       }
 
-      .mobile-nav span {
-        display: block;
-
-        font-size: 18px;
-
-        margin-bottom: 2px;
-      }
 
       .form-grid {
-        grid-template-columns: 1fr;
+
+        grid-template-columns:
+          1fr;
+
       }
 
-      .full {
-        grid-column: auto;
-      }
 
       .auth-card {
-        padding: 24px;
+
+        padding:
+          27px;
+
       }
+
+
+      .report-grid {
+
+        grid-template-columns:
+          1fr;
+
+      }
+
     }
+
 
     @media (max-width: 430px) {
-      .topbar .logo {
-        width: 40px;
-        height: 40px;
 
-        font-size: 17px;
+      .cards {
+
+        grid-template-columns:
+          1fr;
+
       }
 
-      .topbar .brand h1 {
-        font-size: 17px;
+
+      .toolbar input {
+
+        max-width:
+          none;
+
       }
 
-      .grid {
-        grid-template-columns: 1fr;
+
+      .topbar p {
+
+        font-size:
+          12px;
+
       }
 
-      .stat {
-        min-height: 90px;
+
+      .topbar .btn {
+
+        font-size:
+          12px;
+
       }
 
-      .auth-card {
-        padding: 20px;
-      }
     }
+
   </style>
+
 </head>
+
 
 <body>
 
-  <!-- =========================================================
-       LOGIN
-       ========================================================= -->
 
-  <section id="authView" class="auth-screen">
+  <!-- =====================================================
+       TOAST
+  ====================================================== -->
+
+  <div id="toast-container"></div>
+
+
+
+  <!-- =====================================================
+       LOGIN
+  ====================================================== -->
+
+  <section
+    id="login-screen"
+    class="auth-screen"
+  >
 
     <div class="auth-card">
 
-      <div class="brand">
-
-        <div class="logo">
-          R
-        </div>
-
-        <div>
-          <h1>ROMA Cafe</h1>
-
-          <p>
-            Inventory Management
-          </p>
-        </div>
-
+      <div class="brand-mark">
+        R
       </div>
+
+
+      <h1>
+        ROMA Cafe
+      </h1>
+
+
+      <p class="muted">
+        Inventory Management System
+      </p>
+
 
       <!-- LOGIN -->
 
-      <div id="loginStep">
+      <form id="login-form">
 
-        <h2>
-          Welcome back
-        </h2>
+        <label for="login-email">
+          Email
+        </label>
 
-        <p class="auth-description">
-          Sign in using your staff account.
-          A verification code will be sent
-          to your email.
-        </p>
+        <input
+          id="login-email"
+          type="email"
+          autocomplete="username"
+          placeholder="admin@romacafe.com"
+          required
+        >
 
-        <div id="loginMessage"></div>
 
-        <div class="field">
+        <label for="login-password">
+          Password
+        </label>
 
-          <label>
-            Email
-          </label>
+        <input
+          id="login-password"
+          type="password"
+          autocomplete="current-password"
+          placeholder="Enter your password"
+          required
+        >
 
-          <input
-            id="email"
-            type="email"
-            autocomplete="username"
-            placeholder="name@romacafe.com"
-          >
-
-        </div>
-
-        <div class="field">
-
-          <label>
-            Password
-          </label>
-
-          <input
-            id="password"
-            type="password"
-            autocomplete="current-password"
-            placeholder="••••••••"
-          >
-
-        </div>
 
         <button
-          id="requestOtpButton"
-          class="btn btn-primary"
+          class="btn primary full"
+          type="submit"
         >
-          Continue with OTP
+          Continue
         </button>
 
-      </div>
+      </form>
+
+
 
       <!-- OTP -->
 
-      <div
-        id="otpStep"
+      <form
+        id="otp-form"
         class="hidden"
       >
 
-        <h2>
-          Verify your login
-        </h2>
+        <div class="otp-info">
 
-        <p class="auth-description">
-          Enter the 6-digit verification
-          code sent to
-          <strong id="otpEmail"></strong>.
-        </p>
-
-        <div id="otpMessage"></div>
-
-        <div class="field">
-
-          <label>
-            One-Time Password
-          </label>
-
-          <input
-            id="otp"
-            inputmode="numeric"
-            maxlength="6"
-            autocomplete="one-time-code"
-            placeholder="123456"
-          >
+          A verification code has been
+          sent to your email.
 
         </div>
 
-        <button
-          id="verifyOtpButton"
-          class="btn btn-primary"
+
+        <label for="otp-code">
+          6-digit OTP
+        </label>
+
+
+        <input
+          id="otp-code"
+          type="text"
+          inputmode="numeric"
+          autocomplete="one-time-code"
+          maxlength="6"
+          pattern="[0-9]{6}"
+          placeholder="000000"
+          required
         >
-          Verify & Sign In
-        </button>
+
 
         <button
-          id="backLoginButton"
-          class="btn btn-ghost"
-          style="width:100%;margin-top:8px"
+          class="btn primary full"
+          type="submit"
         >
-          Use another account
+          Verify & Login
         </button>
 
-      </div>
+
+        <button
+          id="back-login"
+          class="btn ghost full"
+          type="button"
+        >
+          Back
+        </button>
+
+      </form>
 
     </div>
 
   </section>
 
 
-  <!-- =========================================================
+
+  <!-- =====================================================
        APPLICATION
-       ========================================================= -->
+  ====================================================== -->
 
   <section
-    id="appView"
-    class="hidden"
+    id="app"
+    class="app hidden"
   >
 
-    <!-- TOP BAR -->
 
-    <header class="topbar">
+    <!-- ===================================================
+         SIDEBAR
+    ==================================================== -->
 
-      <div class="top-actions">
+    <aside
+      id="sidebar"
+      class="sidebar"
+    >
+
+      <div class="sidebar-brand">
+
+        <div class="brand-mark small">
+          R
+        </div>
+
+
+        <div>
+
+          <strong>
+            ROMA Cafe
+          </strong>
+
+          <small>
+            Inventory
+          </small>
+
+        </div>
+
+      </div>
+
+
+
+      <!-- =================================================
+           7 FEATURES
+      ================================================== -->
+
+      <nav>
+
+
+        <!-- FEATURE 1 -->
 
         <button
-          id="menuButton"
-          class="menu-button"
+          class="nav-link active"
+          data-page="dashboard"
+        >
+
+          <span>
+            ▦
+          </span>
+
+          Dashboard
+
+        </button>
+
+
+
+        <!-- FEATURE 2 -->
+
+        <button
+          class="nav-link"
+          data-page="inventory"
+        >
+
+          <span>
+            ▤
+          </span>
+
+          Inventory
+
+        </button>
+
+
+
+        <!-- FEATURE 3 -->
+
+        <button
+          class="nav-link"
+          data-page="stock"
+        >
+
+          <span>
+            ↕
+          </span>
+
+          Stock In/Out
+
+        </button>
+
+
+
+        <!-- FEATURE 4 -->
+
+        <button
+          class="nav-link"
+          data-page="suppliers"
+        >
+
+          <span>
+            ♙
+          </span>
+
+          Suppliers
+
+        </button>
+
+
+
+        <!-- FEATURE 5 -->
+
+        <button
+          class="nav-link"
+          data-page="transactions"
+        >
+
+          <span>
+            ◷
+          </span>
+
+          Transactions
+
+        </button>
+
+
+
+        <!-- FEATURE 6 -->
+
+        <button
+          class="nav-link"
+          data-page="reports"
+        >
+
+          <span>
+            ▥
+          </span>
+
+          Reports
+
+        </button>
+
+
+
+        <!-- FEATURE 7 -->
+
+        <button
+          class="nav-link"
+          data-page="audit"
+        >
+
+          <span>
+            ✓
+          </span>
+
+          Audit Log
+
+        </button>
+
+      </nav>
+
+
+
+      <!-- USER -->
+
+      <div class="sidebar-footer">
+
+        <div id="user-chip"></div>
+
+
+        <button
+          id="logout-btn"
+          class="btn ghost full"
+        >
+          Log out
+        </button>
+
+      </div>
+
+    </aside>
+
+
+
+    <!-- ===================================================
+         MAIN
+    ==================================================== -->
+
+    <main class="main">
+
+
+      <header class="topbar">
+
+
+        <button
+          id="menu-btn"
+          class="icon-btn"
+          aria-label="Open navigation"
         >
           ☰
         </button>
 
-        <div class="brand">
-
-          <div class="logo">
-            R
-          </div>
-
-          <div>
-
-            <h1>
-              ROMA Cafe
-            </h1>
-
-            <p>
-              Inventory System
-            </p>
-
-          </div>
-
-        </div>
-
-      </div>
-
-      <div class="top-actions">
 
         <div>
 
-          <div
-            id="userName"
-            class="user-name"
-          ></div>
+          <h2 id="page-title">
+            Dashboard
+          </h2>
 
-          <div
-            id="userRole"
-            class="user-role"
-          ></div>
+
+          <p
+            id="page-subtitle"
+            class="muted"
+          >
+            Overview of your cafe inventory
+          </p>
 
         </div>
 
-        <div
-          id="avatar"
-          class="avatar"
-        >
-          R
-        </div>
 
         <button
-          id="logoutButton"
-          class="btn btn-ghost"
+          id="refresh-btn"
+          class="btn ghost"
         >
-          Logout
+          Refresh
         </button>
 
-      </div>
-
-    </header>
+      </header>
 
 
-    <div class="layout">
 
-      <!-- =====================================================
-           SIDEBAR
-           ===================================================== -->
+      <!-- PAGE 1 -->
 
-      <aside
-        id="sidebar"
-        class="sidebar"
-      >
-
-        <div class="nav-label">
-          Main Menu
-        </div>
-
-        <nav
-          id="navigation"
-          class="nav"
-        >
-
-          <button
-            data-page="dashboard"
-            class="active"
-          >
-            <span class="nav-icon">
-              ▦
-            </span>
-
-            Dashboard
-          </button>
-
-          <button
-            data-page="inventory"
-          >
-            <span class="nav-icon">
-              📦
-            </span>
-
-            Inventory
-          </button>
-
-          <button
-            data-page="transactions"
-          >
-            <span class="nav-icon">
-              ⇄
-            </span>
-
-            Stock Transactions
-          </button>
-
-          <button
-            data-page="suppliers"
-          >
-            <span class="nav-icon">
-              ♙
-            </span>
-
-            Suppliers
-          </button>
-
-          <button
-            data-page="reports"
-          >
-            <span class="nav-icon">
-              ▤
-            </span>
-
-            Reports
-          </button>
-
-          <button
-            data-page="audit"
-          >
-            <span class="nav-icon">
-              ◷
-            </span>
-
-            Audit Log
-          </button>
-
-          <button
-            data-page="settings"
-          >
-            <span class="nav-icon">
-              ⚙
-            </span>
-
-            Settings
-          </button>
-
-        </nav>
-
-      </aside>
+      <div
+        id="page-dashboard"
+        class="page"
+      ></div>
 
 
-      <!-- =====================================================
-           MAIN
-           ===================================================== -->
 
-      <main
-        id="main"
-        class="main"
-      ></main>
+      <!-- PAGE 2 -->
 
-    </div>
+      <div
+        id="page-inventory"
+        class="page hidden"
+      ></div>
 
 
-    <!-- MOBILE NAV -->
 
-    <nav
-      id="mobileNavigation"
-      class="mobile-nav"
-    >
+      <!-- PAGE 3 -->
 
-      <button
-        data-page="dashboard"
-        class="active"
-      >
-        <span>▦</span>
-        Home
-      </button>
+      <div
+        id="page-stock"
+        class="page hidden"
+      ></div>
 
-      <button
-        data-page="inventory"
-      >
-        <span>📦</span>
-        Stock
-      </button>
 
-      <button
-        data-page="transactions"
-      >
-        <span>⇄</span>
-        Moves
-      </button>
 
-      <button
-        data-page="suppliers"
-      >
-        <span>♙</span>
-        Suppliers
-      </button>
+      <!-- PAGE 4 -->
 
-    </nav>
+      <div
+        id="page-suppliers"
+        class="page hidden"
+      ></div>
+
+
+
+      <!-- PAGE 5 -->
+
+      <div
+        id="page-transactions"
+        class="page hidden"
+      ></div>
+
+
+
+      <!-- PAGE 6 -->
+
+      <div
+        id="page-reports"
+        class="page hidden"
+      ></div>
+
+
+
+      <!-- PAGE 7 -->
+
+      <div
+        id="page-audit"
+        class="page hidden"
+      ></div>
+
+
+    </main>
 
   </section>
 
 
-  <!-- MODAL -->
 
-  <div id="modalRoot"></div>
+  <!-- =====================================================
+       MODALS
+  ====================================================== -->
 
-  <!-- TOAST -->
-
-  <div
-    id="toast"
-    class="toast hidden"
-  ></div>
+  <div id="modal-root"></div>
 
 
-<script>
 
-/* =============================================================
-   ROMA CAFE FRONTEND CONFIGURATION
-   =============================================================
+  <!-- =====================================================
+       JAVASCRIPT
+  ====================================================== -->
 
-   IMPORTANT:
+  <script>
 
-   Replace the value below with your deployed Apps Script
-   Web App URL.
+    /* =====================================================
+       CONFIGURATION
+    ====================================================== */
 
-   Example:
+    const CONFIG = {
 
-   https://script.google.com/macros/s/XXXXXXXXXXXX/exec
+      /*
+       * REPLACE THIS WITH YOUR
+       * GOOGLE APPS SCRIPT /exec URL
+       */
 
-   ============================================================= */
+      API_URL:
+        "https://script.google.com/macros/s/AKfycbxqc3p44YPOSCK5kg0Wn0lKHskBmGdNkF3HS2vPllVJMsQ-aYJLzgYEG_mtGfF-Ckok/exec",
 
-const CONFIG = {
+      APP_NAME:
+        "ROMA Cafe Inventory System"
 
-  API_URL:
-    "https://script.google.com/macros/s/AKfycbwjXEfec4TrdLBNvurxwQmF-oLmsMEQxy6gU6bWuhDjpLeIMbamDpYK5SwcqAstb5wF/exec"
-
-};
-
-
-/* =============================================================
-   APPLICATION STATE
-   ============================================================= */
-
-const state = {
-
-  user: null,
-
-  data: {
-
-    inventory: [],
-
-    transactions: [],
-
-    suppliers: [],
-
-    audit: []
-
-  },
-
-  page: "dashboard",
-
-  query: ""
-
-};
+    };
 
 
-/* =============================================================
-   HELPERS
-   ============================================================= */
 
-const $ = id =>
-  document.getElementById(id);
+    /* =====================================================
+       STATE
+    ====================================================== */
+
+    const state = {
+
+      user:
+        JSON.parse(
+          sessionStorage.getItem(
+            "roma_user"
+          ) || "null"
+        ),
+
+      token:
+        sessionStorage.getItem(
+          "roma_token"
+        ),
+
+      inventory: [],
+
+      transactions: [],
+
+      suppliers: [],
+
+      audit: [],
+
+      pendingEmail: ""
+
+    };
 
 
-function escapeHTML(value) {
 
-  return String(value ?? "")
-    .replace(
-      /[&<>'"]/g,
-      character => {
+    /* =====================================================
+       HELPERS
+    ====================================================== */
 
-        const map = {
-
-          "&": "&amp;",
-          "<": "&lt;",
-          ">": "&gt;",
-          "'": "&#39;",
-          '"': "&quot;"
-
-        };
-
-        return map[character];
-
-      }
-    );
-
-}
+    const $ =
+      id =>
+        document.getElementById(id);
 
 
-function money(value) {
+    function esc(value) {
 
-  return "₱" +
-    Number(value || 0)
-      .toLocaleString(
+      return String(
+        value ?? ""
+      ).replace(
+        /[&<>"']/g,
+        character => ({
+
+          "&":
+            "&amp;",
+
+          "<":
+            "&lt;",
+
+          ">":
+            "&gt;",
+
+          '"':
+            "&quot;",
+
+          "'":
+            "&#039;"
+
+        }[character])
+      );
+
+    }
+
+
+    function money(number) {
+
+      return `₱${Number(
+        number || 0
+      ).toLocaleString(
         "en-PH",
         {
-          minimumFractionDigits: 2,
-          maximumFractionDigits: 2
+          minimumFractionDigits:
+            2,
+
+          maximumFractionDigits:
+            2
+        }
+      )}`;
+
+    }
+
+
+    function dateFmt(value) {
+
+      if (!value) {
+        return "—";
+      }
+
+      const date =
+        new Date(value);
+
+      if (
+        isNaN(date.getTime())
+      ) {
+        return String(value);
+      }
+
+      return date.toLocaleString(
+        "en-PH",
+        {
+          dateStyle:
+            "medium",
+
+          timeStyle:
+            "short"
         }
       );
 
-}
-
-
-function formatDate(value) {
-
-  if (!value) {
-    return "—";
-  }
-
-  const date =
-    new Date(value);
-
-  if (Number.isNaN(date.getTime())) {
-    return escapeHTML(value);
-  }
-
-  return date.toLocaleString(
-    "en-PH",
-    {
-      dateStyle: "medium",
-      timeStyle: "short"
     }
-  );
-
-}
 
 
-function initials(name) {
+    /* =====================================================
+       TOAST
+    ====================================================== */
 
-  return String(name || "ROMA")
-    .split(" ")
-    .map(part => part[0])
-    .join("")
-    .slice(0, 2)
-    .toUpperCase();
+    function toast(
+      message,
+      type = "success"
+    ) {
 
-}
-
-
-function showToast(message) {
-
-  const toast =
-    $("toast");
-
-  toast.textContent =
-    message;
-
-  toast.classList.remove(
-    "hidden"
-  );
-
-  setTimeout(
-    () =>
-      toast.classList.add(
-        "hidden"
-      ),
-    2800
-  );
-
-}
+      const element =
+        document.createElement(
+          "div"
+        );
 
 
-function showMessage(
-  elementId,
-  message,
-  type = "error"
-) {
-
-  const element =
-    $(elementId);
-
-  if (!message) {
-
-    element.innerHTML = "";
-
-    return;
-  }
-
-  element.innerHTML = `
-
-    <div class="alert alert-${type}">
-      ${escapeHTML(message)}
-    </div>
-
-  `;
-
-}
+      element.className =
+        "card toast";
 
 
-/* =============================================================
-   API
-   ============================================================= */
+      if (
+        type === "danger"
+      ) {
 
-async function api(
-  action,
-  data = {}
-) {
-
-  if (
-    CONFIG.API_URL.includes(
-      "PASTE_YOUR"
-    )
-  ) {
-
-    throw new Error(
-      "Please set your Apps Script Web App URL in CONFIG.API_URL."
-    );
-
-  }
-
-
-  const response =
-    await fetch(
-      CONFIG.API_URL,
-      {
-
-        method: "POST",
-
-        headers: {
-
-          "Content-Type":
-            "text/plain;charset=utf-8"
-
-        },
-
-        body:
-          JSON.stringify({
-
-            action,
-
-            data
-
-          })
+        element.style.borderColor =
+          "#f0b7b1";
 
       }
-    );
 
 
-  if (!response.ok) {
-
-    throw new Error(
-      "Server request failed."
-    );
-
-  }
+      element.textContent =
+        message;
 
 
-  const result =
-    await response.json();
+      $("toast-container")
+        .appendChild(
+          element
+        );
 
 
-  if (!result.success) {
-
-    throw new Error(
-      result.message ||
-      "Request failed."
-    );
-
-  }
-
-
-  return result;
-
-}
-
-
-/* =============================================================
-   SESSION
-   ============================================================= */
-
-function getSessionUser() {
-
-  try {
-
-    return JSON.parse(
-      sessionStorage.getItem(
-        "romaUser"
-      ) || "null"
-    );
-
-  } catch {
-
-    return null;
-
-  }
-
-}
-
-
-function saveSessionUser(user) {
-
-  state.user =
-    user;
-
-  sessionStorage.setItem(
-    "romaUser",
-    JSON.stringify(user)
-  );
-
-}
-
-
-function clearSession() {
-
-  state.user =
-    null;
-
-  sessionStorage.removeItem(
-    "romaUser"
-  );
-
-}
-
-
-/* =============================================================
-   LOGIN
-   ============================================================= */
-
-$("requestOtpButton").onclick =
-  async function () {
-
-    const email =
-      $("email")
-        .value
-        .trim()
-        .toLowerCase();
-
-    const password =
-      $("password")
-        .value;
-
-
-    showMessage(
-      "loginMessage",
-      ""
-    );
-
-
-    if (!email || !password) {
-
-      showMessage(
-        "loginMessage",
-        "Email and password are required."
+      setTimeout(
+        () =>
+          element.remove(),
+        3200
       );
-
-      return;
 
     }
 
 
-    const button =
-      $("requestOtpButton");
 
-    button.disabled =
-      true;
+    /* =====================================================
+       API
+    ====================================================== */
 
-    button.textContent =
-      "Sending OTP…";
+    const API = {
 
 
-    try {
+      async post(
+        action,
+        data = {}
+      ) {
 
-      await api(
-        "requestOTP",
-        {
-          email,
-          password
+        if (
+          !CONFIG.API_URL ||
+          CONFIG.API_URL.includes(
+            "PASTE_YOUR"
+          )
+        ) {
+
+          throw new Error(
+            "Please configure your Apps Script Web App URL."
+          );
+
         }
-      );
 
 
-      $("otpEmail")
-        .textContent =
-        email;
+        const response =
+          await fetch(
+            CONFIG.API_URL,
+            {
+
+              method:
+                "POST",
+
+              headers:
+                {
+                  "Content-Type":
+                    "text/plain;charset=utf-8"
+                },
+
+              body:
+                JSON.stringify({
+                  action,
+                  data
+                })
+
+            }
+          );
 
 
-      $("loginStep")
-        .classList
-        .add("hidden");
+        if (
+          !response.ok
+        ) {
 
-      $("otpStep")
-        .classList
-        .remove("hidden");
+          throw new Error(
+            `Server returned ${response.status}.`
+          );
 
-
-      $("otp")
-        .focus();
+        }
 
 
-      showToast(
-        "OTP sent to your email."
-      );
+        return await response.json();
+
+      },
 
 
-    } catch (error) {
+      requestOTP(
+        email,
+        password
+      ) {
 
-      showMessage(
-        "loginMessage",
-        error.message
-      );
+        return this.post(
+          "requestOTP",
+          {
+            email,
+            password
+          }
+        );
 
-    } finally {
-
-      button.disabled =
-        false;
-
-      button.textContent =
-        "Continue with OTP";
-
-    }
-
-  };
+      },
 
 
-/* =============================================================
-   VERIFY OTP
-   ============================================================= */
+      verifyOTP(
+        email,
+        otp
+      ) {
 
-$("verifyOtpButton").onclick =
-  async function () {
-
-    const email =
-      $("email")
-        .value
-        .trim()
-        .toLowerCase();
-
-    const otp =
-      $("otp")
-        .value
-        .trim();
-
-
-    showMessage(
-      "otpMessage",
-      ""
-    );
-
-
-    if (!/^\d{6}$/.test(otp)) {
-
-      showMessage(
-        "otpMessage",
-        "Enter the 6-digit OTP."
-      );
-
-      return;
-
-    }
-
-
-    const button =
-      $("verifyOtpButton");
-
-    button.disabled =
-      true;
-
-    button.textContent =
-      "Verifying…";
-
-
-    try {
-
-      const result =
-        await api(
+        return this.post(
           "verifyOTP",
           {
             email,
@@ -1929,645 +2079,744 @@ $("verifyOtpButton").onclick =
           }
         );
 
-
-      saveSessionUser(
-        result.user
-      );
+      },
 
 
-      await startApplication();
+      allData(
+        token
+      ) {
+
+        return this.post(
+          "getAllData",
+          {
+            token
+          }
+        );
+
+      },
 
 
-    } catch (error) {
+      addInventory(
+        token,
+        item
+      ) {
 
-      showMessage(
-        "otpMessage",
-        error.message
-      );
+        return this.post(
+          "addInventory",
+          {
+            token,
+            item
+          }
+        );
 
-    } finally {
+      },
 
-      button.disabled =
-        false;
 
-      button.textContent =
-        "Verify & Sign In";
+      deleteInventory(
+        token,
+        id
+      ) {
+
+        return this.post(
+          "deleteInventory",
+          {
+            token,
+            id
+          }
+        );
+
+      },
+
+
+      stockTransaction(
+        token,
+        payload
+      ) {
+
+        return this.post(
+          "stockTransaction",
+          {
+            token,
+            ...payload
+          }
+        );
+
+      },
+
+
+      addSupplier(
+        token,
+        supplier
+      ) {
+
+        return this.post(
+          "addSupplier",
+          {
+            token,
+            supplier
+          }
+        );
+
+      },
+
+
+      logout(
+        token
+      ) {
+
+        return this.post(
+          "logout",
+          {
+            token
+          }
+        );
+
+      }
+
+    };
+
+
+
+    /* =====================================================
+       AUTH UI
+    ====================================================== */
+
+    function showAuth() {
+
+      $("login-screen")
+        .classList
+        .remove("hidden");
+
+
+      $("app")
+        .classList
+        .add("hidden");
 
     }
 
-  };
 
+    function showApp() {
 
-/* =============================================================
-   BACK TO LOGIN
-   ============================================================= */
+      $("login-screen")
+        .classList
+        .add("hidden");
 
-$("backLoginButton").onclick =
-  function () {
 
-    $("otpStep")
-      .classList
-      .add("hidden");
+      $("app")
+        .classList
+        .remove("hidden");
 
-    $("loginStep")
-      .classList
-      .remove("hidden");
 
-    $("otp").value =
-      "";
+      $("user-chip")
+        .innerHTML = `
 
-    showMessage(
-      "otpMessage",
-      ""
-    );
+          <strong>
+            ${esc(state.user.name)}
+          </strong>
 
-  };
+          <br>
 
+          ${esc(state.user.role)}
 
-/* =============================================================
-   LOGOUT
-   ============================================================= */
+          ·
 
-$("logoutButton").onclick =
-  function () {
+          ${esc(state.user.email)}
 
-    clearSession();
+        `;
 
-    $("appView")
-      .classList
-      .add("hidden");
+    }
 
-    $("authView")
-      .classList
-      .remove("hidden");
 
-    $("password").value =
-      "";
 
-    $("otp").value =
-      "";
+    /* =====================================================
+       LOAD DATA
+    ====================================================== */
 
-    $("otpStep")
-      .classList
-      .add("hidden");
+    async function loadData() {
 
-    $("loginStep")
-      .classList
-      .remove("hidden");
+      if (
+        !state.token
+      ) {
 
-  };
+        showAuth();
 
+        return;
 
-/* =============================================================
-   MOBILE SIDEBAR
-   ============================================================= */
+      }
 
-$("menuButton").onclick =
-  function () {
 
-    $("sidebar")
-      .classList
-      .toggle("open");
+      $("refresh-btn")
+        .disabled = true;
 
-  };
 
+      try {
 
-/* =============================================================
-   START APPLICATION
-   ============================================================= */
-
-async function startApplication() {
-
-  $("authView")
-    .classList
-    .add("hidden");
-
-  $("appView")
-    .classList
-    .remove("hidden");
-
-
-  $("userName")
-    .textContent =
-    state.user.name;
-
-
-  $("userRole")
-    .textContent =
-    state.user.role;
-
-
-  $("avatar")
-    .textContent =
-    initials(
-      state.user.name
-    );
-
-
-  await refreshData();
-
-  render();
-
-}
-
-
-/* =============================================================
-   LOAD DATA
-   ============================================================= */
-
-async function refreshData() {
-
-  try {
-
-    const result =
-      await api(
-        "getAllData",
-        {
-          user:
-            state.user
-        }
-      );
-
-
-    state.data.inventory =
-      result.inventory || [];
-
-    state.data.transactions =
-      result.transactions || [];
-
-    state.data.suppliers =
-      result.suppliers || [];
-
-    state.data.audit =
-      result.audit || [];
-
-
-  } catch (error) {
-
-    showToast(
-      error.message
-    );
-
-  }
-
-}
-
-
-/* =============================================================
-   NAVIGATION
-   ============================================================= */
-
-function setPage(page) {
-
-  state.page =
-    page;
-
-  state.query =
-    "";
-
-
-  document
-    .querySelectorAll(
-      "#navigation button, #mobileNavigation button"
-    )
-    .forEach(
-      button =>
-        button.classList.toggle(
-          "active",
-          button.dataset.page === page
-        )
-    );
-
-
-  $("sidebar")
-    .classList
-    .remove("open");
-
-
-  render();
-
-}
-
-
-document
-  .querySelectorAll(
-    "#navigation button, #mobileNavigation button"
-  )
-  .forEach(
-    button => {
-
-      button.onclick =
-        () =>
-          setPage(
-            button.dataset.page
+        const result =
+          await API.allData(
+            state.token
           );
 
+
+        if (
+          !result.success
+        ) {
+
+          if (
+            result.message &&
+            result.message
+              .toLowerCase()
+              .includes(
+                "unauthorized"
+              )
+          ) {
+
+            sessionExpired();
+
+            return;
+
+          }
+
+          throw new Error(
+            result.message ||
+            "Unable to load data."
+          );
+
+        }
+
+
+        state.inventory =
+          result.inventory || [];
+
+
+        state.transactions =
+          result.transactions || [];
+
+
+        state.suppliers =
+          result.suppliers || [];
+
+
+        state.audit =
+          result.audit || [];
+
+
+        renderCurrent();
+
+      }
+
+      catch (error) {
+
+        toast(
+          error.message,
+          "danger"
+        );
+
+      }
+
+      finally {
+
+        $("refresh-btn")
+          .disabled = false;
+
+      }
+
     }
-  );
 
 
-/* =============================================================
-   RENDER
-   ============================================================= */
 
-function render() {
+    /* =====================================================
+       SESSION EXPIRED
+    ====================================================== */
 
-  const pages = {
+    function sessionExpired() {
 
-    dashboard:
-      dashboardView,
+      sessionStorage.removeItem(
+        "roma_token"
+      );
 
-    inventory:
-      inventoryView,
+      sessionStorage.removeItem(
+        "roma_user"
+      );
 
-    transactions:
-      transactionsView,
 
-    suppliers:
-      suppliersView,
+      state.token =
+        null;
 
-    reports:
-      reportsView,
+      state.user =
+        null;
 
-    audit:
-      auditView,
 
-    settings:
-      settingsView
+      toast(
+        "Your session has expired. Please log in again.",
+        "danger"
+      );
 
-  };
 
+      setTimeout(
+        () =>
+          location.reload(),
+        1200
+      );
 
-  $("main").innerHTML =
-    pages[state.page]();
+    }
 
 
-  bindPageEvents();
 
-}
+    /* =====================================================
+       PAGE ROUTING
+    ====================================================== */
 
+    function renderCurrent() {
 
-/* =============================================================
-   PAGE HEADER
-   ============================================================= */
+      const active =
+        document
+          .querySelector(
+            ".nav-link.active"
+          )
+          ?.dataset.page ||
+        "dashboard";
 
-function pageHeader(
-  title,
-  description,
-  actions = ""
-) {
 
-  return `
+      renderPage(
+        active
+      );
 
-    <div class="page-head">
+    }
 
-      <div>
 
-        <h2>
-          ${title}
-        </h2>
+    function renderPage(
+      page
+    ) {
 
-        <p>
-          ${description}
-        </p>
+      document
+        .querySelectorAll(
+          ".page"
+        )
+        .forEach(
+          element =>
+            element
+              .classList
+              .add("hidden")
+        );
 
-      </div>
 
-      <div class="head-actions">
-        ${actions}
-      </div>
+      $(`page-${page}`)
+        .classList
+        .remove("hidden");
 
-    </div>
 
-  `;
+      const titles = {
 
-}
+        dashboard: [
+          "Dashboard",
+          "Overview of your cafe inventory"
+        ],
 
+        inventory: [
+          "Inventory",
+          "Manage cafe ingredients, supplies and stock levels"
+        ],
 
-/* =============================================================
-   DASHBOARD
-   ============================================================= */
+        stock: [
+          "Stock In/Out",
+          "Record incoming and outgoing stock"
+        ],
 
-function dashboardView() {
+        suppliers: [
+          "Suppliers",
+          "Manage supplier information"
+        ],
 
-  const inventory =
-    state.data.inventory;
+        transactions: [
+          "Transactions",
+          "View stock movement history"
+        ],
 
-  const transactions =
-    state.data.transactions;
+        reports: [
+          "Reports",
+          "Inventory summaries and stock valuation"
+        ],
 
+        audit: [
+          "Audit Log",
+          "Review system activity"
+        ]
 
-  const lowStock =
-    inventory.filter(
-      item =>
-        Number(item.quantity) <=
-        Number(item.minStock)
-    );
+      };
 
 
-  const inventoryValue =
-    inventory.reduce(
-      (
-        total,
-        item
-      ) =>
-        total +
-        Number(item.quantity || 0) *
-        Number(item.cost || 0),
-      0
-    );
+      $("page-title")
+        .textContent =
+          titles[page][0];
 
 
-  const today =
-    new Date()
-      .toDateString();
+      $("page-subtitle")
+        .textContent =
+          titles[page][1];
 
 
-  const todayTransactions =
-    transactions.filter(
-      transaction =>
-        new Date(
-          transaction.date
-        ).toDateString() === today
-    );
+      const renderers = {
 
+        dashboard:
+          renderDashboard,
 
-  return (
+        inventory:
+          renderInventory,
 
-    pageHeader(
-      "Dashboard",
-      "A quick overview of ROMA Cafe inventory."
-    )
+        stock:
+          renderStock,
 
-    +
+        suppliers:
+          renderSuppliers,
 
-    `
+        transactions:
+          renderTransactions,
 
-    <div class="grid">
+        reports:
+          renderReports,
 
-      <div class="card stat">
+        audit:
+          renderAudit
 
-        <div>
+      };
 
-          <small>
-            Total Items
-          </small>
 
-          <strong>
-            ${inventory.length}
-          </strong>
+      renderers[page]();
 
-        </div>
+    }
 
-        <div class="stat-icon">
-          📦
-        </div>
 
-      </div>
 
+    /* =====================================================
+       1. DASHBOARD
+    ====================================================== */
 
-      <div class="card stat">
+    function renderDashboard() {
 
-        <div>
+      const low =
+        state.inventory
+          .filter(
+            item =>
+              Number(item.quantity) <=
+              Number(item.minStock)
+          );
 
-          <small>
-            Low Stock
-          </small>
 
-          <strong
-            class="${lowStock.length ? "low-stock" : ""}"
-          >
-            ${lowStock.length}
-          </strong>
+      const totalValue =
+        state.inventory
+          .reduce(
+            (
+              total,
+              item
+            ) =>
+              total +
+              Number(
+                item.quantity || 0
+              ) *
+              Number(
+                item.cost || 0
+              ),
+            0
+          );
 
-        </div>
 
-        <div class="stat-icon">
-          ⚠
-        </div>
+      $("page-dashboard")
+        .innerHTML = `
 
-      </div>
+          <div class="cards">
 
 
-      <div class="card stat">
+            <div class="card">
 
-        <div>
+              <div class="metric-label">
+                Total Items
+              </div>
 
-          <small>
-            Stock Value
-          </small>
+              <div class="metric">
+                ${state.inventory.length}
+              </div>
 
-          <strong>
-            ${money(inventoryValue)}
-          </strong>
+            </div>
 
-        </div>
 
-        <div class="stat-icon">
-          ₱
-        </div>
+            <div class="card">
 
-      </div>
+              <div class="metric-label">
+                Low Stock
+              </div>
 
+              <div class="metric">
+                ${low.length}
+              </div>
 
-      <div class="card stat">
+            </div>
 
-        <div>
 
-          <small>
-            Today's Moves
-          </small>
+            <div class="card">
 
-          <strong>
-            ${todayTransactions.length}
-          </strong>
+              <div class="metric-label">
+                Suppliers
+              </div>
 
-        </div>
+              <div class="metric">
+                ${state.suppliers.length}
+              </div>
 
-        <div class="stat-icon">
-          ⇄
-        </div>
+            </div>
 
-      </div>
 
-    </div>
+            <div class="card">
 
+              <div class="metric-label">
+                Stock Value
+              </div>
 
-    <div class="section-grid">
+              <div class="metric">
+                ${money(totalValue)}
+              </div>
 
-      <div class="card">
+            </div>
 
-        <div class="card-title">
+          </div>
 
-          <h3>
-            Recent Transactions
-          </h3>
 
-          <button
-            class="btn btn-ghost"
-            data-go="transactions"
-          >
-            View All
-          </button>
 
-        </div>
+          <div class="grid-2">
 
-        ${transactionTable(
-          transactions
-            .slice()
-            .reverse()
-            .slice(0, 7)
-        )}
 
-      </div>
+            <div class="card">
 
+              <div class="section-head">
 
-      <div class="card">
+                <h3>
+                  Low Stock Alerts
+                </h3>
 
-        <div class="card-title">
+                <button
+                  class="btn ghost"
+                  onclick="activatePage('inventory')"
+                >
+                  View inventory
+                </button>
 
-          <h3>
-            Low Stock Alerts
-          </h3>
+              </div>
 
-        </div>
 
-        ${
-          lowStock.length
+              ${
+                low.length
 
-            ? lowStock
-                .slice(0, 8)
-                .map(
-                  item => `
+                ?
 
-                    <div
-                      style="
-                        display:flex;
-                        justify-content:space-between;
-                        gap:10px;
-                        padding:11px 0;
-                        border-bottom:1px solid var(--line)
-                      "
-                    >
+                `
 
-                      <div>
+                <div class="table-wrap">
 
-                        <strong>
-                          ${escapeHTML(item.name)}
-                        </strong>
+                  <table>
 
-                        <div
-                          class="muted"
-                          style="font-size:12px"
-                        >
-                          Minimum:
-                          ${item.minStock}
-                          ${escapeHTML(item.unit)}
-                        </div>
+                    <thead>
+
+                      <tr>
+
+                        <th>
+                          Item
+                        </th>
+
+                        <th>
+                          Quantity
+                        </th>
+
+                        <th>
+                          Minimum
+                        </th>
+
+                        <th>
+                          Status
+                        </th>
+
+                      </tr>
+
+                    </thead>
+
+
+                    <tbody>
+
+                      ${
+
+                        low
+                          .slice(0, 8)
+                          .map(
+                            item => `
+
+                              <tr
+                                class="low-row"
+                              >
+
+                                <td>
+                                  ${esc(item.name)}
+                                </td>
+
+                                <td>
+                                  ${item.quantity}
+                                  ${esc(item.unit)}
+                                </td>
+
+                                <td>
+                                  ${item.minStock}
+                                </td>
+
+                                <td>
+
+                                  <span
+                                    class="badge danger"
+                                  >
+                                    Low
+                                  </span>
+
+                                </td>
+
+                              </tr>
+
+                            `
+                          )
+                          .join("")
+
+                      }
+
+                    </tbody>
+
+                  </table>
+
+                </div>
+
+                `
+
+                :
+
+                `
+
+                  <div class="empty">
+
+                    All inventory items
+                    are above minimum stock.
+
+                  </div>
+
+                `
+
+              }
+
+            </div>
+
+
+
+            <div class="card">
+
+              <div class="section-head">
+
+                <h3>
+                  Recent Activity
+                </h3>
+
+              </div>
+
+
+              ${
+
+                state.transactions
+                  .slice(-7)
+                  .reverse()
+                  .map(
+                    transaction => `
+
+                      <div
+                        class="stat-line"
+                      >
+
+                        <span>
+
+                          <strong>
+                            ${esc(transaction.type)}
+                          </strong>
+
+                          ${esc(transaction.itemName)}
+
+                        </span>
+
+                        <span>
+                          ${transaction.quantity}
+                        </span>
 
                       </div>
 
-                      <span class="badge badge-red">
+                    `
+                  )
+                  .join("")
 
-                        ${item.quantity}
-                        ${escapeHTML(item.unit)}
+                ||
 
-                      </span>
+                `
 
-                    </div>
+                  <div class="empty">
+                    No transactions yet.
+                  </div>
 
-                  `
-                )
-                .join("")
+                `
 
-            : `
+              }
 
-              <div class="empty">
-                All inventory items are
-                above minimum stock.
-              </div>
+            </div>
 
-            `
-        }
+          </div>
 
-      </div>
+        `;
 
-    </div>
-
-    `
-
-  );
-
-}
+    }
 
 
-/* =============================================================
-   INVENTORY
-   ============================================================= */
 
-function inventoryView() {
+    /* =====================================================
+       2. INVENTORY
+    ====================================================== */
 
-  const inventory =
-    filtered(
-      state.data.inventory,
-      [
-        "code",
-        "name",
-        "category"
-      ]
-    );
+    function renderInventory() {
+
+      $("page-inventory")
+        .innerHTML = `
+
+          <div class="card">
 
 
-  const adminButton =
-    state.user.role === "Admin"
+            <div class="section-head">
 
-      ? `
-
-        <button
-          class="btn btn-gold"
-          data-action="addInventory"
-        >
-          + Add Item
-        </button>
-
-      `
-
-      : "";
+              <h3>
+                Inventory Items
+              </h3>
 
 
-  return (
+              <button
+                class="btn primary"
+                onclick="openInventoryModal()"
+              >
+                + Add Item
+              </button>
 
-    pageHeader(
-      "Inventory",
-      "Manage items, quantities, costs and minimum stock.",
-      `
+            </div>
 
-        <input
-          id="pageSearch"
-          class="search"
-          placeholder="Search inventory…"
-          value="${escapeHTML(state.query)}"
-        >
 
-        ${adminButton}
+            <div class="toolbar">
 
-      `
-    )
+              <input
+                id="inventory-search"
+                placeholder="Search item, code or category..."
+                oninput="filterInventory()"
+              >
 
-    +
+            </div>
 
-    `
 
-    <div class="card">
+            <div class="table-wrap">
 
-      <div class="table-wrap">
-
-        ${
-          inventory.length
-
-            ? `
-
-              <table class="table">
+              <table>
 
                 <thead>
 
@@ -2590,11 +2839,11 @@ function inventoryView() {
                     </th>
 
                     <th>
-                      Quantity
+                      Qty
                     </th>
 
                     <th>
-                      Minimum
+                      Min
                     </th>
 
                     <th>
@@ -2613,254 +2862,411 @@ function inventoryView() {
 
                 </thead>
 
-                <tbody>
 
-                  ${inventory
-                    .map(
-                      item => `
-
-                        <tr>
-
-                          <td>
-                            ${escapeHTML(item.code)}
-                          </td>
-
-                          <td>
-                            <strong>
-                              ${escapeHTML(item.name)}
-                            </strong>
-                          </td>
-
-                          <td>
-                            ${escapeHTML(item.category)}
-                          </td>
-
-                          <td>
-                            ${escapeHTML(item.unit)}
-                          </td>
-
-                          <td
-                            class="${
-                              Number(item.quantity) <=
-                              Number(item.minStock)
-                                ? "low-stock"
-                                : ""
-                            }"
-                          >
-                            ${item.quantity}
-                          </td>
-
-                          <td>
-                            ${item.minStock}
-                          </td>
-
-                          <td>
-                            ${money(item.cost)}
-                          </td>
-
-                          <td>
-                            ${stockBadge(item)}
-                          </td>
-
-                          <td>
-
-                            ${
-                              state.user.role === "Admin"
-
-                                ? `
-
-                                  <button
-                                    class="btn btn-danger"
-                                    data-delete="${escapeHTML(item.id)}"
-                                  >
-                                    Delete
-                                  </button>
-
-                                `
-
-                                : `<span class="muted">—</span>`
-                            }
-
-                          </td>
-
-                        </tr>
-
-                      `
-                    )
-                    .join("")}
-
-                </tbody>
+                <tbody
+                  id="inventory-body"
+                ></tbody>
 
               </table>
 
+            </div>
+
+          </div>
+
+        `;
+
+
+      filterInventory();
+
+    }
+
+
+    function filterInventory() {
+
+      const search =
+        (
+          $("inventory-search")
+            ?.value ||
+          ""
+        )
+          .toLowerCase();
+
+
+      const rows =
+        state.inventory
+          .filter(
+            item =>
+              [
+                item.code,
+                item.name,
+                item.category
+              ]
+                .join(" ")
+                .toLowerCase()
+                .includes(search)
+          );
+
+
+      $("inventory-body")
+        .innerHTML =
+
+        rows.length
+
+        ?
+
+        rows
+          .map(
+            item => {
+
+              const low =
+                Number(
+                  item.quantity
+                ) <=
+                Number(
+                  item.minStock
+                );
+
+
+              return `
+
+                <tr
+                  class="${low ? "low-row" : ""}"
+                >
+
+                  <td>
+                    ${esc(item.code)}
+                  </td>
+
+                  <td>
+                    <strong>
+                      ${esc(item.name)}
+                    </strong>
+                  </td>
+
+                  <td>
+                    ${esc(item.category)}
+                  </td>
+
+                  <td>
+                    ${esc(item.unit)}
+                  </td>
+
+                  <td>
+                    ${item.quantity}
+                  </td>
+
+                  <td>
+                    ${item.minStock}
+                  </td>
+
+                  <td>
+                    ${money(item.cost)}
+                  </td>
+
+                  <td>
+
+                    <span
+                      class="badge
+                      ${low ? "danger" : "success"}"
+                    >
+                      ${low ? "Low" : "Good"}
+                    </span>
+
+                  </td>
+
+                  <td>
+
+                    ${
+                      state.user.role === "Admin"
+
+                      ?
+
+                      `
+
+                        <button
+                          class="btn danger"
+                          onclick="deleteItem('${esc(item.id)}')"
+                        >
+                          Delete
+                        </button>
+
+                      `
+
+                      :
+
+                      `<span class="muted">
+                        Admin only
+                      </span>`
+
+                    }
+
+                  </td>
+
+                </tr>
+
+              `;
+
+            }
+          )
+          .join("")
+
+        :
+
+        `
+
+          <tr>
+
+            <td
+              colspan="9"
+              class="empty"
+            >
+              No inventory items found.
+            </td>
+
+          </tr>
+
+        `;
+
+    }
+
+
+
+    /* =====================================================
+       3. STOCK IN / OUT
+    ====================================================== */
+
+    function renderStock() {
+
+      const options =
+        state.inventory
+          .map(
+            item => `
+
+              <option
+                value="${esc(item.id)}"
+              >
+
+                ${esc(item.name)}
+                (${item.quantity}
+                ${esc(item.unit)})
+
+              </option>
+
             `
+          )
+          .join("");
 
-            : `
 
-              <div class="empty">
-                No inventory items found.
+      $("page-stock")
+        .innerHTML = `
+
+          <div class="card">
+
+
+            <div class="section-head">
+
+              <h3>
+                Stock Transaction
+              </h3>
+
+            </div>
+
+
+            <form
+              id="stock-form"
+            >
+
+              <div class="form-grid">
+
+
+                <div>
+
+                  <label>
+                    Transaction Type
+                  </label>
+
+                  <select
+                    id="stock-type"
+                  >
+
+                    <option value="IN">
+                      Stock In
+                    </option>
+
+                    <option value="OUT">
+                      Stock Out
+                    </option>
+
+                  </select>
+
+                </div>
+
+
+                <div>
+
+                  <label>
+                    Inventory Item
+                  </label>
+
+                  <select
+                    id="stock-item"
+                    required
+                  >
+
+                    ${
+                      options ||
+
+                      `<option value="">
+                        No items available
+                      </option>`
+                    }
+
+                  </select>
+
+                </div>
+
+
+                <div>
+
+                  <label>
+                    Quantity
+                  </label>
+
+                  <input
+                    id="stock-qty"
+                    type="number"
+                    min="0.01"
+                    step="0.01"
+                    required
+                  >
+
+                </div>
+
+
+                <div>
+
+                  <label>
+                    Supplier
+                    (optional)
+                  </label>
+
+                  <input
+                    id="stock-supplier"
+                    placeholder="Supplier name"
+                  >
+
+                </div>
+
+
+                <div
+                  style="grid-column:1/-1"
+                >
+
+                  <label>
+                    Reason / Notes
+                  </label>
+
+                  <textarea
+                    id="stock-reason"
+                    rows="3"
+                    placeholder="e.g. New delivery, daily usage, damaged item..."
+                  ></textarea>
+
+                </div>
+
               </div>
 
-            `
-        }
 
-      </div>
+              <button
+                class="btn primary"
+                type="submit"
+              >
+                Record Transaction
+              </button>
 
-    </div>
+            </form>
 
-    `
-
-  );
-
-}
-
-
-/* =============================================================
-   TRANSACTIONS
-   ============================================================= */
-
-function transactionsView() {
-
-  return (
-
-    pageHeader(
-      "Stock Transactions",
-      "Record stock IN and stock OUT movements.",
-      `
-
-        <button
-          class="btn btn-gold"
-          data-action="stock"
-        >
-          + New Transaction
-        </button>
-
-      `
-    )
-
-    +
-
-    `
-
-    <div class="card">
-
-      <div class="filters">
-
-        <select
-          id="typeFilter"
-          class="search"
-        >
-
-          <option value="">
-            All Types
-          </option>
-
-          <option value="IN">
-            Stock In
-          </option>
-
-          <option value="OUT">
-            Stock Out
-          </option>
-
-        </select>
+          </div>
 
 
-        <input
-          id="pageSearch"
-          class="search"
-          placeholder="Search item, supplier, reason…"
-          value="${escapeHTML(state.query)}"
-        >
 
-      </div>
+          <div
+            class="card"
+            style="margin-top:18px"
+          >
 
+            <h3>
+              Stock Management
+            </h3>
 
-      ${transactionTable(
-        filtered(
-          state.data.transactions,
-          [
-            "itemName",
-            "supplier",
-            "reason",
-            "user"
-          ]
-        )
-      )}
+            <p
+              class="muted"
+              style="margin-top:8px"
+            >
 
-    </div>
+              Stock In increases the
+              inventory quantity.
 
-    `
+              Stock Out decreases
+              inventory quantity.
 
-  );
+              The system will not allow
+              stock to become negative.
 
-}
+            </p>
 
+          </div>
 
-/* =============================================================
-   SUPPLIERS
-   ============================================================= */
-
-function suppliersView() {
-
-  const suppliers =
-    filtered(
-      state.data.suppliers,
-      [
-        "name",
-        "contact",
-        "phone",
-        "email",
-        "category"
-      ]
-    );
+        `;
 
 
-  return (
+      $("stock-form")
+        .onsubmit =
+          submitStock;
 
-    pageHeader(
-      "Suppliers",
-      "Manage your cafe supplier directory.",
-      `
+    }
 
-        <input
-          id="pageSearch"
-          class="search"
-          placeholder="Search suppliers…"
-          value="${escapeHTML(state.query)}"
-        >
 
-        <button
-          class="btn btn-gold"
-          data-action="supplier"
-        >
-          + Add Supplier
-        </button>
 
-      `
-    )
+    /* =====================================================
+       4. SUPPLIERS
+    ====================================================== */
 
-    +
+    function renderSuppliers() {
 
-    `
+      $("page-suppliers")
+        .innerHTML = `
 
-    <div class="card">
+          <div class="card">
 
-      <div class="table-wrap">
 
-        ${
-          suppliers.length
+            <div class="section-head">
 
-            ? `
+              <h3>
+                Suppliers
+              </h3>
 
-              <table class="table">
+
+              <button
+                class="btn primary"
+                onclick="openSupplierModal()"
+              >
+                + Add Supplier
+              </button>
+
+            </div>
+
+
+            <div class="table-wrap">
+
+              <table>
 
                 <thead>
 
                   <tr>
 
                     <th>
-                      Supplier
+                      Name
                     </th>
 
                     <th>
@@ -2883,1847 +3289,1659 @@ function suppliersView() {
 
                 </thead>
 
+
                 <tbody>
 
-                  ${suppliers
-                    .map(
-                      supplier => `
+                  ${
 
-                        <tr>
+                    state.suppliers.length
 
-                          <td>
-                            <strong>
-                              ${escapeHTML(supplier.name)}
-                            </strong>
-                          </td>
+                    ?
 
-                          <td>
-                            ${escapeHTML(supplier.contact)}
-                          </td>
+                    state.suppliers
+                      .map(
+                        supplier => `
 
-                          <td>
-                            ${escapeHTML(supplier.phone)}
-                          </td>
+                          <tr>
 
-                          <td>
-                            ${escapeHTML(supplier.email)}
-                          </td>
+                            <td>
 
-                          <td>
-                            ${escapeHTML(supplier.category)}
-                          </td>
+                              <strong>
+                                ${esc(supplier.name)}
+                              </strong>
 
-                        </tr>
+                            </td>
 
-                      `
-                    )
-                    .join("")}
+                            <td>
+                              ${esc(supplier.contact)}
+                            </td>
+
+                            <td>
+                              ${esc(supplier.phone)}
+                            </td>
+
+                            <td>
+                              ${esc(supplier.email)}
+                            </td>
+
+                            <td>
+                              ${esc(supplier.category)}
+                            </td>
+
+                          </tr>
+
+                        `
+                      )
+                      .join("")
+
+                    :
+
+                    `
+
+                      <tr>
+
+                        <td
+                          colspan="5"
+                          class="empty"
+                        >
+                          No suppliers yet.
+                        </td>
+
+                      </tr>
+
+                    `
+
+                  }
 
                 </tbody>
 
               </table>
 
-            `
-
-            : `
-
-              <div class="empty">
-                No suppliers found.
-              </div>
-
-            `
-        }
-
-      </div>
-
-    </div>
-
-    `
-
-  );
-
-}
-
-
-/* =============================================================
-   REPORTS
-   ============================================================= */
-
-function reportsView() {
-
-  const inventory =
-    state.data.inventory;
-
-  const transactions =
-    state.data.transactions;
-
-
-  const categoryValues =
-    {};
-
-
-  inventory.forEach(
-    item => {
-
-      const category =
-        item.category ||
-        "Uncategorized";
-
-
-      categoryValues[category] =
-        (
-          categoryValues[category] ||
-          0
-        ) +
-
-        Number(item.quantity || 0) *
-        Number(item.cost || 0);
-
-    }
-  );
-
-
-  const unitsIn =
-    transactions
-      .filter(
-        transaction =>
-          transaction.type === "IN"
-      )
-      .reduce(
-        (total, transaction) =>
-          total +
-          Number(
-            transaction.quantity || 0
-          ),
-        0
-      );
-
-
-  const unitsOut =
-    transactions
-      .filter(
-        transaction =>
-          transaction.type === "OUT"
-      )
-      .reduce(
-        (total, transaction) =>
-          total +
-          Number(
-            transaction.quantity || 0
-          ),
-        0
-      );
-
-
-  const totalValue =
-    inventory.reduce(
-      (total, item) =>
-        total +
-        Number(item.quantity || 0) *
-        Number(item.cost || 0),
-      0
-    );
-
-
-  return (
-
-    pageHeader(
-      "Reports",
-      "Inventory health and movement summary."
-    )
-
-    +
-
-    `
-
-    <div class="grid">
-
-      <div class="card stat">
-
-        <div>
-
-          <small>
-            Units In
-          </small>
-
-          <strong>
-            ${unitsIn.toLocaleString()}
-          </strong>
-
-        </div>
-
-        <div class="stat-icon">
-          ↓
-        </div>
-
-      </div>
-
-
-      <div class="card stat">
-
-        <div>
-
-          <small>
-            Units Out
-          </small>
-
-          <strong>
-            ${unitsOut.toLocaleString()}
-          </strong>
-
-        </div>
-
-        <div class="stat-icon">
-          ↑
-        </div>
-
-      </div>
-
-
-      <div class="card stat">
-
-        <div>
-
-          <small>
-            Categories
-          </small>
-
-          <strong>
-            ${Object.keys(categoryValues).length}
-          </strong>
-
-        </div>
-
-        <div class="stat-icon">
-          ▤
-        </div>
-
-      </div>
-
-
-      <div class="card stat">
-
-        <div>
-
-          <small>
-            Inventory Value
-          </small>
-
-          <strong>
-            ${money(totalValue)}
-          </strong>
-
-        </div>
-
-        <div class="stat-icon">
-          ₱
-        </div>
-
-      </div>
-
-    </div>
-
-
-    <div
-      class="card"
-      style="margin-top:15px"
-    >
-
-      <div class="card-title">
-
-        <h3>
-          Inventory Value by Category
-        </h3>
-
-      </div>
-
-      <div class="table-wrap">
-
-        <table class="table">
-
-          <thead>
-
-            <tr>
-
-              <th>
-                Category
-              </th>
-
-              <th>
-                Inventory Value
-              </th>
-
-            </tr>
-
-          </thead>
-
-          <tbody>
-
-            ${
-              Object.entries(
-                categoryValues
-              )
-              .sort(
-                (a,b) =>
-                  b[1] - a[1]
-              )
-              .map(
-                ([category,value]) => `
-
-                  <tr>
-
-                    <td>
-                      ${escapeHTML(category)}
-                    </td>
-
-                    <td>
-                      <strong>
-                        ${money(value)}
-                      </strong>
-                    </td>
-
-                  </tr>
-
-                `
-              )
-              .join("")
-
-              ||
-
-              `
-
-                <tr>
-
-                  <td colspan="2">
-                    <div class="empty">
-                      No report data.
-                    </div>
-                  </td>
-
-                </tr>
-
-              `
-            }
-
-          </tbody>
-
-        </table>
-
-      </div>
-
-    </div>
-
-    `
-
-  );
-
-}
-
-
-/* =============================================================
-   AUDIT LOG
-   ============================================================= */
-
-function auditView() {
-
-  const records =
-    state.data.audit
-      .slice()
-      .reverse();
-
-
-  return (
-
-    pageHeader(
-      "Audit Log",
-      "Activity recorded by the Apps Script backend."
-    )
-
-    +
-
-    `
-
-    <div class="card">
-
-      <div class="table-wrap">
-
-        <table class="table">
-
-          <thead>
-
-            <tr>
-
-              <th>
-                Date
-              </th>
-
-              <th>
-                User
-              </th>
-
-              <th>
-                Action
-              </th>
-
-              <th>
-                Details
-              </th>
-
-            </tr>
-
-          </thead>
-
-          <tbody>
-
-            ${
-              records.length
-
-                ? records
-                    .map(
-                      record => `
-
-                        <tr>
-
-                          <td>
-                            ${formatDate(record.date)}
-                          </td>
-
-                          <td>
-                            ${escapeHTML(record.user)}
-                          </td>
-
-                          <td>
-                            <span class="badge badge-gray">
-                              ${escapeHTML(record.action)}
-                            </span>
-                          </td>
-
-                          <td>
-                            ${escapeHTML(record.details)}
-                          </td>
-
-                        </tr>
-
-                      `
-                    )
-                    .join("")
-
-                : `
-
-                  <tr>
-
-                    <td colspan="4">
-
-                      <div class="empty">
-                        No audit records.
-                      </div>
-
-                    </td>
-
-                  </tr>
-
-                `
-            }
-
-          </tbody>
-
-        </table>
-
-      </div>
-
-    </div>
-
-    `
-
-  );
-
-}
-
-
-/* =============================================================
-   SETTINGS
-   ============================================================= */
-
-function settingsView() {
-
-  return (
-
-    pageHeader(
-      "Settings",
-      "Account and application information."
-    )
-
-    +
-
-    `
-
-    <div class="section-grid">
-
-      <div class="card">
-
-        <div class="card-title">
-
-          <h3>
-            Your Account
-          </h3>
-
-        </div>
-
-        <p>
-
-          <strong>
-            Name
-          </strong>
-
-          <br>
-
-          ${escapeHTML(state.user.name)}
-
-        </p>
-
-        <p>
-
-          <strong>
-            Email
-          </strong>
-
-          <br>
-
-          ${escapeHTML(state.user.email)}
-
-        </p>
-
-        <p>
-
-          <strong>
-            Role
-          </strong>
-
-          <br>
-
-          <span
-            class="badge ${
-              state.user.role === "Admin"
-                ? "badge-orange"
-                : "badge-gray"
-            }"
-          >
-            ${escapeHTML(state.user.role)}
-          </span>
-
-        </p>
-
-        <button
-          class="btn btn-ghost"
-          data-action="refresh"
-        >
-          Refresh Data
-        </button>
-
-      </div>
-
-
-      <div class="card">
-
-        <div class="card-title">
-
-          <h3>
-            Security
-          </h3>
-
-        </div>
-
-        <p class="muted">
-
-          Login uses the Apps Script password
-          verification and time-limited email OTP
-          authentication.
-
-        </p>
-
-        <p class="muted">
-
-          The frontend does not store your password
-          or OTP. The authenticated user profile is
-          kept in sessionStorage for the current
-          browser session.
-
-        </p>
-
-        <div
-          class="alert"
-          style="
-            color:#92400e;
-            background:#fffbeb;
-            border:1px solid #fde68a;
-          "
-        >
-
-          <strong>
-            Security note:
-          </strong>
-
-          Your current Apps Script uses the
-          frontend-supplied user email when checking
-          protected operations. For production use,
-          the backend should be upgraded to issue and
-          validate a server-side session/token.
-
-        </div>
-
-      </div>
-
-    </div>
-
-    `
-
-  );
-
-}
-
-
-/* =============================================================
-   FILTERING
-   ============================================================= */
-
-function filtered(
-  list,
-  fields
-) {
-
-  const query =
-    state.query
-      .toLowerCase();
-
-
-  if (!query) {
-
-    return list;
-
-  }
-
-
-  return list.filter(
-    item =>
-      fields.some(
-        field =>
-          String(
-            item[field] ?? ""
-          )
-          .toLowerCase()
-          .includes(query)
-      )
-  );
-
-}
-
-
-/* =============================================================
-   STOCK BADGE
-   ============================================================= */
-
-function stockBadge(item) {
-
-  const quantity =
-    Number(item.quantity || 0);
-
-  const minimum =
-    Number(item.minStock || 0);
-
-
-  if (quantity <= minimum) {
-
-    return `
-
-      <span class="badge badge-red">
-        Low Stock
-      </span>
-
-    `;
-
-  }
-
-
-  return `
-
-    <span class="badge badge-green">
-      Healthy
-    </span>
-
-  `;
-
-}
-
-
-/* =============================================================
-   TRANSACTION TABLE
-   ============================================================= */
-
-function transactionTable(
-  transactions
-) {
-
-  if (!transactions.length) {
-
-    return `
-
-      <div class="empty">
-        No transactions found.
-      </div>
-
-    `;
-
-  }
-
-
-  return `
-
-    <div class="table-wrap">
-
-      <table class="table">
-
-        <thead>
-
-          <tr>
-
-            <th>
-              Date
-            </th>
-
-            <th>
-              Type
-            </th>
-
-            <th>
-              Item
-            </th>
-
-            <th>
-              Quantity
-            </th>
-
-            <th>
-              Supplier
-            </th>
-
-            <th>
-              Reason
-            </th>
-
-            <th>
-              User
-            </th>
-
-          </tr>
-
-        </thead>
-
-        <tbody>
-
-          ${transactions
-            .map(
-              transaction => `
-
-                <tr>
-
-                  <td>
-                    ${formatDate(transaction.date)}
-                  </td>
-
-                  <td>
-
-                    <span
-                      class="badge ${
-                        transaction.type === "IN"
-                          ? "badge-green"
-                          : "badge-orange"
-                      }"
-                    >
-                      ${escapeHTML(transaction.type)}
-                    </span>
-
-                  </td>
-
-                  <td>
-                    ${escapeHTML(transaction.itemName)}
-                  </td>
-
-                  <td>
-                    ${transaction.quantity}
-                  </td>
-
-                  <td>
-                    ${
-                      escapeHTML(
-                        transaction.supplier
-                      ) || "—"
-                    }
-                  </td>
-
-                  <td>
-                    ${
-                      escapeHTML(
-                        transaction.reason
-                      ) || "—"
-                    }
-                  </td>
-
-                  <td>
-                    ${escapeHTML(transaction.user)}
-                  </td>
-
-                </tr>
-
-              `
-            )
-            .join("")}
-
-        </tbody>
-
-      </table>
-
-    </div>
-
-  `;
-
-}
-
-
-/* =============================================================
-   PAGE EVENTS
-   ============================================================= */
-
-function bindPageEvents() {
-
-  const search =
-    $("pageSearch");
-
-
-  if (search) {
-
-    search.oninput =
-      function () {
-
-        state.query =
-          search.value;
-
-        render();
-
-
-        const newSearch =
-          $("pageSearch");
-
-
-        if (newSearch) {
-
-          newSearch.focus();
-
-          newSearch.setSelectionRange(
-            state.query.length,
-            state.query.length
-          );
-
-        }
-
-      };
-
-  }
-
-
-  document
-    .querySelectorAll(
-      "[data-go]"
-    )
-    .forEach(
-      button => {
-
-        button.onclick =
-          () =>
-            setPage(
-              button.dataset.go
-            );
-
-      }
-    );
-
-
-  document
-    .querySelectorAll(
-      "[data-action]"
-    )
-    .forEach(
-      button => {
-
-        button.onclick =
-          () =>
-            openModal(
-              button.dataset.action
-            );
-
-      }
-    );
-
-
-  document
-    .querySelectorAll(
-      "[data-delete]"
-    )
-    .forEach(
-      button => {
-
-        button.onclick =
-          () =>
-            deleteInventoryItem(
-              button.dataset.delete
-            );
-
-      }
-    );
-
-
-  const typeFilter =
-    $("typeFilter");
-
-
-  if (typeFilter) {
-
-    typeFilter.onchange =
-      function () {
-
-        const selected =
-          typeFilter.value;
-
-
-        const filteredTransactions =
-          state.data.transactions
-            .filter(
-              transaction =>
-                !selected ||
-                transaction.type === selected
-            );
-
-
-        const card =
-          $("main")
-            .querySelector(".card");
-
-
-        if (!card) {
-          return;
-        }
-
-
-        card.innerHTML = `
-
-          <div class="filters">
-
-            <select
-              id="typeFilter"
-              class="search"
-            >
-
-              <option value="">
-                All Types
-              </option>
-
-              <option
-                value="IN"
-                ${
-                  selected === "IN"
-                    ? "selected"
-                    : ""
-                }
-              >
-                Stock In
-              </option>
-
-              <option
-                value="OUT"
-                ${
-                  selected === "OUT"
-                    ? "selected"
-                    : ""
-                }
-              >
-                Stock Out
-              </option>
-
-            </select>
-
-
-            <input
-              id="pageSearch"
-              class="search"
-              placeholder="Search item, supplier, reason…"
-              value="${escapeHTML(state.query)}"
-            >
+            </div>
 
           </div>
 
-          ${transactionTable(
-            filtered(
-              filteredTransactions,
-              [
-                "itemName",
-                "supplier",
-                "reason",
-                "user"
-              ]
-            )
-          )}
+        `;
+
+    }
+
+
+
+    /* =====================================================
+       5. TRANSACTIONS
+    ====================================================== */
+
+    function renderTransactions() {
+
+      $("page-transactions")
+        .innerHTML = `
+
+          <div class="card">
+
+
+            <div class="section-head">
+
+              <h3>
+                Stock Transactions
+              </h3>
+
+            </div>
+
+
+            <div class="toolbar">
+
+              <input
+                id="transaction-search"
+                placeholder="Search item, type or user..."
+                oninput="filterTransactions()"
+              >
+
+            </div>
+
+
+            <div class="table-wrap">
+
+              <table>
+
+                <thead>
+
+                  <tr>
+
+                    <th>
+                      Date
+                    </th>
+
+                    <th>
+                      Type
+                    </th>
+
+                    <th>
+                      Item
+                    </th>
+
+                    <th>
+                      Qty
+                    </th>
+
+                    <th>
+                      Supplier
+                    </th>
+
+                    <th>
+                      Reason
+                    </th>
+
+                    <th>
+                      User
+                    </th>
+
+                  </tr>
+
+                </thead>
+
+
+                <tbody
+                  id="transaction-body"
+                ></tbody>
+
+              </table>
+
+            </div>
+
+          </div>
 
         `;
 
 
-        bindPageEvents();
+      filterTransactions();
+
+    }
+
+
+    function filterTransactions() {
+
+      const search =
+        (
+          $("transaction-search")
+            ?.value ||
+          ""
+        )
+          .toLowerCase();
+
+
+      const rows =
+        state.transactions
+          .filter(
+            transaction =>
+              [
+                transaction.itemName,
+                transaction.type,
+                transaction.user,
+                transaction.supplier,
+                transaction.reason
+              ]
+                .join(" ")
+                .toLowerCase()
+                .includes(search)
+          )
+          .slice()
+          .reverse();
+
+
+      $("transaction-body")
+        .innerHTML =
+
+        rows.length
+
+        ?
+
+        rows
+          .map(
+            transaction => `
+
+              <tr>
+
+                <td>
+                  ${dateFmt(transaction.date)}
+                </td>
+
+                <td>
+
+                  <span
+                    class="badge
+                    ${
+                      transaction.type === "IN"
+                      ? "success"
+                      : "warning"
+                    }"
+                  >
+
+                    ${esc(transaction.type)}
+
+                  </span>
+
+                </td>
+
+                <td>
+                  ${esc(transaction.itemName)}
+                </td>
+
+                <td>
+                  ${transaction.quantity}
+                </td>
+
+                <td>
+                  ${esc(transaction.supplier)}
+                </td>
+
+                <td>
+                  ${esc(transaction.reason)}
+                </td>
+
+                <td>
+                  ${esc(transaction.user)}
+                </td>
+
+              </tr>
+
+            `
+          )
+          .join("")
+
+        :
+
+        `
+
+          <tr>
+
+            <td
+              colspan="7"
+              class="empty"
+            >
+              No transactions found.
+            </td>
+
+          </tr>
+
+        `;
+
+    }
+
+
+
+    /* =====================================================
+       6. REPORTS
+    ====================================================== */
+
+    function renderReports() {
+
+      const totalQuantity =
+        state.inventory
+          .reduce(
+            (
+              total,
+              item
+            ) =>
+              total +
+              Number(
+                item.quantity || 0
+              ),
+            0
+          );
+
+
+      const totalValue =
+        state.inventory
+          .reduce(
+            (
+              total,
+              item
+            ) =>
+              total +
+              Number(
+                item.quantity || 0
+              ) *
+              Number(
+                item.cost || 0
+              ),
+            0
+          );
+
+
+      const categories = {};
+
+
+      state.inventory
+        .forEach(
+          item => {
+
+            const category =
+              item.category ||
+              "Uncategorized";
+
+
+            categories[category] =
+              (
+                categories[category] ||
+                0
+              ) + 1;
+
+          }
+        );
+
+
+      $("page-reports")
+        .innerHTML = `
+
+          <div class="report-grid">
+
+
+            <div class="card">
+
+              <div class="metric-label">
+                Inventory Value
+              </div>
+
+              <div class="metric">
+                ${money(totalValue)}
+              </div>
+
+            </div>
+
+
+            <div class="card">
+
+              <div class="metric-label">
+                Total Quantity
+              </div>
+
+              <div class="metric">
+                ${totalQuantity.toLocaleString()}
+              </div>
+
+            </div>
+
+
+            <div class="card">
+
+              <div class="metric-label">
+                Categories
+              </div>
+
+              <div class="metric">
+                ${Object.keys(categories).length}
+              </div>
+
+            </div>
+
+          </div>
+
+
+
+          <div
+            class="card"
+            style="margin-top:18px"
+          >
+
+            <div class="section-head">
+
+              <h3>
+                Category Summary
+              </h3>
+
+            </div>
+
+
+            ${
+
+              Object.keys(categories).length
+
+              ?
+
+              Object
+                .entries(categories)
+                .map(
+                  ([name, count]) => `
+
+                    <div
+                      class="stat-line"
+                    >
+
+                      <span>
+                        ${esc(name)}
+                      </span>
+
+                      <strong>
+                        ${count} item(s)
+                      </strong>
+
+                    </div>
+
+                  `
+                )
+                .join("")
+
+              :
+
+              `
+
+                <div class="empty">
+
+                  No data available.
+
+                </div>
+
+              `
+
+            }
+
+          </div>
+
+        `;
+
+    }
+
+
+
+    /* =====================================================
+       7. AUDIT LOG
+    ====================================================== */
+
+    function renderAudit() {
+
+      $("page-audit")
+        .innerHTML = `
+
+          <div class="card">
+
+
+            <div class="section-head">
+
+              <h3>
+                Audit Log
+              </h3>
+
+            </div>
+
+
+            <div class="table-wrap">
+
+              <table>
+
+                <thead>
+
+                  <tr>
+
+                    <th>
+                      Date
+                    </th>
+
+                    <th>
+                      User
+                    </th>
+
+                    <th>
+                      Action
+                    </th>
+
+                    <th>
+                      Details
+                    </th>
+
+                  </tr>
+
+                </thead>
+
+
+                <tbody>
+
+                  ${
+
+                    state.audit
+                      .slice()
+                      .reverse()
+                      .map(
+                        audit => `
+
+                          <tr>
+
+                            <td>
+                              ${dateFmt(audit.date)}
+                            </td>
+
+                            <td>
+                              ${esc(audit.user)}
+                            </td>
+
+                            <td>
+
+                              <span
+                                class="badge success"
+                              >
+
+                                ${esc(audit.action)}
+
+                              </span>
+
+                            </td>
+
+                            <td>
+                              ${esc(audit.details)}
+                            </td>
+
+                          </tr>
+
+                        `
+                      )
+                      .join("")
+
+                    ||
+
+                    `
+
+                      <tr>
+
+                        <td
+                          colspan="4"
+                          class="empty"
+                        >
+
+                          No audit records yet.
+
+                        </td>
+
+                      </tr>
+
+                    `
+
+                  }
+
+                </tbody>
+
+              </table>
+
+            </div>
+
+          </div>
+
+        `;
+
+    }
+
+
+
+    /* =====================================================
+       PAGE ACTIVATION
+    ====================================================== */
+
+    function activatePage(
+      page
+    ) {
+
+      document
+        .querySelectorAll(
+          ".nav-link"
+        )
+        .forEach(
+          button =>
+            button
+              .classList
+              .remove("active")
+        );
+
+
+      const button =
+        document.querySelector(
+          `.nav-link[data-page="${page}"]`
+        );
+
+
+      if (button) {
+
+        button
+          .classList
+          .add("active");
+
+      }
+
+
+      renderPage(page);
+
+    }
+
+
+
+    /* =====================================================
+       INVENTORY MODAL
+    ====================================================== */
+
+    function openInventoryModal() {
+
+      modal(
+        "Add Inventory Item",
+
+        `
+
+          <form
+            id="inventory-form"
+          >
+
+            <div class="form-grid">
+
+
+              <div>
+
+                <label>
+                  Item Code
+                </label>
+
+                <input
+                  id="item-code"
+                  required
+                  placeholder="RM-001"
+                >
+
+              </div>
+
+
+              <div>
+
+                <label>
+                  Item Name
+                </label>
+
+                <input
+                  id="item-name"
+                  required
+                  placeholder="Coffee Beans"
+                >
+
+              </div>
+
+
+              <div>
+
+                <label>
+                  Category
+                </label>
+
+                <input
+                  id="item-category"
+                  required
+                  placeholder="Ingredients"
+                >
+
+              </div>
+
+
+              <div>
+
+                <label>
+                  Unit
+                </label>
+
+                <input
+                  id="item-unit"
+                  required
+                  placeholder="kg, pcs, box"
+                >
+
+              </div>
+
+
+              <div>
+
+                <label>
+                  Opening Quantity
+                </label>
+
+                <input
+                  id="item-qty"
+                  type="number"
+                  min="0"
+                  step="0.01"
+                  value="0"
+                >
+
+              </div>
+
+
+              <div>
+
+                <label>
+                  Minimum Stock
+                </label>
+
+                <input
+                  id="item-min"
+                  type="number"
+                  min="0"
+                  step="0.01"
+                  value="0"
+                >
+
+              </div>
+
+
+              <div>
+
+                <label>
+                  Unit Cost
+                </label>
+
+                <input
+                  id="item-cost"
+                  type="number"
+                  min="0"
+                  step="0.01"
+                  value="0"
+                >
+
+              </div>
+
+
+            </div>
+
+
+            <div class="form-actions">
+
+
+              <button
+                type="button"
+                class="btn ghost"
+                onclick="closeModal()"
+              >
+                Cancel
+              </button>
+
+
+              <button
+                class="btn primary"
+                type="submit"
+              >
+                Save Item
+              </button>
+
+
+            </div>
+
+          </form>
+
+        `
+      );
+
+
+      $("inventory-form")
+        .onsubmit =
+          async event => {
+
+            event.preventDefault();
+
+
+            try {
+
+              const item = {
+
+                code:
+                  $("item-code")
+                    .value
+                    .trim(),
+
+                name:
+                  $("item-name")
+                    .value
+                    .trim(),
+
+                category:
+                  $("item-category")
+                    .value
+                    .trim(),
+
+                unit:
+                  $("item-unit")
+                    .value
+                    .trim(),
+
+                quantity:
+                  $("item-qty")
+                    .value,
+
+                minStock:
+                  $("item-min")
+                    .value,
+
+                cost:
+                  $("item-cost")
+                    .value
+
+              };
+
+
+              const result =
+                await API.addInventory(
+                  state.token,
+                  item
+                );
+
+
+              if (
+                !result.success
+              ) {
+
+                throw new Error(
+                  result.message ||
+                  "Unable to add item."
+                );
+
+              }
+
+
+              closeModal();
+
+
+              toast(
+                "Inventory item added."
+              );
+
+
+              await loadData();
+
+            }
+
+            catch (error) {
+
+              toast(
+                error.message,
+                "danger"
+              );
+
+            }
+
+          };
+
+    }
+
+
+
+    /* =====================================================
+       DELETE INVENTORY
+    ====================================================== */
+
+    async function deleteItem(
+      id
+    ) {
+
+      if (
+        state.user.role !==
+        "Admin"
+      ) {
+
+        toast(
+          "Admin permission required.",
+          "danger"
+        );
+
+        return;
+
+      }
+
+
+      const item =
+        state.inventory.find(
+          value =>
+            String(value.id) ===
+            String(id)
+        );
+
+
+      if (!item) {
+        return;
+      }
+
+
+      const confirmed =
+        confirm(
+          `Delete "${item.name}"? This cannot be undone.`
+        );
+
+
+      if (!confirmed) {
+        return;
+      }
+
+
+      try {
+
+        const result =
+          await API.deleteInventory(
+            state.token,
+            id
+          );
+
+
+        if (
+          !result.success
+        ) {
+
+          throw new Error(
+            result.message ||
+            "Unable to delete item."
+          );
+
+        }
+
+
+        toast(
+          "Item deleted."
+        );
+
+
+        await loadData();
+
+      }
+
+      catch (error) {
+
+        toast(
+          error.message,
+          "danger"
+        );
+
+      }
+
+    }
+
+
+
+    /* =====================================================
+       SUPPLIER MODAL
+    ====================================================== */
+
+    function openSupplierModal() {
+
+      modal(
+        "Add Supplier",
+
+        `
+
+          <form
+            id="supplier-form"
+          >
+
+            <div class="form-grid">
+
+
+              <div>
+
+                <label>
+                  Supplier Name
+                </label>
+
+                <input
+                  id="sup-name"
+                  required
+                >
+
+              </div>
+
+
+              <div>
+
+                <label>
+                  Contact Person
+                </label>
+
+                <input
+                  id="sup-contact"
+                >
+
+              </div>
+
+
+              <div>
+
+                <label>
+                  Phone
+                </label>
+
+                <input
+                  id="sup-phone"
+                  type="tel"
+                >
+
+              </div>
+
+
+              <div>
+
+                <label>
+                  Email
+                </label>
+
+                <input
+                  id="sup-email"
+                  type="email"
+                >
+
+              </div>
+
+
+              <div>
+
+                <label>
+                  Category
+                </label>
+
+                <input
+                  id="sup-category"
+                  placeholder="Ingredients / Supplies"
+                >
+
+              </div>
+
+
+            </div>
+
+
+            <div class="form-actions">
+
+
+              <button
+                type="button"
+                class="btn ghost"
+                onclick="closeModal()"
+              >
+                Cancel
+              </button>
+
+
+              <button
+                class="btn primary"
+              >
+                Save Supplier
+              </button>
+
+
+            </div>
+
+          </form>
+
+        `
+      );
+
+
+      $("supplier-form")
+        .onsubmit =
+          async event => {
+
+            event.preventDefault();
+
+
+            try {
+
+              const supplier = {
+
+                name:
+                  $("sup-name")
+                    .value
+                    .trim(),
+
+                contact:
+                  $("sup-contact")
+                    .value
+                    .trim(),
+
+                phone:
+                  $("sup-phone")
+                    .value
+                    .trim(),
+
+                email:
+                  $("sup-email")
+                    .value
+                    .trim(),
+
+                category:
+                  $("sup-category")
+                    .value
+                    .trim()
+
+              };
+
+
+              const result =
+                await API.addSupplier(
+                  state.token,
+                  supplier
+                );
+
+
+              if (
+                !result.success
+              ) {
+
+                throw new Error(
+                  result.message ||
+                  "Unable to add supplier."
+                );
+
+              }
+
+
+              closeModal();
+
+
+              toast(
+                "Supplier added."
+              );
+
+
+              await loadData();
+
+            }
+
+            catch (error) {
+
+              toast(
+                error.message,
+                "danger"
+              );
+
+            }
+
+          };
+
+    }
+
+
+
+    /* =====================================================
+       STOCK TRANSACTION
+    ====================================================== */
+
+    async function submitStock(
+      event
+    ) {
+
+      event.preventDefault();
+
+
+      try {
+
+        const payload = {
+
+          type:
+            $("stock-type")
+              .value,
+
+          itemId:
+            $("stock-item")
+              .value,
+
+          quantity:
+            $("stock-qty")
+              .value,
+
+          supplier:
+            $("stock-supplier")
+              .value
+              .trim(),
+
+          reason:
+            $("stock-reason")
+              .value
+              .trim()
+
+        };
+
+
+        const result =
+          await API.stockTransaction(
+            state.token,
+            payload
+          );
+
+
+        if (
+          !result.success
+        ) {
+
+          throw new Error(
+            result.message ||
+            "Unable to record transaction."
+          );
+
+        }
+
+
+        toast(
+          "Stock transaction recorded."
+        );
+
+
+        event.target.reset();
+
+
+        await loadData();
+
+      }
+
+      catch (error) {
+
+        toast(
+          error.message,
+          "danger"
+        );
+
+      }
+
+    }
+
+
+
+    /* =====================================================
+       MODAL
+    ====================================================== */
+
+    function modal(
+      title,
+      body
+    ) {
+
+      $("modal-root")
+        .innerHTML = `
+
+          <div
+            class="modal-backdrop"
+            onclick="
+              if(event.target === this)
+                closeModal()
+            "
+          >
+
+            <div class="modal">
+
+
+              <div class="modal-head">
+
+                <h3>
+                  ${title}
+                </h3>
+
+
+                <button
+                  class="close"
+                  onclick="closeModal()"
+                >
+                  ✕
+                </button>
+
+              </div>
+
+
+              ${body}
+
+            </div>
+
+          </div>
+
+        `;
+
+    }
+
+
+    function closeModal() {
+
+      $("modal-root")
+        .innerHTML = "";
+
+    }
+
+
+
+    /* =====================================================
+       LOGIN
+    ====================================================== */
+
+    $("login-form")
+      .onsubmit =
+        async event => {
+
+          event.preventDefault();
+
+
+          const email =
+            $("login-email")
+              .value
+              .trim()
+              .toLowerCase();
+
+
+          const password =
+            $("login-password")
+              .value;
+
+
+          try {
+
+            const result =
+              await API.requestOTP(
+                email,
+                password
+              );
+
+
+            if (
+              !result.success
+            ) {
+
+              throw new Error(
+                result.message ||
+                "Login failed."
+              );
+
+            }
+
+
+            state.pendingEmail =
+              email;
+
+
+            $("login-form")
+              .classList
+              .add("hidden");
+
+
+            $("otp-form")
+              .classList
+              .remove("hidden");
+
+
+            $("otp-code")
+              .focus();
+
+
+            toast(
+              "OTP sent to your email."
+            );
+
+          }
+
+          catch (error) {
+
+            toast(
+              error.message,
+              "danger"
+            );
+
+          }
+
+        };
+
+
+
+    /* =====================================================
+       OTP
+    ====================================================== */
+
+    $("otp-form")
+      .onsubmit =
+        async event => {
+
+          event.preventDefault();
+
+
+          const otp =
+            $("otp-code")
+              .value
+              .trim();
+
+
+          try {
+
+            const result =
+              await API.verifyOTP(
+                state.pendingEmail,
+                otp
+              );
+
+
+            if (
+              !result.success
+            ) {
+
+              throw new Error(
+                result.message ||
+                "OTP verification failed."
+              );
+
+            }
+
+
+            /*
+             * SERVER-GENERATED TOKEN
+             */
+
+            state.user =
+              result.user;
+
+
+            state.token =
+              result.token;
+
+
+            sessionStorage.setItem(
+              "roma_user",
+              JSON.stringify(
+                result.user
+              )
+            );
+
+
+            sessionStorage.setItem(
+              "roma_token",
+              result.token
+            );
+
+
+            showApp();
+
+
+            await loadData();
+
+          }
+
+          catch (error) {
+
+            toast(
+              error.message,
+              "danger"
+            );
+
+          }
+
+        };
+
+
+
+    /* =====================================================
+       BACK TO LOGIN
+    ====================================================== */
+
+    $("back-login")
+      .onclick = () => {
+
+        $("otp-form")
+          .classList
+          .add("hidden");
+
+
+        $("login-form")
+          .classList
+          .remove("hidden");
+
+
+        $("otp-code")
+          .value = "";
 
       };
 
-  }
 
-}
 
+    /* =====================================================
+       LOGOUT
+    ====================================================== */
 
-/* =============================================================
-   MODALS
-   ============================================================= */
+    $("logout-btn")
+      .onclick =
+        async () => {
 
-function openModal(
-  type
-) {
+          try {
 
-  let title = "";
+            if (
+              state.token
+            ) {
 
-  let body = "";
+              await API.logout(
+                state.token
+              );
 
-
-  /* -----------------------------------------------------------
-     ADD INVENTORY
-     ----------------------------------------------------------- */
-
-  if (
-    type === "addInventory"
-  ) {
-
-    title =
-      "Add Inventory Item";
-
-
-    body = `
-
-      <form id="modalForm">
-
-        <div class="form-grid">
-
-          <div class="field">
-
-            <label>
-              Item Code
-            </label>
-
-            <input
-              name="code"
-              required
-              placeholder="INV-001"
-            >
-
-          </div>
-
-
-          <div class="field">
-
-            <label>
-              Item Name
-            </label>
-
-            <input
-              name="name"
-              required
-              placeholder="Arabica Coffee Beans"
-            >
-
-          </div>
-
-
-          <div class="field">
-
-            <label>
-              Category
-            </label>
-
-            <input
-              name="category"
-              required
-              placeholder="Coffee"
-            >
-
-          </div>
-
-
-          <div class="field">
-
-            <label>
-              Unit
-            </label>
-
-            <input
-              name="unit"
-              required
-              placeholder="kg / pcs / bottle"
-            >
-
-          </div>
-
-
-          <div class="field">
-
-            <label>
-              Opening Quantity
-            </label>
-
-            <input
-              name="quantity"
-              type="number"
-              min="0"
-              step="any"
-              value="0"
-              required
-            >
-
-          </div>
-
-
-          <div class="field">
-
-            <label>
-              Minimum Stock
-            </label>
-
-            <input
-              name="minStock"
-              type="number"
-              min="0"
-              step="any"
-              value="0"
-              required
-            >
-
-          </div>
-
-
-          <div class="field full">
-
-            <label>
-              Unit Cost
-            </label>
-
-            <input
-              name="cost"
-              type="number"
-              min="0"
-              step="0.01"
-              value="0"
-              required
-            >
-
-          </div>
-
-        </div>
-
-
-        <div class="modal-actions">
-
-          <button
-            type="button"
-            class="btn btn-ghost"
-            data-close
-          >
-            Cancel
-          </button>
-
-          <button
-            type="submit"
-            class="btn btn-gold"
-          >
-            Save Item
-          </button>
-
-        </div>
-
-      </form>
-
-    `;
-
-  }
-
-
-  /* -----------------------------------------------------------
-     STOCK TRANSACTION
-     ----------------------------------------------------------- */
-
-  if (
-    type === "stock"
-  ) {
-
-    title =
-      "New Stock Transaction";
-
-
-    body = `
-
-      <form id="modalForm">
-
-        <div class="field">
-
-          <label>
-            Transaction Type
-          </label>
-
-          <select name="type">
-
-            <option value="IN">
-              Stock In
-            </option>
-
-            <option value="OUT">
-              Stock Out
-            </option>
-
-          </select>
-
-        </div>
-
-
-        <div class="field">
-
-          <label>
-            Inventory Item
-          </label>
-
-          <select
-            name="itemId"
-            required
-          >
-
-            ${
-              state.data.inventory.length
-
-                ? state.data.inventory
-                    .map(
-                      item => `
-
-                        <option
-                          value="${escapeHTML(item.id)}"
-                        >
-
-                          ${escapeHTML(item.name)}
-                          —
-                          ${item.quantity}
-                          ${escapeHTML(item.unit)}
-
-                        </option>
-
-                      `
-                    )
-                    .join("")
-
-                : `
-
-                    <option value="">
-                      No inventory items
-                    </option>
-
-                  `
             }
 
-          </select>
+          }
 
-        </div>
+          catch (error) {
 
+            console.warn(
+              error
+            );
 
-        <div class="field">
+          }
 
-          <label>
-            Quantity
-          </label>
 
-          <input
-            name="quantity"
-            type="number"
-            min="0.01"
-            step="any"
-            required
-          >
-
-        </div>
-
-
-        <div class="field">
-
-          <label>
-            Supplier
-          </label>
-
-          <input
-            name="supplier"
-            placeholder="Optional"
-          >
-
-        </div>
-
-
-        <div class="field">
-
-          <label>
-            Reason
-          </label>
-
-          <input
-            name="reason"
-            placeholder="Purchase, sale, spoilage, adjustment…"
-          >
-
-        </div>
-
-
-        <div class="modal-actions">
-
-          <button
-            type="button"
-            class="btn btn-ghost"
-            data-close
-          >
-            Cancel
-          </button>
-
-          <button
-            type="submit"
-            class="btn btn-gold"
-          >
-            Save Transaction
-          </button>
-
-        </div>
-
-      </form>
-
-    `;
-
-  }
-
-
-  /* -----------------------------------------------------------
-     SUPPLIER
-     ----------------------------------------------------------- */
-
-  if (
-    type === "supplier"
-  ) {
-
-    title =
-      "Add Supplier";
-
-
-    body = `
-
-      <form id="modalForm">
-
-        <div class="form-grid">
-
-          <div class="field">
-
-            <label>
-              Supplier Name
-            </label>
-
-            <input
-              name="name"
-              required
-              placeholder="Supplier Company"
-            >
-
-          </div>
-
-
-          <div class="field">
-
-            <label>
-              Contact Person
-            </label>
-
-            <input
-              name="contact"
-              placeholder="Contact name"
-            >
-
-          </div>
-
-
-          <div class="field">
-
-            <label>
-              Phone
-            </label>
-
-            <input
-              name="phone"
-              placeholder="+63..."
-            >
-
-          </div>
-
-
-          <div class="field">
-
-            <label>
-              Email
-            </label>
-
-            <input
-              name="email"
-              type="email"
-              placeholder="supplier@example.com"
-            >
-
-          </div>
-
-
-          <div class="field full">
-
-            <label>
-              Category
-            </label>
-
-            <input
-              name="category"
-              placeholder="Coffee, dairy, produce…"
-            >
-
-          </div>
-
-        </div>
-
-
-        <div class="modal-actions">
-
-          <button
-            type="button"
-            class="btn btn-ghost"
-            data-close
-          >
-            Cancel
-          </button>
-
-          <button
-            type="submit"
-            class="btn btn-gold"
-          >
-            Save Supplier
-          </button>
-
-        </div>
-
-      </form>
-
-    `;
-
-  }
-
-
-  /* -----------------------------------------------------------
-     REFRESH
-     ----------------------------------------------------------- */
-
-  if (
-    type === "refresh"
-  ) {
-
-    refreshData()
-      .then(
-        () => {
-
-          render();
-
-          showToast(
-            "Data refreshed."
+          sessionStorage.removeItem(
+            "roma_token"
           );
+
+
+          sessionStorage.removeItem(
+            "roma_user"
+          );
+
+
+          state.token =
+            null;
+
+
+          state.user =
+            null;
+
+
+          location.reload();
+
+        };
+
+
+
+    /* =====================================================
+       REFRESH
+    ====================================================== */
+
+    $("refresh-btn")
+      .onclick =
+        loadData;
+
+
+
+    /* =====================================================
+       MOBILE MENU
+    ====================================================== */
+
+    $("menu-btn")
+      .onclick =
+        () =>
+          $("sidebar")
+            .classList
+            .toggle("open");
+
+
+
+    /* =====================================================
+       NAVIGATION
+    ====================================================== */
+
+    document
+      .querySelectorAll(
+        ".nav-link"
+      )
+      .forEach(
+        button => {
+
+          button.onclick = () => {
+
+            document
+              .querySelectorAll(
+                ".nav-link"
+              )
+              .forEach(
+                item =>
+                  item
+                    .classList
+                    .remove(
+                      "active"
+                    )
+              );
+
+
+            button
+              .classList
+              .add(
+                "active"
+              );
+
+
+            renderPage(
+              button.dataset.page
+            );
+
+
+            $("sidebar")
+              .classList
+              .remove(
+                "open"
+              );
+
+          };
 
         }
       );
 
-    return;
-
-  }
 
 
-  $("modalRoot").innerHTML = `
-
-    <div class="modal-backdrop">
-
-      <div class="modal">
-
-        <div class="modal-head">
-
-          <h3>
-            ${title}
-          </h3>
-
-          <button
-            class="close-button"
-            data-close
-            aria-label="Close"
-          >
-            ×
-          </button>
-
-        </div>
-
-        ${body}
-
-      </div>
-
-    </div>
-
-  `;
-
-
-  $("modalRoot")
-    .querySelectorAll(
-      "[data-close]"
-    )
-    .forEach(
-      button =>
-        button.onclick =
-          closeModal
-    );
-
-
-  const form =
-    $("modalForm");
-
-
-  if (form) {
-
-    form.onsubmit =
-      event =>
-        submitModal(
-          event,
-          type
-        );
-
-  }
-
-}
-
-
-/* =============================================================
-   CLOSE MODAL
-   ============================================================= */
-
-function closeModal() {
-
-  $("modalRoot")
-    .innerHTML = "";
-
-}
-
-
-/* =============================================================
-   SUBMIT MODAL
-   ============================================================= */
-
-async function submitModal(
-  event,
-  type
-) {
-
-  event.preventDefault();
-
-
-  const form =
-    event.target;
-
-
-  const formData =
-    new FormData(form);
-
-
-  const values =
-    Object.fromEntries(
-      formData.entries()
-    );
-
-
-  try {
-
-    let result;
-
-
-    /* ADD INVENTORY */
+    /* =====================================================
+       START APPLICATION
+    ====================================================== */
 
     if (
-      type === "addInventory"
+      state.user &&
+      state.token
     ) {
 
-      result =
-        await api(
-          "addInventory",
-          {
+      showApp();
 
-            user:
-              state.user,
-
-            item: {
-
-              code:
-                values.code,
-
-              name:
-                values.name,
-
-              category:
-                values.category,
-
-              unit:
-                values.unit,
-
-              quantity:
-                Number(
-                  values.quantity
-                ),
-
-              minStock:
-                Number(
-                  values.minStock
-                ),
-
-              cost:
-                Number(
-                  values.cost
-                )
-
-            }
-
-          }
-        );
+      loadData();
 
     }
 
+    else {
 
-    /* STOCK TRANSACTION */
-
-    if (
-      type === "stock"
-    ) {
-
-      result =
-        await api(
-          "stockTransaction",
-          {
-
-            user:
-              state.user,
-
-            type:
-              values.type,
-
-            itemId:
-              values.itemId,
-
-            quantity:
-              Number(
-                values.quantity
-              ),
-
-            supplier:
-              values.supplier,
-
-            reason:
-              values.reason
-
-          }
-        );
+      showAuth();
 
     }
 
-
-    /* ADD SUPPLIER */
-
-    if (
-      type === "supplier"
-    ) {
-
-      result =
-        await api(
-          "addSupplier",
-          {
-
-            user:
-              state.user,
-
-            supplier: {
-
-              name:
-                values.name,
-
-              contact:
-                values.contact,
-
-              phone:
-                values.phone,
-
-              email:
-                values.email,
-
-              category:
-                values.category
-
-            }
-
-          }
-        );
-
-    }
-
-
-    closeModal();
-
-    await refreshData();
-
-    render();
-
-
-    showToast(
-      result.message ||
-      "Saved successfully."
-    );
-
-
-  } catch (error) {
-
-    showToast(
-      error.message
-    );
-
-  }
-
-}
-
-
-/* =============================================================
-   DELETE INVENTORY
-   ============================================================= */
-
-async function deleteInventoryItem(
-  id
-) {
-
-  if (
-    state.user.role !== "Admin"
-  ) {
-
-    showToast(
-      "Admin permission required."
-    );
-
-    return;
-
-  }
-
-
-  const item =
-    state.data.inventory.find(
-      inventoryItem =>
-        String(
-          inventoryItem.id
-        ) === String(id)
-    );
-
-
-  if (!item) {
-
-    showToast(
-      "Inventory item not found."
-    );
-
-    return;
-
-  }
-
-
-  const confirmed =
-    window.confirm(
-      `Delete "${item.name}"?\n\nThis cannot be undone.`
-    );
-
-
-  if (!confirmed) {
-    return;
-  }
-
-
-  try {
-
-    await api(
-      "deleteInventory",
-      {
-
-        user:
-          state.user,
-
-        id
-
-      }
-    );
-
-
-    await refreshData();
-
-    render();
-
-
-    showToast(
-      "Inventory item deleted."
-    );
-
-
-  } catch (error) {
-
-    showToast(
-      error.message
-    );
-
-  }
-
-}
-
-
-/* =============================================================
-   INITIALIZATION
-   ============================================================= */
-
-(async function () {
-
-  const savedUser =
-    getSessionUser();
-
-
-  if (
-    savedUser
-  ) {
-
-    state.user =
-      savedUser;
-
-
-    await startApplication();
-
-  }
-
-})();
-
-</script>
+  </script>
 
 </body>
+
 </html>
 ```
