@@ -1,1340 +1,1037 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
 <meta charset="UTF-8">
-
-<meta
-  name="viewport"
-  content="width=device-width, initial-scale=1.0"
->
-
-<meta
-  name="description"
-  content="ROMA Cafe Inventory Management System"
->
-
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="ROMA Cafe Inventory Management System">
 <title>ROMA Cafe | Inventory Management System</title>
 
-
 <style>
-
-/* =====================================================
-   ROOT
-===================================================== */
-
-:root {
-  --brown: #795338;
-  --brown-dark: #5f3f2a;
-  --brown-light: #967054;
-
-  --cream: #f7f2ed;
-  --cream-dark: #eee5dd;
-
-  --white: #ffffff;
-
-  --navy: #132238;
-  --text: #263238;
-  --muted: #718096;
-
-  --border: #e5ddd5;
-
-  --green: #2e7d32;
-  --green-bg: #e9f6eb;
-
-  --red: #c62828;
-  --red-bg: #fdecec;
-
-  --orange: #ef8a17;
-  --orange-bg: #fff3df;
-
-  --shadow:
-    0 12px 30px rgba(51, 38, 27, 0.08);
-
-  --radius: 16px;
+:root{
+  --brown:#795338;
+  --brown-dark:#5f3f2a;
+  --brown-light:#967054;
+  --cream:#f7f2ed;
+  --cream-dark:#eee5dd;
+  --white:#fff;
+  --navy:#132238;
+  --text:#263238;
+  --muted:#718096;
+  --border:#e5ddd5;
+  --green:#2e7d32;
+  --green-bg:#e9f6eb;
+  --red:#c62828;
+  --red-bg:#fdecec;
+  --orange:#ef8a17;
+  --orange-bg:#fff3df;
+  --shadow:0 12px 30px rgba(51,38,27,.08);
+  --radius:16px;
 }
 
-
-/* =====================================================
-   RESET
-===================================================== */
-
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
 }
 
-
-body {
-  font-family:
-    Inter,
-    Arial,
-    Helvetica,
-    sans-serif;
-
-  background: var(--cream);
-
-  color: var(--text);
-
-  min-height: 100vh;
+body{
+  font-family:Inter,Arial,Helvetica,sans-serif;
+  background:var(--cream);
+  color:var(--text);
+  min-height:100vh;
 }
 
-
-button,
-input,
-select,
-textarea {
-  font: inherit;
+button,input,select,textarea{
+  font:inherit;
 }
 
-
-button {
-  cursor: pointer;
+button{
+  cursor:pointer;
 }
 
-
-.hidden {
-  display: none !important;
+.hidden{
+  display:none!important;
 }
-
 
 /* =====================================================
    AUTH
 ===================================================== */
 
-.auth-screen {
-  min-height: 100vh;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  padding: 24px;
-
-  background:
-    linear-gradient(
-      135deg,
-      #68462f,
-      #896044
-    );
+.auth-screen{
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:24px;
+  background:linear-gradient(135deg,#68462f,#896044);
 }
 
-
-.login-card {
-  width: 100%;
-  max-width: 525px;
-
-  background: var(--white);
-
-  border-radius: 30px;
-
-  padding: 44px;
-
-  box-shadow:
-    0 30px 70px rgba(0, 0, 0, 0.18);
+.login-card{
+  width:100%;
+  max-width:525px;
+  background:var(--white);
+  border-radius:30px;
+  padding:44px;
+  box-shadow:0 30px 70px rgba(0,0,0,.18);
 }
 
-
-.brand-logo {
-  width: 72px;
-  height: 72px;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  border-radius: 20px;
-
-  background: var(--brown);
-
-  color: white;
-
-  font-family: Georgia, serif;
-
-  font-size: 34px;
-
-  font-weight: bold;
-
-  margin-bottom: 28px;
+.brand-logo{
+  width:72px;
+  height:72px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:20px;
+  background:var(--brown);
+  color:white;
+  font-family:Georgia,serif;
+  font-size:34px;
+  font-weight:bold;
+  margin-bottom:28px;
 }
 
-
-.login-card h1 {
-  font-size: 40px;
-
-  color: var(--navy);
-
-  margin-bottom: 6px;
+.login-card h1{
+  font-size:40px;
+  color:var(--navy);
+  margin-bottom:6px;
 }
 
-
-.login-subtitle {
-  color: var(--muted);
-
-  font-size: 18px;
-
-  margin-bottom: 36px;
+.login-subtitle{
+  color:var(--muted);
+  font-size:18px;
+  margin-bottom:36px;
 }
 
-
-.form-group {
-  margin-bottom: 20px;
+.form-group{
+  margin-bottom:20px;
 }
 
-
-.form-group label {
-  display: block;
-
-  font-weight: 700;
-
-  font-size: 14px;
-
-  margin-bottom: 8px;
+.form-group label{
+  display:block;
+  font-weight:700;
+  font-size:14px;
+  margin-bottom:8px;
 }
 
-
-.form-control {
-  width: 100%;
-
-  border: 1px solid var(--border);
-
-  background: white;
-
-  border-radius: 12px;
-
-  padding: 15px 16px;
-
-  outline: none;
-
-  transition: 0.2s;
+.form-control{
+  width:100%;
+  border:1px solid var(--border);
+  background:white;
+  border-radius:12px;
+  padding:15px 16px;
+  outline:none;
+  transition:.2s;
 }
 
-
-.form-control:focus {
-  border-color: var(--brown);
-
-  box-shadow:
-    0 0 0 3px rgba(121, 83, 56, 0.12);
+.form-control:focus{
+  border-color:var(--brown);
+  box-shadow:0 0 0 3px rgba(121,83,56,.12);
 }
 
-
-.btn {
-  border: 0;
-
-  border-radius: 12px;
-
-  padding: 13px 18px;
-
-  font-weight: 700;
-
-  transition: 0.2s;
+.btn{
+  border:0;
+  border-radius:12px;
+  padding:13px 18px;
+  font-weight:700;
+  transition:.2s;
 }
 
-
-.btn:hover {
-  transform: translateY(-1px);
+.btn:hover{
+  transform:translateY(-1px);
 }
 
-
-.btn-primary {
-  background: var(--brown);
-
-  color: white;
+.btn-primary{
+  background:var(--brown);
+  color:white;
 }
 
-
-.btn-primary:hover {
-  background: var(--brown-dark);
+.btn-primary:hover{
+  background:var(--brown-dark);
 }
 
-
-.btn-secondary {
-  background: var(--cream-dark);
-
-  color: var(--brown-dark);
+.btn-secondary{
+  background:var(--cream-dark);
+  color:var(--brown-dark);
 }
 
-
-.btn-danger {
-  background: var(--red);
-
-  color: white;
+.btn-danger{
+  background:var(--red);
+  color:white;
 }
 
-
-.btn-success {
-  background: var(--green);
-
-  color: white;
+.btn-success{
+  background:var(--green);
+  color:white;
 }
 
-
-.btn-full {
-  width: 100%;
-
-  padding: 16px;
-
-  font-size: 17px;
+.btn-full{
+  width:100%;
+  padding:16px;
+  font-size:17px;
 }
 
-
-.otp-info {
-  background: var(--cream);
-
-  border-radius: 12px;
-
-  padding: 15px;
-
-  margin-bottom: 20px;
-
-  font-size: 14px;
-
-  color: var(--muted);
+.otp-info{
+  background:var(--cream);
+  border-radius:12px;
+  padding:15px;
+  margin-bottom:20px;
+  font-size:14px;
+  color:var(--muted);
 }
 
-
-.back-login {
-  width: 100%;
-
-  background: transparent;
-
-  border: 0;
-
-  margin-top: 12px;
-
-  color: var(--brown);
-
-  font-weight: 700;
+.back-login{
+  width:100%;
+  background:transparent;
+  border:0;
+  margin-top:12px;
+  color:var(--brown);
+  font-weight:700;
 }
-
 
 /* =====================================================
    APP LAYOUT
 ===================================================== */
 
-.app {
-  min-height: 100vh;
-
-  display: flex;
+.app{
+  min-height:100vh;
+  display:flex;
 }
 
-
-.sidebar {
-  width: 255px;
-
-  background: #fff;
-
-  border-right: 1px solid var(--border);
-
-  position: fixed;
-
-  left: 0;
-  top: 0;
-  bottom: 0;
-
-  display: flex;
-
-  flex-direction: column;
-
-  z-index: 100;
+.sidebar{
+  width:255px;
+  background:#fff;
+  border-right:1px solid var(--border);
+  position:fixed;
+  left:0;
+  top:0;
+  bottom:0;
+  display:flex;
+  flex-direction:column;
+  z-index:100;
 }
 
-
-.sidebar-brand {
-  padding: 25px 22px;
-
-  display: flex;
-
-  align-items: center;
-
-  gap: 12px;
-
-  border-bottom: 1px solid var(--border);
+.sidebar-brand{
+  padding:25px 22px;
+  display:flex;
+  align-items:center;
+  gap:12px;
+  border-bottom:1px solid var(--border);
 }
 
-
-.sidebar-logo {
-  width: 44px;
-  height: 44px;
-
-  display: flex;
-
-  align-items: center;
-  justify-content: center;
-
-  background: var(--brown);
-
-  color: white;
-
-  border-radius: 12px;
-
-  font-family: Georgia, serif;
-
-  font-size: 22px;
-
-  font-weight: bold;
+.sidebar-logo{
+  width:44px;
+  height:44px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:var(--brown);
+  color:white;
+  border-radius:12px;
+  font-family:Georgia,serif;
+  font-size:22px;
+  font-weight:bold;
 }
 
-
-.sidebar-brand-text strong {
-  display: block;
-
-  font-size: 17px;
-
-  color: var(--navy);
+.sidebar-brand-text strong{
+  display:block;
+  font-size:17px;
+  color:var(--navy);
 }
 
-
-.sidebar-brand-text span {
-  font-size: 12px;
-
-  color: var(--muted);
+.sidebar-brand-text span{
+  font-size:12px;
+  color:var(--muted);
 }
 
-
-.nav {
-  padding: 20px 12px;
-
-  flex: 1;
+.nav{
+  padding:20px 12px;
+  flex:1;
+  overflow-y:auto;
 }
 
-
-.nav-section {
-  font-size: 11px;
-
-  font-weight: 800;
-
-  color: #9b8d82;
-
-  text-transform: uppercase;
-
-  letter-spacing: 1px;
-
-  padding: 8px 12px;
-
-  margin-bottom: 6px;
+.nav-section{
+  font-size:11px;
+  font-weight:800;
+  color:#9b8d82;
+  text-transform:uppercase;
+  letter-spacing:1px;
+  padding:8px 12px;
+  margin-bottom:6px;
 }
 
-
-.nav-item {
-  width: 100%;
-
-  border: 0;
-
-  background: transparent;
-
-  color: #6b625d;
-
-  padding: 13px 14px;
-
-  border-radius: 11px;
-
-  display: flex;
-
-  align-items: center;
-
-  gap: 12px;
-
-  margin-bottom: 4px;
-
-  text-align: left;
-
-  font-weight: 600;
-
-  transition: 0.2s;
+.nav-item{
+  width:100%;
+  border:0;
+  background:transparent;
+  color:#6b625d;
+  padding:13px 14px;
+  border-radius:11px;
+  display:flex;
+  align-items:center;
+  gap:12px;
+  margin-bottom:4px;
+  text-align:left;
+  font-weight:600;
+  transition:.2s;
 }
 
-
-.nav-item:hover {
-  background: var(--cream);
-
-  color: var(--brown);
+.nav-item:hover{
+  background:var(--cream);
+  color:var(--brown);
 }
 
-
-.nav-item.active {
-  background: #f0e7df;
-
-  color: var(--brown);
-
-  font-weight: 800;
+.nav-item.active{
+  background:#f0e7df;
+  color:var(--brown);
+  font-weight:800;
 }
 
-
-.nav-icon {
-  width: 22px;
-
-  text-align: center;
-
-  font-size: 17px;
+.nav-icon{
+  width:22px;
+  min-width:22px;
+  text-align:center;
+  font-size:17px;
 }
 
-
-.sidebar-user {
-  padding: 18px;
-
-  border-top: 1px solid var(--border);
+.sidebar-user{
+  padding:18px;
+  border-top:1px solid var(--border);
 }
 
-
-.user-name {
-  font-weight: 800;
-
-  color: var(--navy);
+.user-name{
+  font-weight:800;
+  color:var(--navy);
 }
 
-
-.user-role {
-  font-size: 12px;
-
-  color: var(--muted);
-
-  margin-top: 3px;
+.user-role{
+  font-size:12px;
+  color:var(--muted);
+  margin-top:3px;
 }
 
-
-.logout-btn {
-  width: 100%;
-
-  margin-top: 12px;
+.logout-btn{
+  width:100%;
+  margin-top:12px;
 }
-
 
 /* =====================================================
    MAIN
 ===================================================== */
 
-.main {
-  margin-left: 255px;
-
-  width: calc(100% - 255px);
-
-  min-height: 100vh;
+.main{
+  margin-left:255px;
+  width:calc(100% - 255px);
+  min-height:100vh;
 }
 
-
-.topbar {
-  height: 78px;
-
-  background: white;
-
-  border-bottom: 1px solid var(--border);
-
-  display: flex;
-
-  align-items: center;
-
-  justify-content: space-between;
-
-  padding: 0 32px;
-
-  position: sticky;
-
-  top: 0;
-
-  z-index: 50;
+.topbar{
+  height:78px;
+  background:white;
+  border-bottom:1px solid var(--border);
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 32px;
+  position:sticky;
+  top:0;
+  z-index:50;
 }
 
-
-.topbar-title h2 {
-  color: var(--navy);
-
-  font-size: 22px;
+.topbar-title h2{
+  color:var(--navy);
+  font-size:22px;
 }
 
-
-.topbar-title p {
-  color: var(--muted);
-
-  font-size: 13px;
-
-  margin-top: 2px;
+.topbar-title p{
+  color:var(--muted);
+  font-size:13px;
+  margin-top:2px;
 }
 
-
-.content {
-  padding: 30px;
+.content{
+  padding:30px;
 }
-
 
 /* =====================================================
    MOBILE HEADER
 ===================================================== */
 
-.mobile-header {
-  display: none;
+.mobile-header{
+  display:none;
 }
-
 
 /* =====================================================
    CARDS
 ===================================================== */
 
-.stats-grid {
-  display: grid;
-
-  grid-template-columns:
-    repeat(4, minmax(0, 1fr));
-
-  gap: 18px;
-
-  margin-bottom: 25px;
+.stats-grid{
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:18px;
+  margin-bottom:25px;
 }
 
-
-.stat-card {
-  background: white;
-
-  border: 1px solid var(--border);
-
-  border-radius: var(--radius);
-
-  padding: 22px;
-
-  box-shadow: var(--shadow);
+.stat-card{
+  background:white;
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  padding:22px;
+  box-shadow:var(--shadow);
 }
 
-
-.stat-label {
-  color: var(--muted);
-
-  font-size: 13px;
-
-  font-weight: 700;
+.stat-label{
+  color:var(--muted);
+  font-size:13px;
+  font-weight:700;
 }
 
-
-.stat-value {
-  color: var(--navy);
-
-  font-size: 30px;
-
-  font-weight: 800;
-
-  margin-top: 8px;
+.stat-value{
+  color:var(--navy);
+  font-size:30px;
+  font-weight:800;
+  margin-top:8px;
 }
 
-
-.stat-description {
-  margin-top: 5px;
-
-  color: var(--muted);
-
-  font-size: 12px;
+.stat-description{
+  margin-top:5px;
+  color:var(--muted);
+  font-size:12px;
 }
-
 
 /* =====================================================
    PAGE HEADER
 ===================================================== */
 
-.page-header {
-  display: flex;
-
-  align-items: center;
-
-  justify-content: space-between;
-
-  gap: 15px;
-
-  margin-bottom: 22px;
+.page-header{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:15px;
+  margin-bottom:22px;
 }
 
-
-.page-header h3 {
-  color: var(--navy);
-
-  font-size: 24px;
+.page-header h3{
+  color:var(--navy);
+  font-size:24px;
 }
 
-
-.page-header p {
-  color: var(--muted);
-
-  font-size: 13px;
-
-  margin-top: 3px;
+.page-header p{
+  color:var(--muted);
+  font-size:13px;
+  margin-top:3px;
 }
 
-
-.page-actions {
-  display: flex;
-
-  gap: 10px;
-
-  flex-wrap: wrap;
+.page-actions{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
 }
-
 
 /* =====================================================
    PANELS
 ===================================================== */
 
-.panel {
-  background: white;
-
-  border: 1px solid var(--border);
-
-  border-radius: var(--radius);
-
-  box-shadow: var(--shadow);
-
-  overflow: hidden;
+.panel{
+  background:white;
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  box-shadow:var(--shadow);
+  overflow:hidden;
 }
 
-
-.panel-header {
-  padding: 19px 22px;
-
-  border-bottom: 1px solid var(--border);
-
-  display: flex;
-
-  justify-content: space-between;
-
-  align-items: center;
-
-  gap: 15px;
+.panel-header{
+  padding:19px 22px;
+  border-bottom:1px solid var(--border);
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:15px;
 }
 
-
-.panel-header h4 {
-  color: var(--navy);
-
-  font-size: 17px;
+.panel-header h4{
+  color:var(--navy);
+  font-size:17px;
 }
 
-
-.panel-body {
-  padding: 22px;
+.panel-body{
+  padding:22px;
 }
-
 
 /* =====================================================
    TABLE
 ===================================================== */
 
-.table-wrapper {
-  overflow-x: auto;
+.table-wrapper{
+  overflow-x:auto;
 }
 
-
-table {
-  width: 100%;
-
-  border-collapse: collapse;
-
-  min-width: 700px;
+table{
+  width:100%;
+  border-collapse:collapse;
+  min-width:700px;
 }
 
-
-th {
-  text-align: left;
-
-  background: #faf8f6;
-
-  color: #776b62;
-
-  font-size: 12px;
-
-  text-transform: uppercase;
-
-  letter-spacing: 0.5px;
-
-  padding: 13px 15px;
-
-  border-bottom: 1px solid var(--border);
+th{
+  text-align:left;
+  background:#faf8f6;
+  color:#776b62;
+  font-size:12px;
+  text-transform:uppercase;
+  letter-spacing:.5px;
+  padding:13px 15px;
+  border-bottom:1px solid var(--border);
 }
 
-
-td {
-  padding: 15px;
-
-  border-bottom: 1px solid #eee8e3;
-
-  font-size: 14px;
+td{
+  padding:15px;
+  border-bottom:1px solid #eee8e3;
+  font-size:14px;
 }
 
-
-tr:last-child td {
-  border-bottom: 0;
+tr:last-child td{
+  border-bottom:0;
 }
 
-
-.item-name {
-  font-weight: 800;
-
-  color: var(--navy);
+.item-name{
+  font-weight:800;
+  color:var(--navy);
 }
 
-
-.muted {
-  color: var(--muted);
+.muted{
+  color:var(--muted);
 }
 
-
-.badge {
-  display: inline-flex;
-
-  align-items: center;
-
-  border-radius: 999px;
-
-  padding: 5px 10px;
-
-  font-size: 11px;
-
-  font-weight: 800;
+.badge{
+  display:inline-flex;
+  align-items:center;
+  border-radius:999px;
+  padding:5px 10px;
+  font-size:11px;
+  font-weight:800;
 }
 
-
-.badge-green {
-  background: var(--green-bg);
-
-  color: var(--green);
+.badge-green{
+  background:var(--green-bg);
+  color:var(--green);
 }
 
-
-.badge-red {
-  background: var(--red-bg);
-
-  color: var(--red);
+.badge-red{
+  background:var(--red-bg);
+  color:var(--red);
 }
 
-
-.badge-orange {
-  background: var(--orange-bg);
-
-  color: var(--orange);
+.badge-orange{
+  background:var(--orange-bg);
+  color:var(--orange);
 }
 
-
-.badge-brown {
-  background: #f1e8e0;
-
-  color: var(--brown-dark);
+.badge-brown{
+  background:#f1e8e0;
+  color:var(--brown-dark);
 }
-
 
 /* =====================================================
    TOOLBAR
 ===================================================== */
 
-.toolbar {
-  display: flex;
-
-  align-items: center;
-
-  gap: 10px;
-
-  flex-wrap: wrap;
-
-  margin-bottom: 18px;
+.toolbar{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  flex-wrap:wrap;
+  margin-bottom:18px;
 }
 
-
-.search-box {
-  flex: 1;
-
-  min-width: 220px;
+.search-box{
+  flex:1;
+  min-width:220px;
 }
 
-
-.search-box input {
-  width: 100%;
+.search-box input{
+  width:100%;
 }
-
 
 /* =====================================================
    GRID
 ===================================================== */
 
-.two-column {
-  display: grid;
-
-  grid-template-columns:
-    repeat(2, minmax(0, 1fr));
-
-  gap: 22px;
+.two-column{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:22px;
 }
 
-
-.three-column {
-  display: grid;
-
-  grid-template-columns:
-    repeat(3, minmax(0, 1fr));
-
-  gap: 18px;
+.three-column{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:18px;
 }
-
 
 /* =====================================================
-   EMPTY STATE
+   EMPTY
 ===================================================== */
 
-.empty {
-  text-align: center;
-
-  padding: 45px 20px;
-
-  color: var(--muted);
+.empty{
+  text-align:center;
+  padding:45px 20px;
+  color:var(--muted);
 }
 
-
-.empty strong {
-  display: block;
-
-  color: var(--navy);
-
-  margin-bottom: 5px;
+.empty strong{
+  display:block;
+  color:var(--navy);
+  margin-bottom:5px;
 }
-
 
 /* =====================================================
    MODAL
 ===================================================== */
 
-.modal-backdrop {
-  position: fixed;
-
-  inset: 0;
-
-  background: rgba(18, 23, 28, 0.55);
-
-  display: flex;
-
-  align-items: center;
-
-  justify-content: center;
-
-  padding: 20px;
-
-  z-index: 500;
+.modal-backdrop{
+  position:fixed;
+  inset:0;
+  background:rgba(18,23,28,.55);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+  z-index:500;
 }
 
-
-.modal {
-  width: 100%;
-
-  max-width: 600px;
-
-  background: white;
-
-  border-radius: 20px;
-
-  box-shadow:
-    0 30px 80px rgba(0,0,0,0.25);
-
-  max-height: 90vh;
-
-  overflow-y: auto;
+.modal{
+  width:100%;
+  max-width:600px;
+  background:white;
+  border-radius:20px;
+  box-shadow:0 30px 80px rgba(0,0,0,.25);
+  max-height:90vh;
+  overflow-y:auto;
 }
 
-
-.modal-header {
-  padding: 20px 22px;
-
-  border-bottom: 1px solid var(--border);
-
-  display: flex;
-
-  justify-content: space-between;
-
-  align-items: center;
+.modal-header{
+  padding:20px 22px;
+  border-bottom:1px solid var(--border);
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
 }
 
-
-.modal-header h3 {
-  color: var(--navy);
+.modal-header h3{
+  color:var(--navy);
 }
 
-
-.close-btn {
-  width: 35px;
-  height: 35px;
-
-  border: 0;
-
-  border-radius: 9px;
-
-  background: var(--cream);
-
-  color: var(--brown);
-
-  font-size: 20px;
+.close-btn{
+  width:35px;
+  height:35px;
+  border:0;
+  border-radius:9px;
+  background:var(--cream);
+  color:var(--brown);
+  font-size:20px;
 }
 
-
-.modal-body {
-  padding: 22px;
+.modal-body{
+  padding:22px;
 }
 
-
-.form-grid {
-  display: grid;
-
-  grid-template-columns:
-    repeat(2, minmax(0, 1fr));
-
-  gap: 16px;
+.form-grid{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:16px;
 }
 
-
-.full {
-  grid-column: 1 / -1;
+.full{
+  grid-column:1/-1;
 }
 
-
-.modal-footer {
-  padding: 18px 22px;
-
-  border-top: 1px solid var(--border);
-
-  display: flex;
-
-  justify-content: flex-end;
-
-  gap: 10px;
+.modal-footer{
+  padding:18px 22px;
+  border-top:1px solid var(--border);
+  display:flex;
+  justify-content:flex-end;
+  gap:10px;
 }
-
 
 /* =====================================================
    REPORT
 ===================================================== */
 
-.report-card {
-  background: white;
-
-  border: 1px solid var(--border);
-
-  border-radius: var(--radius);
-
-  padding: 22px;
+.report-card{
+  background:white;
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  padding:22px;
 }
 
-
-.report-card h4 {
-  color: var(--navy);
-
-  margin-bottom: 10px;
+.report-card h4{
+  color:var(--navy);
+  margin-bottom:10px;
 }
 
-
-.report-number {
-  font-size: 28px;
-
-  font-weight: 800;
-
-  color: var(--brown);
+.report-number{
+  font-size:28px;
+  font-weight:800;
+  color:var(--brown);
 }
 
-
-.progress {
-  width: 100%;
-
-  height: 8px;
-
-  background: #eee8e3;
-
-  border-radius: 99px;
-
-  overflow: hidden;
-
-  margin-top: 12px;
+.progress{
+  width:100%;
+  height:8px;
+  background:#eee8e3;
+  border-radius:99px;
+  overflow:hidden;
+  margin-top:12px;
 }
 
-
-.progress-bar {
-  height: 100%;
-
-  background: var(--brown);
-
-  border-radius: inherit;
+.progress-bar{
+  height:100%;
+  background:var(--brown);
+  border-radius:inherit;
 }
-
 
 /* =====================================================
    LOADING
 ===================================================== */
 
-.loading {
-  padding: 50px;
-
-  text-align: center;
-
-  color: var(--muted);
+.loading{
+  padding:50px;
+  text-align:center;
+  color:var(--muted);
 }
 
-
-.spinner {
-  width: 30px;
-
-  height: 30px;
-
-  border: 3px solid #eadfd5;
-
-  border-top-color: var(--brown);
-
-  border-radius: 50%;
-
-  animation: spin 0.8s linear infinite;
-
-  margin: 0 auto 12px;
+.spinner{
+  width:30px;
+  height:30px;
+  border:3px solid #eadfd5;
+  border-top-color:var(--brown);
+  border-radius:50%;
+  animation:spin .8s linear infinite;
+  margin:0 auto 12px;
 }
 
-
-@keyframes spin {
-  to {
-    transform: rotate(360deg);
-  }
+@keyframes spin{
+  to{transform:rotate(360deg);}
 }
-
 
 /* =====================================================
    TOAST
 ===================================================== */
 
-.toast {
-  position: fixed;
-
-  right: 25px;
-
-  bottom: 25px;
-
-  max-width: 360px;
-
-  background: white;
-
-  border: 1px solid var(--border);
-
-  border-left: 5px solid var(--brown);
-
-  border-radius: 12px;
-
-  padding: 15px 18px;
-
-  box-shadow:
-    0 15px 40px rgba(0,0,0,0.15);
-
-  z-index: 1000;
-
-  animation: toastIn 0.25s ease;
+.toast{
+  position:fixed;
+  right:25px;
+  bottom:25px;
+  max-width:360px;
+  background:white;
+  border:1px solid var(--border);
+  border-left:5px solid var(--brown);
+  border-radius:12px;
+  padding:15px 18px;
+  box-shadow:0 15px 40px rgba(0,0,0,.15);
+  z-index:1000;
+  animation:toastIn .25s ease;
 }
 
-
-.toast.error {
-  border-left-color: var(--red);
+.toast.error{
+  border-left-color:var(--red);
 }
 
-
-.toast.success {
-  border-left-color: var(--green);
+.toast.success{
+  border-left-color:var(--green);
 }
 
-
-@keyframes toastIn {
-  from {
-    transform: translateY(20px);
-
-    opacity: 0;
+@keyframes toastIn{
+  from{
+    transform:translateY(20px);
+    opacity:0;
   }
-
-  to {
-    transform: translateY(0);
-
-    opacity: 1;
+  to{
+    transform:translateY(0);
+    opacity:1;
   }
 }
-
 
 /* =====================================================
-   RESPONSIVE
+   TABLET
 ===================================================== */
 
-@media (max-width: 1100px) {
-
-  .stats-grid {
-    grid-template-columns:
-      repeat(2, minmax(0, 1fr));
+@media(max-width:1100px){
+  .stats-grid{
+    grid-template-columns:repeat(2,minmax(0,1fr));
   }
-
 }
 
+/* =====================================================
+   MOBILE BOTTOM NAVIGATION
+===================================================== */
 
-@media (max-width: 800px) {
+@media(max-width:800px){
 
-  .sidebar {
-    transform: translateX(-100%);
+  body{
+    padding-bottom:78px;
+  }
 
-    transition: 0.25s;
+  .sidebar{
+    position:fixed;
+    left:0;
+    right:0;
+    top:auto;
+    bottom:0;
+
+    width:100%;
+    height:72px;
+
+    border-right:0;
+    border-top:1px solid var(--border);
+
+    background:rgba(255,255,255,.98);
 
     box-shadow:
-      10px 0 40px rgba(0,0,0,0.1);
+      0 -5px 25px rgba(51,38,27,.12);
+
+    display:block;
+
+    z-index:900;
+
+    transform:none!important;
   }
 
+  /*
+   * Hide the desktop sidebar branding and account area.
+   * The navigation itself becomes the bottom menu.
+   */
 
-  .sidebar.open {
-    transform: translateX(0);
+  .sidebar-brand,
+  .sidebar-user{
+    display:none;
   }
 
+  .nav{
+    height:100%;
+    width:100%;
+    padding:5px 3px 4px;
 
-  .main {
-    margin-left: 0;
+    display:grid;
+    grid-template-columns:repeat(7,1fr);
 
-    width: 100%;
+    gap:0;
+
+    overflow:hidden;
   }
 
-
-  .mobile-header {
-    display: flex;
-
-    position: sticky;
-
-    top: 0;
-
-    z-index: 90;
-
-    height: 65px;
-
-    background: white;
-
-    border-bottom: 1px solid var(--border);
-
-    align-items: center;
-
-    justify-content: space-between;
-
-    padding: 0 17px;
+  .nav-section{
+    display:none;
   }
 
+  .nav-item{
+    width:100%;
+    height:100%;
 
-  .mobile-brand {
-    font-weight: 900;
+    padding:5px 1px;
 
-    color: var(--navy);
+    margin:0;
+
+    border-radius:9px;
+
+    display:flex;
+    flex-direction:column;
+
+    justify-content:center;
+    align-items:center;
+
+    gap:3px;
+
+    text-align:center;
+
+    font-size:9px;
+    font-weight:600;
+
+    color:#81776f;
   }
 
-
-  .menu-btn {
-    width: 40px;
-    height: 40px;
-
-    border: 0;
-
-    border-radius: 10px;
-
-    background: var(--cream);
-
-    color: var(--brown);
-
-    font-size: 20px;
+  .nav-item:hover{
+    background:transparent;
+    color:var(--brown);
   }
 
-
-  .topbar {
-    display: none;
+  .nav-item.active{
+    background:#f0e7df;
+    color:var(--brown);
+    font-weight:800;
   }
 
+  .nav-icon{
+    width:auto;
+    min-width:0;
 
-  .content {
-    padding: 20px 15px 30px;
+    height:24px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    font-size:19px;
+    line-height:1;
   }
 
-
-  .two-column {
-    grid-template-columns: 1fr;
+  .nav-item span:last-child{
+    white-space:nowrap;
+    line-height:11px;
   }
 
-
-  .three-column {
-    grid-template-columns: 1fr;
+  .main{
+    margin-left:0;
+    width:100%;
   }
 
+  /*
+   * Mobile top header.
+   * No hamburger button because the navigation is now at
+   * the bottom of the screen.
+   */
 
-  .page-header {
-    align-items: flex-start;
+  .mobile-header{
+    display:flex;
 
-    flex-direction: column;
+    position:sticky;
+    top:0;
+
+    z-index:80;
+
+    height:60px;
+
+    background:white;
+
+    border-bottom:1px solid var(--border);
+
+    align-items:center;
+    justify-content:center;
+
+    padding:0 17px;
   }
 
-
-  .login-card {
-    padding: 30px 24px;
-
-    border-radius: 22px;
+  .mobile-brand{
+    font-weight:900;
+    color:var(--navy);
+    font-size:18px;
   }
 
-
-  .login-card h1 {
-    font-size: 32px;
+  .topbar{
+    display:none;
   }
 
+  .content{
+    padding:20px 15px 30px;
+  }
+
+  .two-column{
+    grid-template-columns:1fr;
+  }
+
+  .three-column{
+    grid-template-columns:1fr;
+  }
+
+  .page-header{
+    align-items:flex-start;
+    flex-direction:column;
+  }
+
+  .login-card{
+    padding:30px 24px;
+    border-radius:22px;
+  }
+
+  .login-card h1{
+    font-size:32px;
+  }
 }
 
+/* =====================================================
+   SMALL MOBILE
+===================================================== */
 
-@media (max-width: 560px) {
+@media(max-width:560px){
 
-  .stats-grid {
-    grid-template-columns: 1fr;
+  .stats-grid{
+    grid-template-columns:1fr 1fr;
+    gap:10px;
   }
 
-
-  .form-grid {
-    grid-template-columns: 1fr;
+  .stat-card{
+    padding:14px 12px;
   }
 
-
-  .full {
-    grid-column: auto;
+  .stat-value{
+    font-size:23px;
   }
 
-
-  .page-actions {
-    width: 100%;
+  .stat-label{
+    font-size:11px;
   }
 
-
-  .page-actions .btn {
-    flex: 1;
+  .stat-description{
+    font-size:10px;
   }
 
-
-  .panel-body {
-    padding: 16px;
+  .form-grid{
+    grid-template-columns:1fr;
   }
 
-
-  .modal-footer {
-    flex-direction: column;
+  .full{
+    grid-column:auto;
   }
 
-
-  .modal-footer .btn {
-    width: 100%;
+  .page-actions{
+    width:100%;
   }
 
-
-  .toast {
-    left: 15px;
-
-    right: 15px;
-
-    bottom: 15px;
-
-    max-width: none;
+  .page-actions .btn{
+    flex:1;
   }
 
+  .panel-body{
+    padding:16px;
+  }
+
+  .modal-footer{
+    flex-direction:column;
+  }
+
+  .modal-footer .btn{
+    width:100%;
+  }
+
+  .toast{
+    left:15px;
+    right:15px;
+    bottom:90px;
+    max-width:none;
+  }
+
+  /*
+   * Make the seven bottom navigation buttons fit
+   * comfortably on smaller phones.
+   */
+
+  .nav{
+    padding-left:2px;
+    padding-right:2px;
+  }
+
+  .nav-item{
+    font-size:8px;
+  }
+
+  .nav-icon{
+    font-size:17px;
+    height:22px;
+  }
 }
-
 </style>
-
 </head>
 
-
 <body>
-
 
 <!-- ===================================================
      LOGIN
@@ -1352,16 +1049,10 @@ tr:last-child td {
       Inventory Management System
     </p>
 
-
-    <!-- LOGIN FORM -->
-
     <form id="loginForm">
 
       <div class="form-group">
-
-        <label for="loginEmail">
-          Email
-        </label>
+        <label for="loginEmail">Email</label>
 
         <input
           id="loginEmail"
@@ -1371,15 +1062,10 @@ tr:last-child td {
           autocomplete="email"
           required
         >
-
       </div>
 
-
       <div class="form-group">
-
-        <label for="loginPassword">
-          Password
-        </label>
+        <label for="loginPassword">Password</label>
 
         <input
           id="loginPassword"
@@ -1389,9 +1075,7 @@ tr:last-child td {
           autocomplete="current-password"
           required
         >
-
       </div>
-
 
       <button
         id="loginButton"
@@ -1403,13 +1087,7 @@ tr:last-child td {
 
     </form>
 
-
-    <!-- OTP FORM -->
-
-    <form
-      id="otpForm"
-      class="hidden"
-    >
+    <form id="otpForm" class="hidden">
 
       <div class="otp-info">
 
@@ -1422,7 +1100,6 @@ tr:last-child td {
         Enter the 6-digit code to continue.
 
       </div>
-
 
       <div class="form-group">
 
@@ -1443,7 +1120,6 @@ tr:last-child td {
 
       </div>
 
-
       <button
         id="otpButton"
         class="btn btn-primary btn-full"
@@ -1451,7 +1127,6 @@ tr:last-child td {
       >
         Verify & Login
       </button>
-
 
       <button
         type="button"
@@ -1468,23 +1143,15 @@ tr:last-child td {
 </section>
 
 
-
 <!-- ===================================================
      APPLICATION
 =================================================== -->
 
-<section
-  id="appScreen"
-  class="app hidden"
->
+<section id="appScreen" class="app hidden">
 
+  <!-- SIDEBAR / MOBILE BOTTOM NAVIGATION -->
 
-  <!-- SIDEBAR -->
-
-  <aside
-    id="sidebar"
-    class="sidebar"
-  >
+  <aside id="sidebar" class="sidebar">
 
     <div class="sidebar-brand">
 
@@ -1503,14 +1170,17 @@ tr:last-child td {
     </div>
 
 
+    <!--
+      On desktop this is the left sidebar.
+      On mobile CSS automatically converts this
+      into the fixed bottom navigation.
+    -->
+
     <nav class="nav">
 
       <div class="nav-section">
         Main Menu
       </div>
-
-
-      <!-- FEATURE 1 -->
 
       <button
         class="nav-item active"
@@ -1520,9 +1190,6 @@ tr:last-child td {
         <span>Dashboard</span>
       </button>
 
-
-      <!-- FEATURE 2 -->
-
       <button
         class="nav-item"
         data-page="inventory"
@@ -1531,19 +1198,13 @@ tr:last-child td {
         <span>Inventory</span>
       </button>
 
-
-      <!-- FEATURE 3 -->
-
       <button
         class="nav-item"
         data-page="stock"
       >
         <span class="nav-icon">↕</span>
-        <span>Stock In / Out</span>
+        <span>Stock</span>
       </button>
-
-
-      <!-- FEATURE 4 -->
 
       <button
         class="nav-item"
@@ -1553,9 +1214,6 @@ tr:last-child td {
         <span>Suppliers</span>
       </button>
 
-
-      <!-- FEATURE 5 -->
-
       <button
         class="nav-item"
         data-page="transactions"
@@ -1563,9 +1221,6 @@ tr:last-child td {
         <span class="nav-icon">▤</span>
         <span>Transactions</span>
       </button>
-
-
-      <!-- FEATURE 6 -->
 
       <button
         class="nav-item"
@@ -1575,15 +1230,12 @@ tr:last-child td {
         <span>Reports</span>
       </button>
 
-
-      <!-- FEATURE 7 -->
-
       <button
         class="nav-item"
         data-page="audit"
       >
         <span class="nav-icon">✓</span>
-        <span>Audit Log</span>
+        <span>Audit</span>
       </button>
 
     </nav>
@@ -1591,20 +1243,13 @@ tr:last-child td {
 
     <div class="sidebar-user">
 
-      <div
-        id="sidebarUserName"
-        class="user-name"
-      >
+      <div id="sidebarUserName" class="user-name">
         User
       </div>
 
-      <div
-        id="sidebarUserRole"
-        class="user-role"
-      >
+      <div id="sidebarUserRole" class="user-role">
         Staff
       </div>
-
 
       <button
         id="logoutButton"
@@ -1618,28 +1263,17 @@ tr:last-child td {
   </aside>
 
 
-
   <!-- MAIN -->
 
   <main class="main">
-
 
     <!-- MOBILE HEADER -->
 
     <header class="mobile-header">
 
-      <button
-        id="menuButton"
-        class="menu-btn"
-      >
-        ☰
-      </button>
-
       <div class="mobile-brand">
         ROMA Cafe
       </div>
-
-      <div style="width:40px"></div>
 
     </header>
 
@@ -1660,11 +1294,7 @@ tr:last-child td {
 
       </div>
 
-
-      <div
-        id="topbarUser"
-        class="muted"
-      >
+      <div id="topbarUser" class="muted">
         Admin
       </div>
 
@@ -1673,35 +1303,21 @@ tr:last-child td {
 
     <!-- PAGE CONTENT -->
 
-    <div
-      id="content"
-      class="content"
-    >
-    </div>
+    <div id="content" class="content"></div>
 
   </main>
 
 </section>
 
 
+<!-- MODAL -->
 
-<!-- ===================================================
-     MODAL
-=================================================== -->
-
-<div
-  id="modalContainer"
-  class="hidden"
-></div>
-
+<div id="modalContainer" class="hidden"></div>
 
 
 <!-- TOAST -->
 
-<div
-  id="toastContainer"
-></div>
-
+<div id="toastContainer"></div>
 
 
 <script>
@@ -1709,12 +1325,6 @@ tr:last-child td {
 /* =====================================================
    CONFIGURATION
 ===================================================== */
-
-/*
- * IMPORTANT:
- * Replace this with your deployed Apps Script
- * Web App /exec URL.
- */
 
 const API_URL =
   "https://script.google.com/macros/s/AKfycbzNNtT83ZF0lnoMi0YsaNcmoCr_IGNS2p026eeIjt7QXpL7IHeg1mD2mBYr2_OVUME3/exec";
@@ -1725,9 +1335,7 @@ const API_URL =
 ===================================================== */
 
 let currentUser = null;
-
 let sessionToken = null;
-
 let sessionExpires = null;
 
 let appData = {
@@ -1738,7 +1346,6 @@ let appData = {
 };
 
 let currentPage = "dashboard";
-
 let otpEmail = "";
 
 
@@ -1784,61 +1391,43 @@ async function api(action, data = {}) {
     !API_URL ||
     API_URL.includes("PASTE_YOUR")
   ) {
-
     throw new Error(
       "Please add your Apps Script Web App URL in index.html."
     );
   }
 
-
   const payload = {
     action: action,
-
     data: {
       ...data
     }
   };
 
-
   if (sessionToken) {
-
-    payload.data.token =
-      sessionToken;
+    payload.data.token = sessionToken;
   }
-
 
   const response = await fetch(
     API_URL,
     {
       method: "POST",
-
       body: JSON.stringify(payload)
     }
   );
 
-
-  const text =
-    await response.text();
-
+  const text = await response.text();
 
   let result;
 
-
   try {
-
     result = JSON.parse(text);
-
   } catch (error) {
-
     throw new Error(
       "The server returned an invalid response."
     );
   }
 
-
-  if (
-    result.unauthorized
-  ) {
+  if (result.unauthorized) {
 
     clearSession();
 
@@ -1847,16 +1436,12 @@ async function api(action, data = {}) {
     );
   }
 
-
-  if (
-    result.success === false
-  ) {
+  if (result.success === false) {
 
     throw new Error(
       result.message || "Request failed."
     );
   }
-
 
   return result;
 }
@@ -1868,15 +1453,9 @@ async function api(action, data = {}) {
 
 function saveSession(result) {
 
-  sessionToken =
-    result.token;
-
-  sessionExpires =
-    result.expires;
-
-  currentUser =
-    result.user;
-
+  sessionToken = result.token;
+  sessionExpires = result.expires;
+  currentUser = result.user;
 
   sessionStorage.setItem(
     "roma_token",
@@ -1898,22 +1477,15 @@ function saveSession(result) {
 function restoreSession() {
 
   const token =
-    sessionStorage.getItem(
-      "roma_token"
-    );
+    sessionStorage.getItem("roma_token");
 
   const expires =
     Number(
-      sessionStorage.getItem(
-        "roma_expires"
-      ) || 0
+      sessionStorage.getItem("roma_expires") || 0
     );
 
   const user =
-    sessionStorage.getItem(
-      "roma_user"
-    );
-
+    sessionStorage.getItem("roma_user");
 
   if (
     !token ||
@@ -1927,15 +1499,11 @@ function restoreSession() {
     return false;
   }
 
-
   try {
 
     sessionToken = token;
-
     sessionExpires = expires;
-
-    currentUser =
-      JSON.parse(user);
+    currentUser = JSON.parse(user);
 
     return true;
 
@@ -1951,23 +1519,12 @@ function restoreSession() {
 function clearSession() {
 
   sessionToken = null;
-
   sessionExpires = null;
-
   currentUser = null;
 
-
-  sessionStorage.removeItem(
-    "roma_token"
-  );
-
-  sessionStorage.removeItem(
-    "roma_expires"
-  );
-
-  sessionStorage.removeItem(
-    "roma_user"
-  );
+  sessionStorage.removeItem("roma_token");
+  sessionStorage.removeItem("roma_expires");
+  sessionStorage.removeItem("roma_user");
 }
 
 
@@ -1978,30 +1535,28 @@ function clearSession() {
 function esc(value) {
 
   return String(
-    value === null ||
-    value === undefined
+    value === null || value === undefined
       ? ""
       : value
   )
-  .replace(/&/g, "&amp;")
-  .replace(/</g, "&lt;")
-  .replace(/>/g, "&gt;")
-  .replace(/"/g, "&quot;")
-  .replace(/'/g, "&#039;");
+  .replace(/&/g,"&amp;")
+  .replace(/</g,"&lt;")
+  .replace(/>/g,"&gt;")
+  .replace(/"/g,"&quot;")
+  .replace(/'/g,"&#039;");
 }
 
 
 function money(value) {
 
-  const amount =
-    Number(value || 0);
+  const amount = Number(value || 0);
 
   return "₱" +
     amount.toLocaleString(
       "en-PH",
       {
-        minimumFractionDigits: 2,
-        maximumFractionDigits: 2
+        minimumFractionDigits:2,
+        maximumFractionDigits:2
       }
     );
 }
@@ -2009,11 +1564,8 @@ function money(value) {
 
 function number(value) {
 
-  return Number(
-    value || 0
-  ).toLocaleString(
-    "en-PH"
-  );
+  return Number(value || 0)
+    .toLocaleString("en-PH");
 }
 
 
@@ -2023,24 +1575,20 @@ function formatDate(value) {
     return "-";
   }
 
-
-  const date =
-    new Date(value);
-
+  const date = new Date(value);
 
   if (isNaN(date.getTime())) {
     return esc(value);
   }
 
-
   return date.toLocaleString(
     "en-PH",
     {
-      year: "numeric",
-      month: "short",
-      day: "numeric",
-      hour: "2-digit",
-      minute: "2-digit"
+      year:"numeric",
+      month:"short",
+      day:"numeric",
+      hour:"2-digit",
+      minute:"2-digit"
     }
   );
 }
@@ -2054,19 +1602,12 @@ function showToast(
   const toast =
     document.createElement("div");
 
-
   toast.className =
     "toast " + type;
 
+  toast.textContent = message;
 
-  toast.textContent =
-    message;
-
-
-  toastContainer.appendChild(
-    toast
-  );
-
+  toastContainer.appendChild(toast);
 
   setTimeout(
     () => toast.remove(),
@@ -2086,15 +1627,11 @@ function loading() {
 }
 
 
-function pageTitle(
-  title,
-  subtitle
-) {
+function pageTitle(title, subtitle) {
 
   document.getElementById(
     "pageTitle"
   ).textContent = title;
-
 
   document.getElementById(
     "pageSubtitle"
@@ -2112,24 +1649,20 @@ loginForm.addEventListener(
 
     event.preventDefault();
 
-
     const email =
       document.getElementById(
         "loginEmail"
       ).value.trim();
-
 
     const password =
       document.getElementById(
         "loginPassword"
       ).value;
 
-
     loginButton.disabled = true;
 
     loginButton.textContent =
       "Sending OTP...";
-
 
     try {
 
@@ -2137,34 +1670,24 @@ loginForm.addEventListener(
         await api(
           "requestOTP",
           {
-            email: email,
-            password: password
+            email:email,
+            password:password
           }
         );
 
-
       otpEmail = email;
-
 
       document.getElementById(
         "otpEmail"
-      ).textContent =
-        email;
+      ).textContent = email;
 
+      loginForm.classList.add("hidden");
 
-      loginForm.classList.add(
-        "hidden"
-      );
-
-      otpForm.classList.remove(
-        "hidden"
-      );
-
+      otpForm.classList.remove("hidden");
 
       document.getElementById(
         "otpInput"
       ).focus();
-
 
       showToast(
         result.message,
@@ -2195,18 +1718,15 @@ otpForm.addEventListener(
 
     event.preventDefault();
 
-
     const otp =
       document.getElementById(
         "otpInput"
       ).value.trim();
 
-
     otpButton.disabled = true;
 
     otpButton.textContent =
       "Verifying...";
-
 
     try {
 
@@ -2214,20 +1734,16 @@ otpForm.addEventListener(
         await api(
           "verifyOTP",
           {
-            email: otpEmail,
-            otp: otp
+            email:otpEmail,
+            otp:otp
           }
         );
 
-
       saveSession(result);
-
 
       showApplication();
 
-
       await refreshData();
-
 
       showToast(
         "Welcome to ROMA Cafe, " +
@@ -2259,13 +1775,9 @@ document.getElementById(
   "click",
   function() {
 
-    otpForm.classList.add(
-      "hidden"
-    );
+    otpForm.classList.add("hidden");
 
-    loginForm.classList.remove(
-      "hidden"
-    );
+    loginForm.classList.remove("hidden");
 
     document.getElementById(
       "otpInput"
@@ -2280,32 +1792,24 @@ document.getElementById(
 
 function showApplication() {
 
-  authScreen.classList.add(
-    "hidden"
-  );
+  authScreen.classList.add("hidden");
 
-  appScreen.classList.remove(
-    "hidden"
-  );
-
+  appScreen.classList.remove("hidden");
 
   document.getElementById(
     "sidebarUserName"
   ).textContent =
     currentUser.name;
 
-
   document.getElementById(
     "sidebarUserRole"
   ).textContent =
     currentUser.role;
 
-
   document.getElementById(
     "topbarUser"
   ).textContent =
     currentUser.role;
-
 
   navigate("dashboard");
 }
@@ -2328,14 +1832,10 @@ document
             this.dataset.page
           );
 
-
-          document
-            .getElementById(
-              "sidebar"
-            )
-            .classList.remove(
-              "open"
-            );
+          /*
+           * No sidebar closing code here.
+           * On mobile the sidebar IS the bottom menu.
+           */
         }
       );
     }
@@ -2345,7 +1845,6 @@ document
 async function navigate(page) {
 
   currentPage = page;
-
 
   document
     .querySelectorAll(".nav-item")
@@ -2359,8 +1858,7 @@ async function navigate(page) {
       }
     );
 
-
-  switch (page) {
+  switch(page) {
 
     case "dashboard":
       renderDashboard();
@@ -2405,10 +1903,7 @@ async function refreshData() {
   try {
 
     const result =
-      await api(
-        "getAllData"
-      );
-
+      await api("getAllData");
 
     appData.inventory =
       result.inventory || [];
@@ -2422,16 +1917,13 @@ async function refreshData() {
     appData.audit =
       result.audit || [];
 
-
     currentUser =
       result.user || currentUser;
-
 
     sessionStorage.setItem(
       "roma_user",
       JSON.stringify(currentUser)
     );
-
 
     renderCurrentPage();
 
@@ -2446,7 +1938,6 @@ async function refreshData() {
 
 
 function renderCurrentPage() {
-
   navigate(currentPage);
 }
 
@@ -2462,22 +1953,17 @@ function renderDashboard() {
     "Overview of your cafe inventory"
   );
 
-
   const inventory =
     appData.inventory;
-
 
   const suppliers =
     appData.suppliers;
 
-
   const transactions =
     appData.transactions;
 
-
   const totalItems =
     inventory.length;
-
 
   const lowStock =
     inventory.filter(
@@ -2486,24 +1972,19 @@ function renderDashboard() {
         Number(item.minStock)
     ).length;
 
-
   const inventoryValue =
     inventory.reduce(
-      (total, item) =>
+      (total,item) =>
         total +
-        (
-          Number(item.quantity || 0) *
-          Number(item.cost || 0)
-        ),
+        Number(item.quantity || 0) *
+        Number(item.cost || 0),
       0
     );
-
 
   const recent =
     [...transactions]
       .reverse()
-      .slice(0, 6);
-
+      .slice(0,6);
 
   content.innerHTML = `
 
@@ -2523,8 +2004,8 @@ function renderDashboard() {
         </div>
       </div>
 
-
       <div class="stat-card">
+
         <div class="stat-label">
           Low Stock
         </div>
@@ -2543,10 +2024,11 @@ function renderDashboard() {
         <div class="stat-description">
           Items at or below minimum stock
         </div>
+
       </div>
 
-
       <div class="stat-card">
+
         <div class="stat-label">
           Inventory Value
         </div>
@@ -2558,10 +2040,11 @@ function renderDashboard() {
         <div class="stat-description">
           Current estimated inventory value
         </div>
+
       </div>
 
-
       <div class="stat-card">
+
         <div class="stat-label">
           Suppliers
         </div>
@@ -2573,6 +2056,7 @@ function renderDashboard() {
         <div class="stat-description">
           Registered suppliers
         </div>
+
       </div>
 
     </div>
@@ -2597,7 +2081,6 @@ function renderDashboard() {
 
         </div>
 
-
         <div class="panel-body">
 
           ${
@@ -2608,12 +2091,14 @@ function renderDashboard() {
                   <table>
 
                     <thead>
+
                       <tr>
                         <th>Item</th>
                         <th>Type</th>
                         <th>Qty</th>
                         <th>Date</th>
                       </tr>
+
                     </thead>
 
                     <tbody>
@@ -2629,13 +2114,17 @@ function renderDashboard() {
                           </td>
 
                           <td>
+
                             <span class="badge ${
                               String(t.type) === "IN"
                                 ? "badge-green"
                                 : "badge-red"
                             }">
+
                               ${esc(t.type)}
+
                             </span>
+
                           </td>
 
                           <td>
@@ -2658,8 +2147,13 @@ function renderDashboard() {
               `
               : `
                 <div class="empty">
-                  <strong>No transactions yet</strong>
+
+                  <strong>
+                    No transactions yet
+                  </strong>
+
                   Stock transactions will appear here.
+
                 </div>
               `
           }
@@ -2685,7 +2179,6 @@ function renderDashboard() {
           </button>
 
         </div>
-
 
         <div class="panel-body">
 
@@ -2719,12 +2212,13 @@ function renderDashboard() {
                               Number(item.quantity) <=
                               Number(item.minStock)
                           )
-                          .slice(0, 8)
+                          .slice(0,8)
                           .map(item => `
 
                             <tr>
 
                               <td>
+
                                 <span class="item-name">
                                   ${esc(item.name)}
                                 </span>
@@ -2734,18 +2228,25 @@ function renderDashboard() {
                                 <small class="muted">
                                   ${esc(item.code)}
                                 </small>
+
                               </td>
 
                               <td>
+
                                 <span class="badge badge-red">
+
                                   ${number(item.quantity)}
                                   ${esc(item.unit)}
+
                                 </span>
+
                               </td>
 
                               <td>
+
                                 ${number(item.minStock)}
                                 ${esc(item.unit)}
+
                               </td>
 
                             </tr>
@@ -2762,8 +2263,13 @@ function renderDashboard() {
               `
               : `
                 <div class="empty">
-                  <strong>Stock levels are healthy</strong>
+
+                  <strong>
+                    Stock levels are healthy
+                  </strong>
+
                   No items currently require restocking.
+
                 </div>
               `
           }
@@ -2789,19 +2295,21 @@ function renderInventory() {
     "Manage ROMA Cafe products and stock levels"
   );
 
-
   content.innerHTML = `
 
     <div class="page-header">
 
       <div>
-        <h3>Inventory</h3>
+
+        <h3>
+          Inventory
+        </h3>
 
         <p>
           Add, monitor and manage cafe inventory.
         </p>
-      </div>
 
+      </div>
 
       <div class="page-actions">
 
@@ -2837,10 +2345,7 @@ function renderInventory() {
 
         </div>
 
-
-        <div
-          id="inventoryTable"
-        ></div>
+        <div id="inventoryTable"></div>
 
       </div>
 
@@ -2848,27 +2353,24 @@ function renderInventory() {
 
   `;
 
-
   renderInventoryTable();
 }
 
 
 function filterInventory() {
 
+  const input =
+    document.getElementById(
+      "inventorySearch"
+    );
+
   renderInventoryTable(
-    document
-      .getElementById(
-        "inventorySearch"
-      )
-      .value
-      .toLowerCase()
+    input ? input.value.toLowerCase() : ""
   );
 }
 
 
-function renderInventoryTable(
-  search = ""
-) {
+function renderInventoryTable(search = "") {
 
   let items =
     appData.inventory.filter(
@@ -2887,30 +2389,33 @@ function renderInventoryTable(
       }
     );
 
-
   const container =
     document.getElementById(
       "inventoryTable"
     );
 
-
   if (!container) {
     return;
   }
 
-
   if (!items.length) {
 
     container.innerHTML = `
+
       <div class="empty">
-        <strong>No inventory items found</strong>
+
+        <strong>
+          No inventory items found
+        </strong>
+
         Add your first inventory item.
+
       </div>
+
     `;
 
     return;
   }
-
 
   container.innerHTML = `
 
@@ -2934,7 +2439,6 @@ function renderInventoryTable(
 
         </thead>
 
-
         <tbody>
 
           ${items.map(item => {
@@ -2945,33 +2449,19 @@ function renderInventoryTable(
             const minimum =
               Number(item.minStock || 0);
 
-
-            let status =
-              "In Stock";
-
-            let badge =
-              "badge-green";
-
+            let status = "In Stock";
+            let badge = "badge-green";
 
             if (quantity <= 0) {
 
-              status =
-                "Out of Stock";
+              status = "Out of Stock";
+              badge = "badge-red";
 
-              badge =
-                "badge-red";
+            } else if (quantity <= minimum) {
 
-            } else if (
-              quantity <= minimum
-            ) {
-
-              status =
-                "Low Stock";
-
-              badge =
-                "badge-orange";
+              status = "Low Stock";
+              badge = "badge-orange";
             }
-
 
             return `
 
@@ -2982,7 +2472,6 @@ function renderInventoryTable(
                     ${esc(item.code)}
                   </strong>
                 </td>
-
 
                 <td>
 
@@ -2998,24 +2487,23 @@ function renderInventoryTable(
 
                 </td>
 
-
                 <td>
                   ${esc(item.category)}
                 </td>
 
-
                 <td>
+
                   <strong>
                     ${number(quantity)}
                   </strong>
-                  ${esc(item.unit)}
-                </td>
 
+                  ${esc(item.unit)}
+
+                </td>
 
                 <td>
                   ${money(item.cost)}
                 </td>
-
 
                 <td>
 
@@ -3024,7 +2512,6 @@ function renderInventoryTable(
                   </span>
 
                 </td>
-
 
                 <td>
 
@@ -3070,10 +2557,7 @@ function renderInventoryTable(
 
 function openInventoryModal() {
 
-  modalContainer.classList.remove(
-    "hidden"
-  );
-
+  modalContainer.classList.remove("hidden");
 
   modalContainer.innerHTML = `
 
@@ -3096,15 +2580,11 @@ function openInventoryModal() {
 
         </div>
 
-
-        <form
-          id="inventoryForm"
-        >
+        <form id="inventoryForm">
 
           <div class="modal-body">
 
             <div class="form-grid">
-
 
               <div class="form-group">
 
@@ -3121,7 +2601,6 @@ function openInventoryModal() {
 
               </div>
 
-
               <div class="form-group">
 
                 <label>
@@ -3136,7 +2615,6 @@ function openInventoryModal() {
                 >
 
               </div>
-
 
               <div class="form-group">
 
@@ -3166,7 +2644,6 @@ function openInventoryModal() {
                 </select>
 
               </div>
-
 
               <div class="form-group">
 
@@ -3198,7 +2675,6 @@ function openInventoryModal() {
 
               </div>
 
-
               <div class="form-group">
 
                 <label>
@@ -3216,7 +2692,6 @@ function openInventoryModal() {
 
               </div>
 
-
               <div class="form-group">
 
                 <label>
@@ -3233,7 +2708,6 @@ function openInventoryModal() {
                 >
 
               </div>
-
 
               <div class="form-group full">
 
@@ -3257,7 +2731,6 @@ function openInventoryModal() {
 
           </div>
 
-
           <div class="modal-footer">
 
             <button
@@ -3267,7 +2740,6 @@ function openInventoryModal() {
             >
               Cancel
             </button>
-
 
             <button
               type="submit"
@@ -3286,11 +2758,8 @@ function openInventoryModal() {
 
   `;
 
-
   document
-    .getElementById(
-      "inventoryForm"
-    )
+    .getElementById("inventoryForm")
     .addEventListener(
       "submit",
       addInventory
@@ -3301,7 +2770,6 @@ function openInventoryModal() {
 async function addInventory(event) {
 
   event.preventDefault();
-
 
   const data = {
 
@@ -3347,7 +2815,6 @@ async function addInventory(event) {
       )
   };
 
-
   try {
 
     const result =
@@ -3356,15 +2823,12 @@ async function addInventory(event) {
         data
       );
 
-
     closeModal();
-
 
     showToast(
       result.message,
       "success"
     );
-
 
     await refreshData();
 
@@ -3378,9 +2842,7 @@ async function addInventory(event) {
 }
 
 
-async function deleteItem(
-  itemId
-) {
+async function deleteItem(itemId) {
 
   const item =
     appData.inventory.find(
@@ -3389,24 +2851,20 @@ async function deleteItem(
         String(itemId)
     );
 
-
   if (!item) {
     return;
   }
 
-
   const confirmed =
     confirm(
-      "Delete \"" +
+      'Delete "' +
       item.name +
-      "\" from inventory?"
+      '" from inventory?'
     );
-
 
   if (!confirmed) {
     return;
   }
-
 
   try {
 
@@ -3414,16 +2872,14 @@ async function deleteItem(
       await api(
         "deleteInventory",
         {
-          itemId: itemId
+          itemId:itemId
         }
       );
-
 
     showToast(
       result.message,
       "success"
     );
-
 
     await refreshData();
 
@@ -3448,24 +2904,25 @@ function renderStock() {
     "Record incoming and outgoing inventory"
   );
 
-
   content.innerHTML = `
 
     <div class="page-header">
 
       <div>
-        <h3>Stock In / Out</h3>
+
+        <h3>
+          Stock In / Out
+        </h3>
 
         <p>
           Record stock additions and releases.
         </p>
+
       </div>
 
     </div>
 
-
     <div class="two-column">
-
 
       <div class="panel">
 
@@ -3476,7 +2933,6 @@ function renderStock() {
           </h4>
 
         </div>
-
 
         <form id="stockForm">
 
@@ -3514,7 +2970,6 @@ function renderStock() {
 
             </div>
 
-
             <div class="form-group">
 
               <label>
@@ -3539,7 +2994,6 @@ function renderStock() {
 
             </div>
 
-
             <div class="form-group">
 
               <label>
@@ -3556,7 +3010,6 @@ function renderStock() {
 
             </div>
 
-
             <div class="form-group">
 
               <label>
@@ -3570,7 +3023,6 @@ function renderStock() {
               >
 
             </div>
-
 
             <div class="form-group">
 
@@ -3589,7 +3041,6 @@ function renderStock() {
 
           </div>
 
-
           <div class="modal-footer">
 
             <button
@@ -3605,7 +3056,6 @@ function renderStock() {
 
       </div>
 
-
       <div class="panel">
 
         <div class="panel-header">
@@ -3615,7 +3065,6 @@ function renderStock() {
           </h4>
 
         </div>
-
 
         <div class="panel-body">
 
@@ -3646,16 +3095,15 @@ function renderStock() {
                         const min =
                           Number(item.minStock || 0);
 
-
                         const low =
                           qty <= min;
-
 
                         return `
 
                           <tr>
 
                             <td>
+
                               <span class="item-name">
                                 ${esc(item.name)}
                               </span>
@@ -3665,16 +3113,21 @@ function renderStock() {
                               <small class="muted">
                                 ${esc(item.category)}
                               </small>
+
                             </td>
 
                             <td>
+
                               <strong>
                                 ${number(qty)}
                               </strong>
+
                               ${esc(item.unit)}
+
                             </td>
 
                             <td>
+
                               <span class="badge ${
                                 qty <= 0
                                   ? "badge-red"
@@ -3682,6 +3135,7 @@ function renderStock() {
                                     ? "badge-orange"
                                     : "badge-green"
                               }">
+
                                 ${
                                   qty <= 0
                                     ? "Out"
@@ -3689,7 +3143,9 @@ function renderStock() {
                                       ? "Low"
                                       : "Good"
                                 }
+
                               </span>
+
                             </td>
 
                           </tr>
@@ -3706,8 +3162,13 @@ function renderStock() {
               `
               : `
                 <div class="empty">
-                  <strong>No inventory items</strong>
+
+                  <strong>
+                    No inventory items
+                  </strong>
+
                   Add inventory items first.
+
                 </div>
               `
           }
@@ -3720,11 +3181,8 @@ function renderStock() {
 
   `;
 
-
   document
-    .getElementById(
-      "stockForm"
-    )
+    .getElementById("stockForm")
     .addEventListener(
       "submit",
       submitStockTransaction
@@ -3732,12 +3190,9 @@ function renderStock() {
 }
 
 
-async function submitStockTransaction(
-  event
-) {
+async function submitStockTransaction(event) {
 
   event.preventDefault();
-
 
   const data = {
 
@@ -3769,7 +3224,6 @@ async function submitStockTransaction(
       ).value.trim()
   };
 
-
   try {
 
     const result =
@@ -3778,19 +3232,16 @@ async function submitStockTransaction(
         data
       );
 
-
     showToast(
       result.message,
       "success"
     );
-
 
     document
       .getElementById(
         "stockForm"
       )
       .reset();
-
 
     await refreshData();
 
@@ -3815,19 +3266,21 @@ function renderSuppliers() {
     "Manage cafe suppliers and contacts"
   );
 
-
   content.innerHTML = `
 
     <div class="page-header">
 
       <div>
-        <h3>Suppliers</h3>
+
+        <h3>
+          Suppliers
+        </h3>
 
         <p>
           Maintain your supplier records.
         </p>
-      </div>
 
+      </div>
 
       <button
         class="btn btn-primary"
@@ -3837,7 +3290,6 @@ function renderSuppliers() {
       </button>
 
     </div>
-
 
     <div class="panel">
 
@@ -3858,10 +3310,7 @@ function renderSuppliers() {
 
         </div>
 
-
-        <div
-          id="supplierTable"
-        ></div>
+        <div id="supplierTable"></div>
 
       </div>
 
@@ -3869,39 +3318,36 @@ function renderSuppliers() {
 
   `;
 
-
   renderSupplierTable();
 }
 
 
 function filterSuppliers() {
 
-  const search =
+  const input =
     document.getElementById(
       "supplierSearch"
-    ).value.toLowerCase();
+    );
 
+  const search =
+    input
+      ? input.value.toLowerCase()
+      : "";
 
-  renderSupplierTable(
-    search
-  );
+  renderSupplierTable(search);
 }
 
 
-function renderSupplierTable(
-  search = ""
-) {
+function renderSupplierTable(search = "") {
 
   const container =
     document.getElementById(
       "supplierTable"
     );
 
-
   if (!container) {
     return;
   }
-
 
   const suppliers =
     appData.suppliers.filter(
@@ -3916,24 +3362,28 @@ function renderSupplierTable(
             String(supplier.category)
           ).toLowerCase();
 
-
         return text.includes(search);
       }
     );
 
-
   if (!suppliers.length) {
 
     container.innerHTML = `
+
       <div class="empty">
-        <strong>No suppliers found</strong>
+
+        <strong>
+          No suppliers found
+        </strong>
+
         Add a supplier to get started.
+
       </div>
+
     `;
 
     return;
   }
-
 
   container.innerHTML = `
 
@@ -3953,7 +3403,6 @@ function renderSupplierTable(
 
         </thead>
 
-
         <tbody>
 
           ${suppliers.map(supplier => `
@@ -3961,9 +3410,11 @@ function renderSupplierTable(
             <tr>
 
               <td>
+
                 <span class="item-name">
                   ${esc(supplier.name)}
                 </span>
+
               </td>
 
               <td>
@@ -3979,6 +3430,7 @@ function renderSupplierTable(
               </td>
 
               <td>
+
                 ${
                   supplier.category
                     ? `
@@ -3988,6 +3440,7 @@ function renderSupplierTable(
                     `
                     : "-"
                 }
+
               </td>
 
             </tr>
@@ -4006,10 +3459,7 @@ function renderSupplierTable(
 
 function openSupplierModal() {
 
-  modalContainer.classList.remove(
-    "hidden"
-  );
-
+  modalContainer.classList.remove("hidden");
 
   modalContainer.innerHTML = `
 
@@ -4032,15 +3482,11 @@ function openSupplierModal() {
 
         </div>
 
-
-        <form
-          id="supplierForm"
-        >
+        <form id="supplierForm">
 
           <div class="modal-body">
 
             <div class="form-grid">
-
 
               <div class="form-group full">
 
@@ -4057,7 +3503,6 @@ function openSupplierModal() {
 
               </div>
 
-
               <div class="form-group">
 
                 <label>
@@ -4071,7 +3516,6 @@ function openSupplierModal() {
                 >
 
               </div>
-
 
               <div class="form-group">
 
@@ -4087,7 +3531,6 @@ function openSupplierModal() {
 
               </div>
 
-
               <div class="form-group">
 
                 <label>
@@ -4102,7 +3545,6 @@ function openSupplierModal() {
                 >
 
               </div>
-
 
               <div class="form-group">
 
@@ -4122,7 +3564,6 @@ function openSupplierModal() {
 
           </div>
 
-
           <div class="modal-footer">
 
             <button
@@ -4132,7 +3573,6 @@ function openSupplierModal() {
             >
               Cancel
             </button>
-
 
             <button
               type="submit"
@@ -4151,11 +3591,8 @@ function openSupplierModal() {
 
   `;
 
-
   document
-    .getElementById(
-      "supplierForm"
-    )
+    .getElementById("supplierForm")
     .addEventListener(
       "submit",
       submitSupplier
@@ -4163,12 +3600,9 @@ function openSupplierModal() {
 }
 
 
-async function submitSupplier(
-  event
-) {
+async function submitSupplier(event) {
 
   event.preventDefault();
-
 
   const data = {
 
@@ -4198,7 +3632,6 @@ async function submitSupplier(
       ).value.trim()
   };
 
-
   try {
 
     const result =
@@ -4207,15 +3640,12 @@ async function submitSupplier(
         data
       );
 
-
     closeModal();
-
 
     showToast(
       result.message,
       "success"
     );
-
 
     await refreshData();
 
@@ -4240,21 +3670,23 @@ function renderTransactions() {
     "View all recorded stock movements"
   );
 
-
   content.innerHTML = `
 
     <div class="page-header">
 
       <div>
-        <h3>Transactions</h3>
+
+        <h3>
+          Transactions
+        </h3>
 
         <p>
           History of stock IN and OUT transactions.
         </p>
+
       </div>
 
     </div>
-
 
     <div class="panel">
 
@@ -4272,7 +3704,6 @@ function renderTransactions() {
             >
 
           </div>
-
 
           <select
             id="transactionType"
@@ -4297,17 +3728,13 @@ function renderTransactions() {
 
         </div>
 
-
-        <div
-          id="transactionTable"
-        ></div>
+        <div id="transactionTable"></div>
 
       </div>
 
     </div>
 
   `;
-
 
   renderTransactionTable();
 }
@@ -4320,12 +3747,10 @@ function filterTransactions() {
       "transactionSearch"
     ).value.toLowerCase();
 
-
   const type =
     document.getElementById(
       "transactionType"
     ).value;
-
 
   renderTransactionTable(
     search,
@@ -4344,11 +3769,9 @@ function renderTransactionTable(
       "transactionTable"
     );
 
-
   if (!container) {
     return;
   }
-
 
   const transactions =
     [...appData.transactions]
@@ -4366,33 +3789,35 @@ function renderTransactionTable(
             String(transaction.user)
           ).toLowerCase();
 
-
         const matchesSearch =
           text.includes(search);
-
 
         const matchesType =
           !type ||
           String(transaction.type) === type;
 
-
         return matchesSearch &&
           matchesType;
       });
 
-
   if (!transactions.length) {
 
     container.innerHTML = `
+
       <div class="empty">
-        <strong>No transactions found</strong>
+
+        <strong>
+          No transactions found
+        </strong>
+
         Stock movements will appear here.
+
       </div>
+
     `;
 
     return;
   }
-
 
   container.innerHTML = `
 
@@ -4414,7 +3839,6 @@ function renderTransactionTable(
 
         </thead>
 
-
         <tbody>
 
           ${transactions.map(transaction => `
@@ -4425,13 +3849,13 @@ function renderTransactionTable(
                 ${formatDate(transaction.date)}
               </td>
 
-
               <td>
+
                 <span class="item-name">
                   ${esc(transaction.itemName)}
                 </span>
-              </td>
 
+              </td>
 
               <td>
 
@@ -4451,23 +3875,21 @@ function renderTransactionTable(
 
               </td>
 
-
               <td>
+
                 <strong>
                   ${number(transaction.quantity)}
                 </strong>
-              </td>
 
+              </td>
 
               <td>
                 ${esc(transaction.supplier || "-")}
               </td>
 
-
               <td>
                 ${esc(transaction.reason || "-")}
               </td>
-
 
               <td>
                 ${esc(transaction.user || "-")}
@@ -4498,22 +3920,17 @@ function renderReports() {
     "Inventory summaries and stock analysis"
   );
 
-
   const inventory =
     appData.inventory;
 
-
   const totalValue =
     inventory.reduce(
-      (total, item) =>
+      (total,item) =>
         total +
-        (
-          Number(item.quantity || 0) *
-          Number(item.cost || 0)
-        ),
+        Number(item.quantity || 0) *
+        Number(item.cost || 0),
       0
     );
-
 
   const lowStock =
     inventory.filter(
@@ -4522,31 +3939,26 @@ function renderReports() {
         Number(item.minStock)
     );
 
-
   const outOfStock =
     inventory.filter(
       item =>
         Number(item.quantity) <= 0
     );
 
-
   const categoryMap = {};
-
 
   inventory.forEach(item => {
 
     const category =
       item.category || "Other";
 
-
     if (!categoryMap[category]) {
 
       categoryMap[category] = {
-        items: 0,
-        value: 0
+        items:0,
+        value:0
       };
     }
-
 
     categoryMap[category].items++;
 
@@ -4555,10 +3967,8 @@ function renderReports() {
       Number(item.cost || 0);
   });
 
-
   const categories =
     Object.entries(categoryMap);
-
 
   content.innerHTML = `
 
@@ -4576,7 +3986,6 @@ function renderReports() {
 
       </div>
 
-
       <button
         class="btn btn-primary"
         onclick="window.print()"
@@ -4586,9 +3995,7 @@ function renderReports() {
 
     </div>
 
-
     <div class="three-column">
-
 
       <div class="report-card">
 
@@ -4605,7 +4012,6 @@ function renderReports() {
         </p>
 
       </div>
-
 
       <div class="report-card">
 
@@ -4625,7 +4031,6 @@ function renderReports() {
         </p>
 
       </div>
-
 
       <div class="report-card">
 
@@ -4648,12 +4053,9 @@ function renderReports() {
 
     </div>
 
-
     <br>
 
-
     <div class="two-column">
-
 
       <div class="panel">
 
@@ -4665,14 +4067,13 @@ function renderReports() {
 
         </div>
 
-
         <div class="panel-body">
 
           ${
             categories.length
               ? `
                 ${categories.map(
-                  ([category, info]) => {
+                  ([category,info]) => {
 
                     const percentage =
                       totalValue > 0
@@ -4684,7 +4085,6 @@ function renderReports() {
                             ) * 100
                           )
                         : 0;
-
 
                     return `
 
@@ -4711,7 +4111,6 @@ function renderReports() {
 
                         </div>
 
-
                         <div class="progress">
 
                           <div
@@ -4720,7 +4119,6 @@ function renderReports() {
                           ></div>
 
                         </div>
-
 
                         <div
                           style="
@@ -4740,8 +4138,13 @@ function renderReports() {
               `
               : `
                 <div class="empty">
-                  <strong>No report data</strong>
+
+                  <strong>
+                    No report data
+                  </strong>
+
                   Add inventory items first.
+
                 </div>
               `
           }
@@ -4749,7 +4152,6 @@ function renderReports() {
         </div>
 
       </div>
-
 
       <div class="panel">
 
@@ -4760,7 +4162,6 @@ function renderReports() {
           </h4>
 
         </div>
-
 
         <div class="panel-body">
 
@@ -4781,7 +4182,6 @@ function renderReports() {
 
                     </thead>
 
-
                     <tbody>
 
                       ${lowStock.map(item => `
@@ -4789,21 +4189,29 @@ function renderReports() {
                         <tr>
 
                           <td>
+
                             <span class="item-name">
                               ${esc(item.name)}
                             </span>
+
                           </td>
 
                           <td>
+
                             <span class="badge badge-orange">
+
                               ${number(item.quantity)}
                               ${esc(item.unit)}
+
                             </span>
+
                           </td>
 
                           <td>
+
                             ${number(item.minStock)}
                             ${esc(item.unit)}
+
                           </td>
 
                         </tr>
@@ -4818,8 +4226,13 @@ function renderReports() {
               `
               : `
                 <div class="empty">
-                  <strong>No low stock items</strong>
+
+                  <strong>
+                    No low stock items
+                  </strong>
+
                   Inventory levels are currently healthy.
+
                 </div>
               `
           }
@@ -4844,7 +4257,6 @@ function renderAudit() {
     "Audit Log",
     "Administrative activity monitoring"
   );
-
 
   if (
     !currentUser ||
@@ -4872,7 +4284,6 @@ function renderAudit() {
     return;
   }
 
-
   content.innerHTML = `
 
     <div class="page-header">
@@ -4890,7 +4301,6 @@ function renderAudit() {
       </div>
 
     </div>
-
 
     <div class="panel">
 
@@ -4914,7 +4324,6 @@ function renderAudit() {
                     </tr>
 
                   </thead>
-
 
                   <tbody>
 
@@ -4959,6 +4368,7 @@ function renderAudit() {
 
             `
             : `
+
               <div class="empty">
 
                 <strong>
@@ -4968,6 +4378,7 @@ function renderAudit() {
                 System activities will appear here.
 
               </div>
+
             `
         }
 
@@ -4985,9 +4396,7 @@ function renderAudit() {
 
 function closeModal() {
 
-  modalContainer.classList.add(
-    "hidden"
-  );
+  modalContainer.classList.add("hidden");
 
   modalContainer.innerHTML = "";
 }
@@ -4998,9 +4407,7 @@ function closeModal() {
 ===================================================== */
 
 document
-  .getElementById(
-    "logoutButton"
-  )
+  .getElementById("logoutButton")
   .addEventListener(
     "click",
     async function() {
@@ -5010,17 +4417,13 @@ document
           "Are you sure you want to logout?"
         );
 
-
       if (!confirmed) {
         return;
       }
 
-
       try {
 
-        await api(
-          "logout"
-        );
+        await api("logout");
 
       } catch (error) {
 
@@ -5029,65 +4432,28 @@ document
         );
       }
 
-
       clearSession();
 
+      appScreen.classList.add("hidden");
 
-      appScreen.classList.add(
-        "hidden"
-      );
+      authScreen.classList.remove("hidden");
 
-      authScreen.classList.remove(
-        "hidden"
-      );
+      loginForm.classList.remove("hidden");
 
-
-      loginForm.classList.remove(
-        "hidden"
-      );
-
-      otpForm.classList.add(
-        "hidden"
-      );
-
+      otpForm.classList.add("hidden");
 
       document.getElementById(
         "loginPassword"
       ).value = "";
 
-
       document.getElementById(
         "otpInput"
       ).value = "";
-
 
       showToast(
         "You have been logged out.",
         "success"
       );
-    }
-  );
-
-
-/* =====================================================
-   MOBILE MENU
-===================================================== */
-
-document
-  .getElementById(
-    "menuButton"
-  )
-  .addEventListener(
-    "click",
-    function() {
-
-      document
-        .getElementById(
-          "sidebar"
-        )
-        .classList.toggle(
-          "open"
-        );
     }
   );
 
@@ -5107,24 +4473,13 @@ setInterval(
 
       clearSession();
 
+      appScreen.classList.add("hidden");
 
-      appScreen.classList.add(
-        "hidden"
-      );
+      authScreen.classList.remove("hidden");
 
-      authScreen.classList.remove(
-        "hidden"
-      );
+      loginForm.classList.remove("hidden");
 
-
-      loginForm.classList.remove(
-        "hidden"
-      );
-
-      otpForm.classList.add(
-        "hidden"
-      );
-
+      otpForm.classList.add("hidden");
 
       showToast(
         "Your session has expired. Please login again.",
@@ -5143,9 +4498,7 @@ setInterval(
 
 async function startApplication() {
 
-  if (
-    restoreSession()
-  ) {
+  if (restoreSession()) {
 
     showApplication();
 
@@ -5156,16 +4509,10 @@ async function startApplication() {
     return;
   }
 
+  authScreen.classList.remove("hidden");
 
-  authScreen.classList.remove(
-    "hidden"
-  );
-
-  appScreen.classList.add(
-    "hidden"
-  );
+  appScreen.classList.add("hidden");
 }
-
 
 startApplication();
 
