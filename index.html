@@ -1,27 +1,74 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <title>ROMA Café Inventory System</title>
+  <meta name="theme-color" content="#111827">
+  <meta name="description" content="ROMA Cafe Inventory Management System">
+  <title>ROMA Cafe | Inventory Management</title>
 
   <style>
+    /* =========================================================
+       ROMA CAFE INVENTORY SYSTEM
+       Single-file GitHub frontend
+       ========================================================= */
+
+    :root {
+      --bg: #f5f7fb;
+      --white: #ffffff;
+      --dark: #111827;
+      --dark-2: #1f2937;
+      --text: #172033;
+      --muted: #6b7280;
+      --line: #e5e7eb;
+
+      --gold: #b7791f;
+      --gold-dark: #8b5e16;
+      --gold-light: #fff7e8;
+
+      --green: #15803d;
+      --green-light: #dcfce7;
+
+      --red: #dc2626;
+      --red-light: #fee2e2;
+
+      --orange: #d97706;
+      --orange-light: #fef3c7;
+
+      --blue: #2563eb;
+      --blue-light: #dbeafe;
+
+      --radius: 16px;
+      --shadow: 0 10px 30px rgba(17, 24, 39, 0.08);
+    }
+
     * {
       box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    html {
+      scroll-behavior: smooth;
     }
 
     body {
-      background: #f5f1ed;
-      color: #3e2723;
+      margin: 0;
+      font-family:
+        Inter,
+        ui-sans-serif,
+        system-ui,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+      background: var(--bg);
+      color: var(--text);
     }
 
     button,
     input,
-    select {
+    select,
+    textarea {
       font: inherit;
     }
 
@@ -29,1876 +76,1486 @@
       cursor: pointer;
     }
 
-    /* =========================
-       LOGIN
-    ========================= */
+    .hidden {
+      display: none !important;
+    }
 
-    .login-wrapper {
+    /* =========================================================
+       AUTHENTICATION
+       ========================================================= */
+
+    .auth-screen {
       min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      min-height: 100dvh;
+
+      display: grid;
+      place-items: center;
+
       padding: 20px;
+
       background:
-        linear-gradient(
-          rgba(62, 39, 35, 0.55),
-          rgba(62, 39, 35, 0.55)
+        radial-gradient(
+          circle at top right,
+          #f6d69b,
+          transparent 35%
         ),
         linear-gradient(
           135deg,
-          #8d6e63,
-          #4e342e
+          #ffffff,
+          #f4f1eb
         );
     }
 
-    .login-card {
-      width: 100%;
-      max-width: 430px;
-      background: white;
-      border-radius: 18px;
-      padding: 35px;
-      box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+    .auth-card {
+      width: min(430px, 100%);
+
+      background: var(--white);
+
+      border: 1px solid var(--line);
+
+      border-radius: 24px;
+
+      padding: 30px;
+
+      box-shadow: var(--shadow);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
     }
 
     .logo {
-      text-align: center;
-      margin-bottom: 25px;
+      width: 48px;
+      height: 48px;
+
+      display: grid;
+      place-items: center;
+
+      border-radius: 15px;
+
+      background: var(--dark);
+      color: #f6d69b;
+
+      font-weight: 900;
+      font-size: 20px;
     }
 
-    .logo h1 {
-      font-size: 38px;
-      letter-spacing: 5px;
-      color: #6f4e37;
+    .brand h1 {
+      margin: 0;
+
+      font-size: 20px;
     }
 
-    .logo p {
-      color: #777;
-      margin-top: 7px;
+    .brand p {
+      margin: 2px 0 0;
+
+      color: var(--muted);
+
+      font-size: 13px;
+    }
+
+    .auth-card h2 {
+      margin: 28px 0 7px;
+    }
+
+    .auth-description {
+      color: var(--muted);
+
       font-size: 14px;
+
+      line-height: 1.6;
+
+      margin-top: 0;
     }
 
-    .login-title {
-      text-align: center;
-      margin-bottom: 20px;
+    .field {
+      margin: 15px 0;
     }
 
-    .form-group {
-      margin-bottom: 16px;
-    }
-
-    .form-group label {
+    .field label {
       display: block;
-      font-weight: bold;
+
       margin-bottom: 7px;
-      font-size: 14px;
+
+      font-size: 13px;
+
+      font-weight: 700;
     }
 
-    .form-group input,
-    .form-group select {
+    .field input,
+    .field select,
+    .field textarea {
       width: 100%;
-      padding: 13px;
-      border: 1px solid #ddd;
-      border-radius: 9px;
+
+      padding: 12px 13px;
+
+      border: 1px solid #d1d5db;
+
+      border-radius: 11px;
+
       outline: none;
+
+      background: #fff;
+
+      color: var(--text);
     }
 
-    .form-group input:focus,
-    .form-group select:focus {
-      border-color: #6f4e37;
+    .field textarea {
+      min-height: 90px;
+
+      resize: vertical;
     }
 
-    .primary-btn {
+    .field input:focus,
+    .field select:focus,
+    .field textarea:focus {
+      border-color: var(--gold);
+
+      box-shadow:
+        0 0 0 3px
+        rgba(183, 121, 31, 0.14);
+    }
+
+    .btn {
+      border: 0;
+
+      padding: 11px 15px;
+
+      border-radius: 11px;
+
+      font-weight: 800;
+
+      transition: 0.2s ease;
+    }
+
+    .btn:hover {
+      transform: translateY(-1px);
+    }
+
+    .btn:disabled {
+      opacity: 0.55;
+
+      cursor: not-allowed;
+
+      transform: none;
+    }
+
+    .btn-primary {
       width: 100%;
-      padding: 13px;
-      border: none;
-      border-radius: 9px;
-      background: #6f4e37;
+
+      background: var(--dark);
+
       color: white;
-      font-weight: bold;
-      transition: 0.2s;
     }
 
-    .primary-btn:hover {
-      background: #4e342e;
+    .btn-gold {
+      background: var(--gold);
+
+      color: white;
     }
 
-    .secondary-btn {
-      padding: 11px 16px;
-      border: none;
-      border-radius: 8px;
-      background: #eee;
-      color: #3e2723;
-      font-weight: bold;
+    .btn-gold:hover {
+      background: var(--gold-dark);
     }
 
-    .secondary-btn:hover {
-      background: #ddd;
+    .btn-ghost {
+      background: #f3f4f6;
+
+      color: var(--text);
     }
 
-    .error-message {
-      display: none;
-      background: #ffebee;
-      color: #c62828;
-      padding: 11px;
-      border-radius: 8px;
-      margin-bottom: 15px;
-      font-size: 14px;
+    .btn-danger {
+      background: var(--red-light);
+
+      color: #991b1b;
     }
 
-    .success-message {
-      display: none;
-      background: #e8f5e9;
-      color: #2e7d32;
-      padding: 11px;
-      border-radius: 8px;
-      margin-bottom: 15px;
-      font-size: 14px;
+    .btn-blue {
+      background: var(--blue-light);
+
+      color: #1d4ed8;
     }
 
-    /* =========================
-       OTP
-    ========================= */
+    .alert {
+      padding: 10px 12px;
 
-    #otpSection {
-      display: none;
-    }
+      border-radius: 10px;
 
-    .otp-info {
-      text-align: center;
-      color: #666;
-      font-size: 14px;
-      margin-bottom: 20px;
+      font-size: 13px;
+
+      margin: 12px 0;
+
       line-height: 1.5;
     }
 
-    .otp-email {
-      font-weight: bold;
-      color: #6f4e37;
+    .alert-error {
+      color: #b91c1c;
+
+      background: #fef2f2;
+
+      border: 1px solid #fecaca;
     }
 
-    .otp-input {
-      text-align: center;
-      font-size: 25px;
-      letter-spacing: 8px;
-      font-weight: bold;
+    .alert-success {
+      color: #166534;
+
+      background: #f0fdf4;
+
+      border: 1px solid #bbf7d0;
     }
 
-    .timer {
-      text-align: center;
-      margin: 15px 0;
-      font-weight: bold;
-      color: #6f4e37;
+    /* =========================================================
+       TOP BAR
+       ========================================================= */
+
+    .topbar {
+      height: 68px;
+
+      background: var(--dark);
+
+      color: white;
+
+      display: flex;
+
+      align-items: center;
+
+      justify-content: space-between;
+
+      padding: 0 22px;
+
+      position: sticky;
+
+      top: 0;
+
+      z-index: 50;
     }
 
-    .timer.expired {
-      color: #c62828;
+    .topbar .brand p {
+      color: #cbd5e1;
     }
 
-    .otp-actions {
-      margin-top: 15px;
-      text-align: center;
+    .top-actions {
+      display: flex;
+
+      align-items: center;
+
+      gap: 10px;
     }
 
-    .resend-btn {
-      border: none;
-      background: transparent;
-      color: #6f4e37;
-      font-weight: bold;
-      margin-top: 12px;
-    }
-
-    .resend-btn:disabled {
-      color: #aaa;
-      cursor: not-allowed;
-    }
-
-    .back-login {
-      width: 100%;
-      margin-top: 10px;
-    }
-
-    /* =========================
-       APP
-    ========================= */
-
-    #app {
+    .menu-button {
       display: none;
-      min-height: 100vh;
+
+      background: transparent;
+
+      color: white;
+
+      border: 0;
+
+      font-size: 25px;
+    }
+
+    .avatar {
+      width: 36px;
+      height: 36px;
+
+      border-radius: 50%;
+
+      display: grid;
+
+      place-items: center;
+
+      background: #f6d69b;
+
+      color: var(--dark);
+
+      font-weight: 900;
+    }
+
+    .user-name {
+      font-size: 13px;
+
+      font-weight: 700;
+    }
+
+    .user-role {
+      font-size: 11px;
+
+      color: #cbd5e1;
+    }
+
+    /* =========================================================
+       LAYOUT
+       ========================================================= */
+
+    .layout {
+      display: flex;
+
+      min-height:
+        calc(100vh - 68px);
+      min-height:
+        calc(100dvh - 68px);
     }
 
     .sidebar {
-      position: fixed;
-      left: 0;
-      top: 0;
-      width: 250px;
-      height: 100vh;
-      background: #3e2723;
-      color: white;
-      padding: 25px 15px;
-      z-index: 1000;
+      width: 245px;
+
+      flex-shrink: 0;
+
+      background: white;
+
+      border-right: 1px solid var(--line);
+
+      padding: 18px 12px;
+
+      position: sticky;
+
+      top: 68px;
+
+      height:
+        calc(100vh - 68px);
+      height:
+        calc(100dvh - 68px);
+
       overflow-y: auto;
     }
 
-    .sidebar-logo {
-      text-align: center;
-      margin-bottom: 30px;
+    .nav-label {
+      font-size: 10px;
+
+      font-weight: 900;
+
+      color: #9ca3af;
+
+      text-transform: uppercase;
+
+      padding: 12px 12px 8px;
+
+      letter-spacing: 0.08em;
     }
 
-    .sidebar-logo h2 {
-      letter-spacing: 4px;
+    .nav {
+      display: grid;
+
+      gap: 5px;
     }
 
-    .sidebar-logo p {
-      font-size: 12px;
-      opacity: 0.7;
-      margin-top: 5px;
-    }
+    .nav button {
+      display: flex;
 
-    .nav-menu {
-      list-style: none;
-    }
+      align-items: center;
 
-    .nav-menu li {
-      margin-bottom: 7px;
-    }
+      gap: 11px;
 
-    .nav-menu button {
-      width: 100%;
-      padding: 13px 15px;
+      padding: 12px;
+
+      border-radius: 11px;
+
+      border: 0;
+
       background: transparent;
-      border: none;
-      color: white;
+
+      color: #4b5563;
+
       text-align: left;
-      border-radius: 8px;
-      font-size: 14px;
+
+      font-weight: 700;
     }
 
-    .nav-menu button:hover,
-    .nav-menu button.active {
-      background: #6f4e37;
+    .nav button:hover {
+      background: #f8fafc;
     }
 
-    .logout-btn {
-      margin-top: 25px;
-      background: #8d3c35 !important;
+    .nav button.active {
+      background: var(--gold-light);
+
+      color: var(--gold-dark);
+    }
+
+    .nav-icon {
+      width: 22px;
+
+      text-align: center;
     }
 
     .main {
-      margin-left: 250px;
-      min-height: 100vh;
-      padding: 25px;
+      flex: 1;
+
+      min-width: 0;
+
+      padding: 24px;
     }
 
-    .mobile-header {
-      display: none;
+    /* =========================================================
+       PAGE HEADER
+       ========================================================= */
+
+    .page-head {
+      display: flex;
+
+      align-items: center;
+
+      justify-content: space-between;
+
+      gap: 15px;
+
+      margin-bottom: 20px;
     }
 
-    /* =========================
-       PAGE
-    ========================= */
+    .page-head h2 {
+      margin: 0;
 
-    .page {
-      display: none;
+      font-size: 24px;
     }
 
-    .page.active {
-      display: block;
+    .page-head p {
+      margin: 5px 0 0;
+
+      color: var(--muted);
+
+      font-size: 13px;
     }
 
-    .page-header {
-      margin-bottom: 25px;
+    .head-actions {
+      display: flex;
+
+      align-items: center;
+
+      gap: 8px;
+
+      flex-wrap: wrap;
     }
 
-    .page-header h1 {
-      font-size: 28px;
-      margin-bottom: 5px;
-    }
+    /* =========================================================
+       CARDS
+       ========================================================= */
 
-    .page-header p {
-      color: #777;
-    }
-
-    /* =========================
-       DASHBOARD
-    ========================= */
-
-    .cards {
+    .grid {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 18px;
-      margin-bottom: 25px;
+
+      grid-template-columns:
+        repeat(4, minmax(0, 1fr));
+
+      gap: 15px;
     }
 
     .card {
       background: white;
-      border-radius: 12px;
-      padding: 22px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+
+      border: 1px solid var(--line);
+
+      border-radius: var(--radius);
+
+      padding: 18px;
+
+      box-shadow:
+        0 2px 8px
+        rgba(0, 0, 0, 0.025);
+    }
+
+    .stat {
+      display: flex;
+
+      align-items: flex-start;
+
+      justify-content: space-between;
+
+      gap: 12px;
+    }
+
+    .stat small {
+      color: var(--muted);
+
+      font-weight: 700;
+    }
+
+    .stat strong {
+      display: block;
+
+      margin-top: 8px;
+
+      font-size: 28px;
+    }
+
+    .stat-icon {
+      width: 42px;
+      height: 42px;
+
+      display: grid;
+
+      place-items: center;
+
+      border-radius: 13px;
+
+      background: var(--gold-light);
+
+      font-size: 18px;
+    }
+
+    .section-grid {
+      display: grid;
+
+      grid-template-columns:
+        1.4fr 0.8fr;
+
+      gap: 15px;
+
+      margin-top: 15px;
     }
 
     .card-title {
-      color: #777;
+      display: flex;
+
+      align-items: center;
+
+      justify-content: space-between;
+
+      gap: 10px;
+
+      margin-bottom: 15px;
+    }
+
+    .card-title h3 {
+      margin: 0;
+
+      font-size: 16px;
+    }
+
+    .muted {
+      color: var(--muted);
+    }
+
+    /* =========================================================
+       TABLES
+       ========================================================= */
+
+    .table-wrap {
+      overflow-x: auto;
+
+      border: 1px solid var(--line);
+
+      border-radius: 13px;
+    }
+
+    .table {
+      width: 100%;
+
+      min-width: 650px;
+
+      border-collapse: collapse;
+    }
+
+    .table th,
+    .table td {
+      padding: 12px 13px;
+
+      border-bottom: 1px solid var(--line);
+
+      text-align: left;
+
       font-size: 13px;
-      margin-bottom: 10px;
+
+      white-space: nowrap;
     }
 
-    .card-value {
-      font-size: 28px;
-      font-weight: bold;
-      color: #6f4e37;
+    .table th {
+      background: #f9fafb;
+
+      color: #6b7280;
+
+      font-size: 11px;
+
+      text-transform: uppercase;
+
+      letter-spacing: 0.03em;
     }
 
-    /* =========================
-       PANELS
-    ========================= */
+    .table tr:last-child td {
+      border-bottom: 0;
+    }
 
-    .panel {
+    .badge {
+      display: inline-flex;
+
+      align-items: center;
+
+      padding: 4px 8px;
+
+      border-radius: 999px;
+
+      font-size: 11px;
+
+      font-weight: 800;
+    }
+
+    .badge-green {
+      background: var(--green-light);
+
+      color: #166534;
+    }
+
+    .badge-red {
+      background: var(--red-light);
+
+      color: #991b1b;
+    }
+
+    .badge-orange {
+      background: var(--orange-light);
+
+      color: #92400e;
+    }
+
+    .badge-blue {
+      background: var(--blue-light);
+
+      color: #1d4ed8;
+    }
+
+    .badge-gray {
+      background: #f3f4f6;
+
+      color: #4b5563;
+    }
+
+    .low-stock {
+      color: #b91c1c;
+
+      font-weight: 900;
+    }
+
+    .empty {
+      padding: 35px;
+
+      text-align: center;
+
+      color: var(--muted);
+    }
+
+    /* =========================================================
+       SEARCH
+       ========================================================= */
+
+    .search {
+      width: min(280px, 100%);
+
+      padding: 10px 12px;
+
+      border: 1px solid var(--line);
+
+      border-radius: 10px;
+
       background: white;
-      border-radius: 12px;
-      padding: 22px;
-      margin-bottom: 20px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+
+      outline: none;
     }
 
-    .panel h2 {
-      margin-bottom: 18px;
+    .search:focus {
+      border-color: var(--gold);
+    }
+
+    .filters {
+      display: flex;
+
+      align-items: center;
+
+      gap: 8px;
+
+      flex-wrap: wrap;
+
+      margin-bottom: 13px;
+    }
+
+    /* =========================================================
+       MODAL
+       ========================================================= */
+
+    .modal-backdrop {
+      position: fixed;
+
+      inset: 0;
+
+      z-index: 100;
+
+      display: grid;
+
+      place-items: center;
+
+      padding: 18px;
+
+      background:
+        rgba(17, 24, 39, 0.55);
+    }
+
+    .modal {
+      width: min(580px, 100%);
+
+      max-height: 90dvh;
+
+      overflow-y: auto;
+
+      background: white;
+
+      border-radius: 20px;
+
+      padding: 22px;
+
+      box-shadow:
+        0 25px 70px
+        rgba(0, 0, 0, 0.2);
+    }
+
+    .modal-head {
+      display: flex;
+
+      align-items: center;
+
+      justify-content: space-between;
+
+      margin-bottom: 5px;
+    }
+
+    .modal-head h3 {
+      margin: 0;
+    }
+
+    .close-button {
+      width: 34px;
+      height: 34px;
+
+      border: 0;
+
+      border-radius: 9px;
+
+      background: #f3f4f6;
+
       font-size: 20px;
     }
 
-    /* =========================
-       FORMS
-    ========================= */
-
     .form-grid {
       display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 15px;
+
+      grid-template-columns:
+        1fr 1fr;
+
+      gap: 4px 12px;
     }
 
-    .form-grid .full {
+    .full {
       grid-column: 1 / -1;
     }
 
-    .form-grid button {
-      margin-top: 5px;
+    .modal-actions {
+      display: flex;
+
+      justify-content: flex-end;
+
+      gap: 8px;
+
+      margin-top: 16px;
     }
 
-    /* =========================
-       TABLE
-    ========================= */
-
-    .table-container {
-      overflow-x: auto;
-    }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      min-width: 700px;
-    }
-
-    th,
-    td {
-      padding: 12px;
-      text-align: left;
-      border-bottom: 1px solid #eee;
-      font-size: 13px;
-    }
-
-    th {
-      background: #f5f1ed;
-      font-weight: bold;
-    }
-
-    .status {
-      display: inline-block;
-      padding: 5px 9px;
-      border-radius: 20px;
-      font-size: 11px;
-      font-weight: bold;
-    }
-
-    .status.active {
-      background: #e8f5e9;
-      color: #2e7d32;
-    }
-
-    .status.low {
-      background: #fff3e0;
-      color: #ef6c00;
-    }
-
-    .status.out {
-      background: #ffebee;
-      color: #c62828;
-    }
-
-    /* =========================
-       USER INFO
-    ========================= */
-
-    .user-info {
-      margin-top: 20px;
-      padding: 12px;
-      background: rgba(255,255,255,0.08);
-      border-radius: 8px;
-      font-size: 12px;
-    }
-
-    .user-info strong {
-      display: block;
-      margin-bottom: 3px;
-    }
-
-    /* =========================
-       LOADING
-    ========================= */
-
-    .loading {
-      text-align: center;
-      padding: 25px;
-      color: #777;
-    }
-
-    /* =========================
+    /* =========================================================
        TOAST
-    ========================= */
+       ========================================================= */
 
     .toast {
       position: fixed;
-      right: 25px;
-      bottom: 25px;
-      background: #3e2723;
+
+      right: 20px;
+
+      bottom: 20px;
+
+      z-index: 200;
+
+      max-width: 360px;
+
+      padding: 12px 15px;
+
+      border-radius: 11px;
+
+      background: var(--dark);
+
       color: white;
-      padding: 13px 18px;
-      border-radius: 8px;
-      display: none;
-      z-index: 3000;
-      max-width: 350px;
+
+      box-shadow: var(--shadow);
+
+      font-size: 13px;
     }
 
-    /* =========================
-       MOBILE
-    ========================= */
+    /* =========================================================
+       MOBILE NAVIGATION
+       ========================================================= */
 
-    @media (max-width: 1000px) {
+    .mobile-nav {
+      display: none;
+    }
 
-      .cards {
-        grid-template-columns: repeat(2, 1fr);
+    /* =========================================================
+       RESPONSIVE
+       ========================================================= */
+
+    @media (max-width: 1050px) {
+      .grid {
+        grid-template-columns:
+          repeat(2, minmax(0, 1fr));
       }
 
+      .section-grid {
+        grid-template-columns: 1fr;
+      }
     }
 
-    @media (max-width: 768px) {
+    @media (max-width: 760px) {
+
+      .topbar {
+        padding: 0 14px;
+      }
+
+      .menu-button {
+        display: block;
+      }
+
+      .user-name,
+      .user-role {
+        display: none;
+      }
 
       .sidebar {
-        transform: translateX(-100%);
-        transition: 0.3s;
+        position: fixed;
+
+        left: 0;
+
+        top: 68px;
+
+        bottom: 0;
+
+        height: auto;
+
+        z-index: 45;
+
+        transform:
+          translateX(-105%);
+
+        transition: 0.2s ease;
+
+        box-shadow:
+          10px 0 30px
+          rgba(0, 0, 0, 0.12);
       }
 
       .sidebar.open {
-        transform: translateX(0);
+        transform:
+          translateX(0);
       }
 
       .main {
-        margin-left: 0;
-        padding: 15px;
-        padding-top: 70px;
+        padding:
+          16px
+          14px
+          84px;
       }
 
-      .mobile-header {
-        display: flex;
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        height: 55px;
-        background: #3e2723;
-        color: white;
-        align-items: center;
-        padding: 0 15px;
-        z-index: 900;
+      .page-head {
+        align-items: flex-start;
+
+        flex-direction: column;
       }
 
-      .menu-btn {
-        background: transparent;
-        border: none;
-        color: white;
-        font-size: 24px;
-        margin-right: 15px;
+      .page-head h2 {
+        font-size: 21px;
       }
 
-      .mobile-header h3 {
-        letter-spacing: 2px;
+      .head-actions {
+        width: 100%;
       }
 
-      .cards {
-        grid-template-columns: 1fr 1fr;
+      .head-actions .search {
+        flex: 1;
+
+        width: auto;
+      }
+
+      .grid {
+        grid-template-columns:
+          1fr 1fr;
+
         gap: 10px;
       }
 
       .card {
-        padding: 15px;
+        padding: 14px;
       }
 
-      .card-value {
-        font-size: 22px;
+      .stat strong {
+        font-size: 23px;
+      }
+
+      .mobile-nav {
+        display: grid;
+
+        position: fixed;
+
+        left: 0;
+
+        right: 0;
+
+        bottom: 0;
+
+        z-index: 60;
+
+        height: 64px;
+
+        padding-bottom:
+          env(safe-area-inset-bottom);
+
+        grid-template-columns:
+          repeat(4, 1fr);
+
+        background: white;
+
+        border-top: 1px solid var(--line);
+      }
+
+      .mobile-nav button {
+        border: 0;
+
+        background: white;
+
+        color: #6b7280;
+
+        font-size: 10px;
+
+        font-weight: 800;
+      }
+
+      .mobile-nav button.active {
+        color: var(--gold-dark);
+      }
+
+      .mobile-nav span {
+        display: block;
+
+        font-size: 18px;
+
+        margin-bottom: 2px;
       }
 
       .form-grid {
         grid-template-columns: 1fr;
       }
 
-      .form-grid .full {
+      .full {
         grid-column: auto;
       }
 
-      .page-header h1 {
-        font-size: 23px;
+      .auth-card {
+        padding: 24px;
       }
-
     }
 
-    @media (max-width: 450px) {
+    @media (max-width: 430px) {
+      .topbar .logo {
+        width: 40px;
+        height: 40px;
 
-      .login-card {
-        padding: 25px 20px;
+        font-size: 17px;
       }
 
-      .logo h1 {
-        font-size: 30px;
+      .topbar .brand h1 {
+        font-size: 17px;
       }
 
-      .cards {
+      .grid {
         grid-template-columns: 1fr;
       }
 
-      .main {
-        padding-left: 10px;
-        padding-right: 10px;
+      .stat {
+        min-height: 90px;
       }
 
-      .panel {
-        padding: 15px;
+      .auth-card {
+        padding: 20px;
       }
-
     }
   </style>
 </head>
 
 <body>
 
-<!-- =====================================================
-     LOGIN
-===================================================== -->
+  <!-- =========================================================
+       LOGIN
+       ========================================================= -->
 
-<div id="loginPage">
+  <section id="authView" class="auth-screen">
 
-  <div class="login-wrapper">
+    <div class="auth-card">
 
-    <div class="login-card">
-
-      <!-- PASSWORD LOGIN -->
-
-      <div id="passwordSection">
+      <div class="brand">
 
         <div class="logo">
-          <h1>ROMA</h1>
-          <p>Café Inventory System</p>
+          R
         </div>
 
-        <div class="login-title">
-          <h2>Welcome Back</h2>
-          <p style="color:#777;margin-top:5px;">
-            Sign in to continue
+        <div>
+          <h1>ROMA Cafe</h1>
+
+          <p>
+            Inventory Management
           </p>
         </div>
 
-        <div id="loginError"
-             class="error-message"></div>
-
-        <form id="loginForm">
-
-          <div class="form-group">
-
-            <label>
-              Username
-            </label>
-
-            <input
-              type="text"
-              id="username"
-              autocomplete="username"
-              required
-            >
-
-          </div>
-
-          <div class="form-group">
-
-            <label>
-              Password
-            </label>
-
-            <input
-              type="password"
-              id="password"
-              autocomplete="current-password"
-              required
-            >
-
-          </div>
-
-          <button
-            type="submit"
-            class="primary-btn"
-            id="loginBtn"
-          >
-            Sign In
-          </button>
-
-        </form>
-
       </div>
 
+      <!-- LOGIN -->
+
+      <div id="loginStep">
+
+        <h2>
+          Welcome back
+        </h2>
+
+        <p class="auth-description">
+          Sign in using your staff account.
+          A verification code will be sent
+          to your email.
+        </p>
+
+        <div id="loginMessage"></div>
+
+        <div class="field">
+
+          <label>
+            Email
+          </label>
+
+          <input
+            id="email"
+            type="email"
+            autocomplete="username"
+            placeholder="name@romacafe.com"
+          >
+
+        </div>
+
+        <div class="field">
+
+          <label>
+            Password
+          </label>
+
+          <input
+            id="password"
+            type="password"
+            autocomplete="current-password"
+            placeholder="••••••••"
+          >
+
+        </div>
+
+        <button
+          id="requestOtpButton"
+          class="btn btn-primary"
+        >
+          Continue with OTP
+        </button>
+
+      </div>
 
       <!-- OTP -->
 
-      <div id="otpSection">
-
-        <div class="logo">
-          <h1>ROMA</h1>
-          <p>Security Verification</p>
-        </div>
-
-        <div class="login-title">
-          <h2>Enter OTP</h2>
-        </div>
-
-        <div class="otp-info">
-
-          We sent a 6-digit verification code to
-
-          <br>
-
-          <span
-            id="otpEmail"
-            class="otp-email"
-          >
-            your email
-          </span>
-
-        </div>
-
-        <div
-          id="otpError"
-          class="error-message"
-        ></div>
-
-        <div
-          id="otpSuccess"
-          class="success-message"
-        ></div>
-
-        <form id="otpForm">
-
-          <div class="form-group">
-
-            <label>
-              One-Time Password
-            </label>
-
-            <input
-              type="text"
-              id="otp"
-              class="otp-input"
-              maxlength="6"
-              inputmode="numeric"
-              autocomplete="one-time-code"
-              placeholder="000000"
-              required
-            >
-
-          </div>
-
-          <div
-            id="otpTimer"
-            class="timer"
-          >
-            OTP expires in 10:00
-          </div>
-
-          <button
-            type="submit"
-            class="primary-btn"
-            id="verifyOtpBtn"
-          >
-            Verify OTP
-          </button>
-
-        </form>
-
-        <div class="otp-actions">
-
-          <button
-            type="button"
-            id="resendBtn"
-            class="resend-btn"
-          >
-            Resend OTP
-          </button>
-
-          <br>
-
-          <button
-            type="button"
-            class="secondary-btn back-login"
-            id="backLoginBtn"
-          >
-            Back to Login
-          </button>
-
-        </div>
-
-      </div>
-
-    </div>
-
-  </div>
-
-</div>
-
-
-<!-- =====================================================
-     APP
-===================================================== -->
-
-<div id="app">
-
-  <!-- MOBILE HEADER -->
-
-  <div class="mobile-header">
-
-    <button
-      class="menu-btn"
-      id="menuBtn"
-    >
-      ☰
-    </button>
-
-    <h3>ROMA</h3>
-
-  </div>
-
-
-  <!-- SIDEBAR -->
-
-  <aside
-    class="sidebar"
-    id="sidebar"
-  >
-
-    <div class="sidebar-logo">
-
-      <h2>ROMA</h2>
-
-      <p>Café Inventory</p>
-
-    </div>
-
-
-    <ul class="nav-menu">
-
-      <li>
-        <button
-          class="nav-btn active"
-          data-page="dashboard"
-        >
-          Dashboard
-        </button>
-      </li>
-
-      <li>
-        <button
-          class="nav-btn"
-          data-page="products"
-        >
-          Products
-        </button>
-      </li>
-
-      <li>
-        <button
-          class="nav-btn"
-          data-page="inventory"
-        >
-          Inventory
-        </button>
-      </li>
-
-      <li>
-        <button
-          class="nav-btn"
-          data-page="stock"
-        >
-          Stock Movement
-        </button>
-      </li>
-
-      <li>
-        <button
-          class="nav-btn"
-          data-page="sales"
-        >
-          Sales
-        </button>
-      </li>
-
-      <li>
-        <button
-          class="nav-btn"
-          data-page="reports"
-        >
-          Reports
-        </button>
-      </li>
-
-      <li>
-        <button
-          class="nav-btn"
-          data-page="audit"
-        >
-          Users / Audit
-        </button>
-      </li>
-
-    </ul>
-
-
-    <div class="user-info">
-
-      <strong id="sidebarUsername">
-        User
-      </strong>
-
-      <span id="sidebarRole">
-        Role
-      </span>
-
-      <br>
-
-      <span id="sidebarBranch">
-        Branch
-      </span>
-
-    </div>
-
-
-    <button
-      class="nav-menu button logout-btn"
-      id="logoutBtn"
-      style="
-        width:100%;
-        padding:13px 15px;
-        border:none;
-        color:white;
-        text-align:left;
-        border-radius:8px;
-        font-size:14px;
-      "
-    >
-      Logout
-    </button>
-
-  </aside>
-
-
-  <!-- MAIN -->
-
-  <main class="main">
-
-
-    <!-- =================================================
-         DASHBOARD
-    ================================================== -->
-
-    <section
-      id="dashboard"
-      class="page active"
-    >
-
-      <div class="page-header">
-
-        <h1>Dashboard</h1>
-
-        <p>
-          Welcome to ROMA Café Inventory System.
-        </p>
-
-      </div>
-
-
-      <div class="cards">
-
-        <div class="card">
-
-          <div class="card-title">
-            Total Products
-          </div>
-
-          <div
-            class="card-value"
-            id="totalProducts"
-          >
-            0
-          </div>
-
-        </div>
-
-
-        <div class="card">
-
-          <div class="card-title">
-            Total Stock
-          </div>
-
-          <div
-            class="card-value"
-            id="totalStock"
-          >
-            0
-          </div>
-
-        </div>
-
-
-        <div class="card">
-
-          <div class="card-title">
-            Low Stock
-          </div>
-
-          <div
-            class="card-value"
-            id="lowStock"
-          >
-            0
-          </div>
-
-        </div>
-
-
-        <div class="card">
-
-          <div class="card-title">
-            Inventory Value
-          </div>
-
-          <div
-            class="card-value"
-            id="inventoryValue"
-          >
-            ₱0.00
-          </div>
-
-        </div>
-
-      </div>
-
-
-      <div class="panel">
-
-        <h2>
-          ROMA Café
-        </h2>
-
-        <p style="line-height:1.7;color:#666;">
-
-          Modern and cozy, with a touch of province charm —
-          our wood details are beautifully crafted from coconut
-          trees, giving the space that warm, local feel.
-
-        </p>
-
-      </div>
-
-    </section>
-
-
-    <!-- =================================================
-         PRODUCTS
-    ================================================== -->
-
-    <section
-      id="products"
-      class="page"
-    >
-
-      <div class="page-header">
-
-        <h1>Products</h1>
-
-        <p>
-          Manage café products and product information.
-        </p>
-
-      </div>
-
-
       <div
-        class="panel"
-        id="addProductPanel"
+        id="otpStep"
+        class="hidden"
       >
 
         <h2>
-          Add Product
+          Verify your login
         </h2>
 
-        <form
-          id="productForm"
-          class="form-grid"
+        <p class="auth-description">
+          Enter the 6-digit verification
+          code sent to
+          <strong id="otpEmail"></strong>.
+        </p>
+
+        <div id="otpMessage"></div>
+
+        <div class="field">
+
+          <label>
+            One-Time Password
+          </label>
+
+          <input
+            id="otp"
+            inputmode="numeric"
+            maxlength="6"
+            autocomplete="one-time-code"
+            placeholder="123456"
+          >
+
+        </div>
+
+        <button
+          id="verifyOtpButton"
+          class="btn btn-primary"
+        >
+          Verify & Sign In
+        </button>
+
+        <button
+          id="backLoginButton"
+          class="btn btn-ghost"
+          style="width:100%;margin-top:8px"
+        >
+          Use another account
+        </button>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- =========================================================
+       APPLICATION
+       ========================================================= -->
+
+  <section
+    id="appView"
+    class="hidden"
+  >
+
+    <!-- TOP BAR -->
+
+    <header class="topbar">
+
+      <div class="top-actions">
+
+        <button
+          id="menuButton"
+          class="menu-button"
+        >
+          ☰
+        </button>
+
+        <div class="brand">
+
+          <div class="logo">
+            R
+          </div>
+
+          <div>
+
+            <h1>
+              ROMA Cafe
+            </h1>
+
+            <p>
+              Inventory System
+            </p>
+
+          </div>
+
+        </div>
+
+      </div>
+
+      <div class="top-actions">
+
+        <div>
+
+          <div
+            id="userName"
+            class="user-name"
+          ></div>
+
+          <div
+            id="userRole"
+            class="user-role"
+          ></div>
+
+        </div>
+
+        <div
+          id="avatar"
+          class="avatar"
+        >
+          R
+        </div>
+
+        <button
+          id="logoutButton"
+          class="btn btn-ghost"
+        >
+          Logout
+        </button>
+
+      </div>
+
+    </header>
+
+
+    <div class="layout">
+
+      <!-- =====================================================
+           SIDEBAR
+           ===================================================== -->
+
+      <aside
+        id="sidebar"
+        class="sidebar"
+      >
+
+        <div class="nav-label">
+          Main Menu
+        </div>
+
+        <nav
+          id="navigation"
+          class="nav"
         >
 
-          <div class="form-group">
-
-            <label>
-              Product Name
-            </label>
-
-            <input
-              type="text"
-              id="productName"
-              required
-            >
-
-          </div>
-
-
-          <div class="form-group">
-
-            <label>
-              Category
-            </label>
-
-            <select
-              id="productCategory"
-              required
-            >
-
-              <option value="">
-                Select Category
-              </option>
-
-              <option value="Coffee">
-                Coffee
-              </option>
-
-              <option value="Sweet Cake">
-                Sweet Cake
-              </option>
-
-              <option value="Pastry">
-                Pastry
-              </option>
-
-              <option value="Beverage">
-                Beverage
-              </option>
-
-              <option value="Other">
-                Other
-              </option>
-
-            </select>
-
-          </div>
-
-
-          <div class="form-group">
-
-            <label>
-              Variant / Flavor
-            </label>
-
-            <select
-              id="productVariant"
-            >
-
-              <option value="">
-                Select Variant
-              </option>
-
-              <option value="Caramel">
-                Caramel
-              </option>
-
-              <option value="Carrot">
-                Carrot
-              </option>
-
-              <option value="Red Velvet">
-                Red Velvet
-              </option>
-
-              <option value="Blueberry">
-                Blueberry
-              </option>
-
-              <option value="Triple Choco">
-                Triple Choco
-              </option>
-
-              <option value="Any Type">
-                Any Type
-              </option>
-
-            </select>
-
-          </div>
-
-
-          <div class="form-group">
-
-            <label>
-              Price
-            </label>
-
-            <input
-              type="number"
-              id="productPrice"
-              min="0"
-              step="0.01"
-              required
-            >
-
-          </div>
-
-
-          <div class="form-group">
-
-            <label>
-              Initial Stock
-            </label>
-
-            <input
-              type="number"
-              id="productStock"
-              min="0"
-              required
-            >
-
-          </div>
-
-
-          <div class="form-group">
-
-            <label>
-              Reorder Level
-            </label>
-
-            <input
-              type="number"
-              id="reorderLevel"
-              min="0"
-              value="5"
-              required
-            >
-
-          </div>
-
-
-          <div class="form-group">
-
-            <label>
-              Supplier
-            </label>
-
-            <input
-              type="text"
-              id="supplier"
-            >
-
-          </div>
-
-
-          <div class="form-group">
-
-            <label>
-              Branch
-            </label>
-
-            <input
-              type="text"
-              id="productBranch"
-              value="ROMA"
-            >
-
-          </div>
-
-
-          <div class="form-group full">
-
-            <button
-              type="submit"
-              class="primary-btn"
-            >
-              Add Product
-            </button>
-
-          </div>
-
-        </form>
-
-      </div>
-
-
-      <div class="panel">
-
-        <h2>
-          Product List
-        </h2>
-
-        <div class="table-container">
-
-          <table>
-
-            <thead>
-
-              <tr>
-
-                <th>
-                  Product
-                </th>
-
-                <th>
-                  Category
-                </th>
-
-                <th>
-                  Variant
-                </th>
-
-                <th>
-                  Price
-                </th>
-
-                <th>
-                  Stock
-                </th>
-
-                <th>
-                  Status
-                </th>
-
-              </tr>
-
-            </thead>
-
-            <tbody
-              id="productsTable"
-            ></tbody>
-
-          </table>
-
-        </div>
-
-      </div>
-
-    </section>
-
-
-    <!-- =================================================
-         INVENTORY
-    ================================================== -->
-
-    <section
-      id="inventory"
-      class="page"
+          <button
+            data-page="dashboard"
+            class="active"
+          >
+            <span class="nav-icon">
+              ▦
+            </span>
+
+            Dashboard
+          </button>
+
+          <button
+            data-page="inventory"
+          >
+            <span class="nav-icon">
+              📦
+            </span>
+
+            Inventory
+          </button>
+
+          <button
+            data-page="transactions"
+          >
+            <span class="nav-icon">
+              ⇄
+            </span>
+
+            Stock Transactions
+          </button>
+
+          <button
+            data-page="suppliers"
+          >
+            <span class="nav-icon">
+              ♙
+            </span>
+
+            Suppliers
+          </button>
+
+          <button
+            data-page="reports"
+          >
+            <span class="nav-icon">
+              ▤
+            </span>
+
+            Reports
+          </button>
+
+          <button
+            data-page="audit"
+          >
+            <span class="nav-icon">
+              ◷
+            </span>
+
+            Audit Log
+          </button>
+
+          <button
+            data-page="settings"
+          >
+            <span class="nav-icon">
+              ⚙
+            </span>
+
+            Settings
+          </button>
+
+        </nav>
+
+      </aside>
+
+
+      <!-- =====================================================
+           MAIN
+           ===================================================== -->
+
+      <main
+        id="main"
+        class="main"
+      ></main>
+
+    </div>
+
+
+    <!-- MOBILE NAV -->
+
+    <nav
+      id="mobileNavigation"
+      class="mobile-nav"
     >
 
-      <div class="page-header">
-
-        <h1>Inventory</h1>
-
-        <p>
-          Monitor available stock and reorder levels.
-        </p>
-
-      </div>
-
-
-      <div class="panel">
-
-        <div class="table-container">
-
-          <table>
-
-            <thead>
-
-              <tr>
-
-                <th>
-                  Product
-                </th>
-
-                <th>
-                  Category
-                </th>
-
-                <th>
-                  Stock
-                </th>
-
-                <th>
-                  Reorder Level
-                </th>
-
-                <th>
-                  Price
-                </th>
-
-                <th>
-                  Status
-                </th>
-
-              </tr>
-
-            </thead>
-
-            <tbody
-              id="inventoryTable"
-            ></tbody>
-
-          </table>
-
-        </div>
-
-      </div>
-
-    </section>
-
-
-    <!-- =================================================
-         STOCK MOVEMENT
-    ================================================== -->
-
-    <section
-      id="stock"
-      class="page"
-    >
-
-      <div class="page-header">
-
-        <h1>Stock Movement</h1>
-
-        <p>
-          Record stock-in and stock-out transactions.
-        </p>
-
-      </div>
-
-
-      <div class="panel">
-
-        <h2>
-          Record Movement
-        </h2>
-
-        <form
-          id="stockForm"
-          class="form-grid"
-        >
-
-          <div class="form-group">
-
-            <label>
-              Product
-            </label>
-
-            <select
-              id="stockProduct"
-              required
-            ></select>
-
-          </div>
-
-
-          <div class="form-group">
-
-            <label>
-              Movement Type
-            </label>
-
-            <select
-              id="stockType"
-              required
-            >
-
-              <option value="IN">
-                Stock In
-              </option>
-
-              <option value="OUT">
-                Stock Out
-              </option>
-
-            </select>
-
-          </div>
-
-
-          <div class="form-group">
-
-            <label>
-              Quantity
-            </label>
-
-            <input
-              type="number"
-              id="stockQuantity"
-              min="1"
-              required
-            >
-
-          </div>
-
-
-          <div class="form-group">
-
-            <label>
-              Reason
-            </label>
-
-            <input
-              type="text"
-              id="stockReason"
-              placeholder="Purchase, delivery, damaged, etc."
-            >
-
-          </div>
-
-
-          <div class="form-group full">
-
-            <button
-              type="submit"
-              class="primary-btn"
-            >
-              Save Stock Movement
-            </button>
-
-          </div>
-
-        </form>
-
-      </div>
-
-    </section>
-
-
-    <!-- =================================================
-         SALES
-    ================================================== -->
-
-    <section
-      id="sales"
-      class="page"
-    >
-
-      <div class="page-header">
-
-        <h1>Sales</h1>
-
-        <p>
-          Record café sales transactions.
-        </p>
-
-      </div>
-
-
-      <div class="panel">
-
-        <h2>
-          Record Sale
-        </h2>
-
-        <form
-          id="salesForm"
-          class="form-grid"
-        >
-
-          <div class="form-group">
-
-            <label>
-              Product
-            </label>
-
-            <select
-              id="saleProduct"
-              required
-            ></select>
-
-          </div>
-
-
-          <div class="form-group">
-
-            <label>
-              Quantity
-            </label>
-
-            <input
-              type="number"
-              id="saleQuantity"
-              min="1"
-              required
-            >
-
-          </div>
-
-
-          <div class="form-group full">
-
-            <button
-              type="submit"
-              class="primary-btn"
-            >
-              Record Sale
-            </button>
-
-          </div>
-
-        </form>
-
-      </div>
-
-    </section>
-
-
-    <!-- =================================================
-         REPORTS
-    ================================================== -->
-
-    <section
-      id="reports"
-      class="page"
-    >
-
-      <div class="page-header">
-
-        <h1>Reports</h1>
-
-        <p>
-          Review recorded sales.
-        </p>
-
-      </div>
-
-
-      <div class="panel">
-
-        <h2>
-          Sales Report
-        </h2>
-
-        <div class="table-container">
-
-          <table>
-
-            <thead>
-
-              <tr>
-
-                <th>
-                  Date
-                </th>
-
-                <th>
-                  Product
-                </th>
-
-                <th>
-                  Quantity
-                </th>
-
-                <th>
-                  Total
-                </th>
-
-                <th>
-                  Cashier
-                </th>
-
-                <th>
-                  Branch
-                </th>
-
-              </tr>
-
-            </thead>
-
-            <tbody
-              id="salesTable"
-            ></tbody>
-
-          </table>
-
-        </div>
-
-      </div>
-
-    </section>
-
-
-    <!-- =================================================
-         AUDIT
-    ================================================== -->
-
-    <section
-      id="audit"
-      class="page"
-    >
-
-      <div class="page-header">
-
-        <h1>Users / Audit</h1>
-
-        <p>
-          Monitor system activity and security events.
-        </p>
-
-      </div>
-
-
-      <div class="panel">
-
-        <h2>
-          Audit Logs
-        </h2>
-
-        <div class="table-container">
-
-          <table>
-
-            <thead>
-
-              <tr>
-
-                <th>
-                  Date
-                </th>
-
-                <th>
-                  User
-                </th>
-
-                <th>
-                  Action
-                </th>
-
-                <th>
-                  Module
-                </th>
-
-                <th>
-                  Details
-                </th>
-
-              </tr>
-
-            </thead>
-
-            <tbody
-              id="auditTable"
-            ></tbody>
-
-          </table>
-
-        </div>
-
-      </div>
-
-    </section>
-
-  </main>
-
-</div>
-
-
-<!-- TOAST -->
-
-<div
-  id="toast"
-  class="toast"
-></div>
+      <button
+        data-page="dashboard"
+        class="active"
+      >
+        <span>▦</span>
+        Home
+      </button>
+
+      <button
+        data-page="inventory"
+      >
+        <span>📦</span>
+        Stock
+      </button>
+
+      <button
+        data-page="transactions"
+      >
+        <span>⇄</span>
+        Moves
+      </button>
+
+      <button
+        data-page="suppliers"
+      >
+        <span>♙</span>
+        Suppliers
+      </button>
+
+    </nav>
+
+  </section>
+
+
+  <!-- MODAL -->
+
+  <div id="modalRoot"></div>
+
+  <!-- TOAST -->
+
+  <div
+    id="toast"
+    class="toast hidden"
+  ></div>
 
 
 <script>
 
-/*******************************************************
- * ROMA CAFÉ FRONTEND
- *******************************************************/
+/* =============================================================
+   ROMA CAFE FRONTEND CONFIGURATION
+   =============================================================
+
+   IMPORTANT:
+
+   Replace the value below with your deployed Apps Script
+   Web App URL.
+
+   Example:
+
+   https://script.google.com/macros/s/XXXXXXXXXXXX/exec
+
+   ============================================================= */
+
+const CONFIG = {
+
+  API_URL:
+    "https://script.google.com/macros/s/AKfycbwjXEfec4TrdLBNvurxwQmF-oLmsMEQxy6gU6bWuhDjpLeIMbamDpYK5SwcqAstb5wF/exec"
+
+};
 
 
-/*
- * YOUR NEW APPS SCRIPT WEB APP URL
- */
+/* =============================================================
+   APPLICATION STATE
+   ============================================================= */
 
-const API_URL =
-  "https://script.google.com/macros/s/AKfycby6J_rGCSgF8Xp5n7_eK2cDJvfxfZqP6HJIEKZcj7lvbkBJuApAo91xuNPDmw7xN8k/exec";
+const state = {
 
+  user: null,
 
-let sessionToken =
-  sessionStorage.getItem(
-    "roma_token"
-  );
+  data: {
 
-let currentUser =
-  JSON.parse(
-    sessionStorage.getItem(
-      "roma_user"
-    ) || "null"
-  );
+    inventory: [],
 
+    transactions: [],
 
-let products = [];
+    suppliers: [],
 
-let otpChallengeId =
-  null;
+    audit: []
 
-let otpExpiresAt =
-  null;
+  },
 
-let otpTimerInterval =
-  null;
+  page: "dashboard",
+
+  query: ""
+
+};
 
 
-/*******************************************************
- * API
- *******************************************************/
+/* =============================================================
+   HELPERS
+   ============================================================= */
 
-async function api(
-  action,
-  data = {}
-) {
+const $ = id =>
+  document.getElementById(id);
 
-  const payload = {
-
-    action: action,
-
-    ...data
-
-  };
-
-
-  if (sessionToken) {
-
-    payload.token =
-      sessionToken;
-
-  }
-
-
-  try {
-
-    const response =
-      await fetch(
-        API_URL,
-        {
-          method: "POST",
-
-          headers: {
-            "Content-Type":
-              "text/plain;charset=utf-8"
-          },
-
-          body:
-            JSON.stringify(payload)
-        }
-      );
-
-
-    const result =
-      await response.json();
-
-
-    if (
-      result &&
-      result.ok === false
-    ) {
-
-      throw new Error(
-        result.error ||
-        "Something went wrong."
-      );
-    }
-
-
-    return result;
-
-
-  } catch (error) {
-
-    throw error;
-
-  }
-
-}
-
-
-/*******************************************************
- * HELPERS
- *******************************************************/
 
 function escapeHTML(value) {
 
-  if (
-    value === null ||
-    value === undefined
-  ) {
+  return String(value ?? "")
+    .replace(
+      /[&<>'"]/g,
+      character => {
 
-    return "";
+        const map = {
 
-  }
+          "&": "&amp;",
+          "<": "&lt;",
+          ">": "&gt;",
+          "'": "&#39;",
+          '"': "&quot;"
 
-  return String(value)
-    .replace(
-      /&/g,
-      "&amp;"
-    )
-    .replace(
-      /</g,
-      "&lt;"
-    )
-    .replace(
-      />/g,
-      "&gt;"
-    )
-    .replace(
-      /"/g,
-      "&quot;"
-    )
-    .replace(
-      /'/g,
-      "&#039;"
+        };
+
+        return map[character];
+
+      }
     );
 
 }
 
 
-function formatMoney(value) {
-
-  const number =
-    Number(value || 0);
+function money(value) {
 
   return "₱" +
-    number.toLocaleString(
-      "en-PH",
-      {
-        minimumFractionDigits: 2,
-        maximumFractionDigits: 2
-      }
-    );
+    Number(value || 0)
+      .toLocaleString(
+        "en-PH",
+        {
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 2
+        }
+      );
 
 }
 
@@ -1906,1967 +1563,3167 @@ function formatMoney(value) {
 function formatDate(value) {
 
   if (!value) {
-    return "";
+    return "—";
   }
 
   const date =
     new Date(value);
 
-  if (
-    isNaN(
-      date.getTime()
-    )
-  ) {
-
+  if (Number.isNaN(date.getTime())) {
     return escapeHTML(value);
-
   }
 
   return date.toLocaleString(
-    "en-PH"
+    "en-PH",
+    {
+      dateStyle: "medium",
+      timeStyle: "short"
+    }
   );
 
 }
 
 
-function showToast(
-  message
-) {
+function initials(name) {
+
+  return String(name || "ROMA")
+    .split(" ")
+    .map(part => part[0])
+    .join("")
+    .slice(0, 2)
+    .toUpperCase();
+
+}
+
+
+function showToast(message) {
 
   const toast =
-    document.getElementById(
-      "toast"
-    );
+    $("toast");
 
   toast.textContent =
     message;
 
-  toast.style.display =
-    "block";
+  toast.classList.remove(
+    "hidden"
+  );
 
   setTimeout(
-    function() {
-
-      toast.style.display =
-        "none";
-
-    },
-    3000
+    () =>
+      toast.classList.add(
+        "hidden"
+      ),
+    2800
   );
 
 }
 
 
-function showError(
+function showMessage(
   elementId,
-  message
+  message,
+  type = "error"
 ) {
 
   const element =
-    document.getElementById(
-      elementId
-    );
+    $(elementId);
 
-  element.textContent =
-    message;
+  if (!message) {
 
-  element.style.display =
-    "block";
-
-}
-
-
-function hideElement(
-  elementId
-) {
-
-  document.getElementById(
-    elementId
-  ).style.display =
-    "none";
-
-}
-
-
-/*******************************************************
- * LOGIN
- *******************************************************/
-
-document
-  .getElementById("loginForm")
-  .addEventListener(
-    "submit",
-    async function(event) {
-
-      event.preventDefault();
-
-
-      hideElement(
-        "loginError"
-      );
-
-
-      const username =
-        document
-          .getElementById(
-            "username"
-          )
-          .value
-          .trim();
-
-
-      const password =
-        document
-          .getElementById(
-            "password"
-          )
-          .value;
-
-
-      const button =
-        document.getElementById(
-          "loginBtn"
-        );
-
-
-      button.disabled =
-        true;
-
-      button.textContent =
-        "Checking...";
-
-
-      try {
-
-        const result =
-          await api(
-            "requestOtp",
-            {
-              username:
-                username,
-
-              password:
-                password
-            }
-          );
-
-
-        otpChallengeId =
-          result.challengeId;
-
-
-        otpExpiresAt =
-          Number(
-            result.expiresAt
-          );
-
-
-        document
-          .getElementById(
-            "otpEmail"
-          )
-          .textContent =
-          result.maskedEmail;
-
-
-        document
-          .getElementById(
-            "passwordSection"
-          )
-          .style.display =
-          "none";
-
-
-        document
-          .getElementById(
-            "otpSection"
-          )
-          .style.display =
-          "block";
-
-
-        document
-          .getElementById(
-            "otp"
-          )
-          .value =
-          "";
-
-
-        startOtpTimer();
-
-
-        showToast(
-          "OTP sent to your registered email."
-        );
-
-
-      } catch (error) {
-
-        showError(
-          "loginError",
-          error.message
-        );
-
-
-      } finally {
-
-        button.disabled =
-          false;
-
-        button.textContent =
-          "Sign In";
-
-      }
-
-    }
-  );
-
-
-/*******************************************************
- * OTP VERIFICATION
- *******************************************************/
-
-document
-  .getElementById("otpForm")
-  .addEventListener(
-    "submit",
-    async function(event) {
-
-      event.preventDefault();
-
-
-      hideElement(
-        "otpError"
-      );
-
-
-      const otp =
-        document
-          .getElementById(
-            "otp"
-          )
-          .value
-          .trim();
-
-
-      const button =
-        document.getElementById(
-          "verifyOtpBtn"
-        );
-
-
-      if (!otpChallengeId) {
-
-        showError(
-          "otpError",
-          "OTP session is invalid. Please log in again."
-        );
-
-        return;
-
-      }
-
-
-      if (
-        !otpExpiresAt ||
-        Date.now() >= otpExpiresAt
-      ) {
-
-        showError(
-          "otpError",
-          "This OTP has expired. Please request a new one."
-        );
-
-        return;
-
-      }
-
-
-      button.disabled =
-        true;
-
-      button.textContent =
-        "Verifying...";
-
-
-      try {
-
-        const result =
-          await api(
-            "verifyOtp",
-            {
-              challengeId:
-                otpChallengeId,
-
-              otp:
-                otp
-            }
-          );
-
-
-        sessionToken =
-          result.token;
-
-
-        currentUser =
-          result.user;
-
-
-        sessionStorage.setItem(
-          "roma_token",
-          sessionToken
-        );
-
-
-        sessionStorage.setItem(
-          "roma_user",
-          JSON.stringify(
-            currentUser
-          )
-        );
-
-
-        stopOtpTimer();
-
-
-        document
-          .getElementById(
-            "loginPage"
-          )
-          .style.display =
-          "none";
-
-
-        document
-          .getElementById(
-            "app"
-          )
-          .style.display =
-          "block";
-
-
-        updateUserInfo();
-
-
-        await loadDashboard();
-
-
-        await loadProducts();
-
-
-        applyRoleAccess();
-
-
-        showToast(
-          "Login successful."
-        );
-
-
-      } catch (error) {
-
-        showError(
-          "otpError",
-          error.message
-        );
-
-
-      } finally {
-
-        button.disabled =
-          false;
-
-        button.textContent =
-          "Verify OTP";
-
-      }
-
-    }
-  );
-
-
-/*******************************************************
- * OTP TIMER
- *******************************************************/
-
-function startOtpTimer() {
-
-  stopOtpTimer();
-
-
-  updateOtpTimer();
-
-
-  otpTimerInterval =
-    setInterval(
-      updateOtpTimer,
-      1000
-    );
-
-}
-
-
-function updateOtpTimer() {
-
-  const timer =
-    document.getElementById(
-      "otpTimer"
-    );
-
-
-  const remaining =
-    Math.max(
-      0,
-      otpExpiresAt -
-      Date.now()
-    );
-
-
-  const totalSeconds =
-    Math.floor(
-      remaining / 1000
-    );
-
-
-  const minutes =
-    Math.floor(
-      totalSeconds / 60
-    );
-
-
-  const seconds =
-    totalSeconds % 60;
-
-
-  timer.textContent =
-    "OTP expires in " +
-    String(minutes).padStart(2, "0") +
-    ":" +
-    String(seconds).padStart(2, "0");
-
-
-  if (
-    remaining <= 0
-  ) {
-
-    timer.textContent =
-      "OTP expired";
-
-    timer.classList.add(
-      "expired"
-    );
-
-
-    document
-      .getElementById(
-        "verifyOtpBtn"
-      )
-      .disabled =
-      true;
+    element.innerHTML = "";
 
     return;
-
   }
 
+  element.innerHTML = `
 
-  timer.classList.remove(
-    "expired"
-  );
+    <div class="alert alert-${type}">
+      ${escapeHTML(message)}
+    </div>
 
-
-  document
-    .getElementById(
-      "verifyOtpBtn"
-    )
-    .disabled =
-    false;
+  `;
 
 }
 
 
-function stopOtpTimer() {
+/* =============================================================
+   API
+   ============================================================= */
+
+async function api(
+  action,
+  data = {}
+) {
 
   if (
-    otpTimerInterval
+    CONFIG.API_URL.includes(
+      "PASTE_YOUR"
+    )
   ) {
 
-    clearInterval(
-      otpTimerInterval
+    throw new Error(
+      "Please set your Apps Script Web App URL in CONFIG.API_URL."
     );
 
-    otpTimerInterval =
-      null;
+  }
+
+
+  const response =
+    await fetch(
+      CONFIG.API_URL,
+      {
+
+        method: "POST",
+
+        headers: {
+
+          "Content-Type":
+            "text/plain;charset=utf-8"
+
+        },
+
+        body:
+          JSON.stringify({
+
+            action,
+
+            data
+
+          })
+
+      }
+    );
+
+
+  if (!response.ok) {
+
+    throw new Error(
+      "Server request failed."
+    );
+
+  }
+
+
+  const result =
+    await response.json();
+
+
+  if (!result.success) {
+
+    throw new Error(
+      result.message ||
+      "Request failed."
+    );
+
+  }
+
+
+  return result;
+
+}
+
+
+/* =============================================================
+   SESSION
+   ============================================================= */
+
+function getSessionUser() {
+
+  try {
+
+    return JSON.parse(
+      sessionStorage.getItem(
+        "romaUser"
+      ) || "null"
+    );
+
+  } catch {
+
+    return null;
 
   }
 
 }
 
 
-/*******************************************************
- * RESEND OTP
- *******************************************************/
+function saveSessionUser(user) {
 
-document
-  .getElementById("resendBtn")
-  .addEventListener(
-    "click",
-    async function() {
+  state.user =
+    user;
 
-      hideElement(
-        "otpError"
-      );
-
-
-      const button =
-        document.getElementById(
-          "resendBtn"
-        );
-
-
-      button.disabled =
-        true;
-
-      button.textContent =
-        "Sending...";
-
-
-      try {
-
-        const result =
-          await api(
-            "resendOtp",
-            {
-              challengeId:
-                otpChallengeId
-            }
-          );
-
-
-        otpExpiresAt =
-          Number(
-            result.expiresAt
-          );
-
-
-        document
-          .getElementById(
-            "otpEmail"
-          )
-          .textContent =
-          result.maskedEmail;
-
-
-        startOtpTimer();
-
-
-        showToast(
-          "A new OTP has been sent."
-        );
-
-
-        document
-          .getElementById(
-            "otp"
-          )
-          .value =
-          "";
-
-
-      } catch (error) {
-
-        showError(
-          "otpError",
-          error.message
-        );
-
-      } finally {
-
-        setTimeout(
-          function() {
-
-            button.disabled =
-              false;
-
-            button.textContent =
-              "Resend OTP";
-
-          },
-          30000
-        );
-
-      }
-
-    }
+  sessionStorage.setItem(
+    "romaUser",
+    JSON.stringify(user)
   );
 
-
-/*******************************************************
- * BACK TO LOGIN
- *******************************************************/
-
-document
-  .getElementById(
-    "backLoginBtn"
-  )
-  .addEventListener(
-    "click",
-    function() {
-
-      stopOtpTimer();
+}
 
 
-      otpChallengeId =
-        null;
+function clearSession() {
 
-      otpExpiresAt =
-        null;
+  state.user =
+    null;
 
-
-      document
-        .getElementById(
-          "otpSection"
-        )
-        .style.display =
-        "none";
-
-
-      document
-        .getElementById(
-          "passwordSection"
-        )
-        .style.display =
-        "block";
-
-
-      document
-        .getElementById(
-          "otp"
-        )
-        .value =
-        "";
-
-
-      hideElement(
-        "otpError"
-      );
-
-    }
+  sessionStorage.removeItem(
+    "romaUser"
   );
 
-
-/*******************************************************
- * LOGOUT
- *******************************************************/
-
-document
-  .getElementById(
-    "logoutBtn"
-  )
-  .addEventListener(
-    "click",
-    async function() {
-
-      try {
-
-        await api(
-          "logout"
-        );
-
-      } catch (error) {
-
-        console.log(error);
-
-      }
+}
 
 
-      sessionToken =
-        null;
+/* =============================================================
+   LOGIN
+   ============================================================= */
 
-      currentUser =
-        null;
+$("requestOtpButton").onclick =
+  async function () {
+
+    const email =
+      $("email")
+        .value
+        .trim()
+        .toLowerCase();
+
+    const password =
+      $("password")
+        .value;
 
 
-      sessionStorage.removeItem(
-        "roma_token"
+    showMessage(
+      "loginMessage",
+      ""
+    );
+
+
+    if (!email || !password) {
+
+      showMessage(
+        "loginMessage",
+        "Email and password are required."
       );
 
-      sessionStorage.removeItem(
-        "roma_user"
+      return;
+
+    }
+
+
+    const button =
+      $("requestOtpButton");
+
+    button.disabled =
+      true;
+
+    button.textContent =
+      "Sending OTP…";
+
+
+    try {
+
+      await api(
+        "requestOTP",
+        {
+          email,
+          password
+        }
       );
 
 
-      document
-        .getElementById(
-          "app"
-        )
-        .style.display =
-        "none";
+      $("otpEmail")
+        .textContent =
+        email;
 
 
-      document
-        .getElementById(
-          "loginPage"
-        )
-        .style.display =
-        "block";
+      $("loginStep")
+        .classList
+        .add("hidden");
+
+      $("otpStep")
+        .classList
+        .remove("hidden");
 
 
-      document
-        .getElementById(
-          "passwordSection"
-        )
-        .style.display =
-        "block";
-
-
-      document
-        .getElementById(
-          "otpSection"
-        )
-        .style.display =
-        "none";
-
-
-      document
-        .getElementById(
-          "password"
-        )
-        .value =
-        "";
+      $("otp")
+        .focus();
 
 
       showToast(
-        "You have been logged out."
+        "OTP sent to your email."
       );
 
+
+    } catch (error) {
+
+      showMessage(
+        "loginMessage",
+        error.message
+      );
+
+    } finally {
+
+      button.disabled =
+        false;
+
+      button.textContent =
+        "Continue with OTP";
+
     }
-  );
+
+  };
 
 
-/*******************************************************
- * USER INFORMATION
- *******************************************************/
+/* =============================================================
+   VERIFY OTP
+   ============================================================= */
 
-function updateUserInfo() {
+$("verifyOtpButton").onclick =
+  async function () {
 
-  if (!currentUser) {
-    return;
-  }
+    const email =
+      $("email")
+        .value
+        .trim()
+        .toLowerCase();
+
+    const otp =
+      $("otp")
+        .value
+        .trim();
 
 
-  document
-    .getElementById(
-      "sidebarUsername"
-    )
+    showMessage(
+      "otpMessage",
+      ""
+    );
+
+
+    if (!/^\d{6}$/.test(otp)) {
+
+      showMessage(
+        "otpMessage",
+        "Enter the 6-digit OTP."
+      );
+
+      return;
+
+    }
+
+
+    const button =
+      $("verifyOtpButton");
+
+    button.disabled =
+      true;
+
+    button.textContent =
+      "Verifying…";
+
+
+    try {
+
+      const result =
+        await api(
+          "verifyOTP",
+          {
+            email,
+            otp
+          }
+        );
+
+
+      saveSessionUser(
+        result.user
+      );
+
+
+      await startApplication();
+
+
+    } catch (error) {
+
+      showMessage(
+        "otpMessage",
+        error.message
+      );
+
+    } finally {
+
+      button.disabled =
+        false;
+
+      button.textContent =
+        "Verify & Sign In";
+
+    }
+
+  };
+
+
+/* =============================================================
+   BACK TO LOGIN
+   ============================================================= */
+
+$("backLoginButton").onclick =
+  function () {
+
+    $("otpStep")
+      .classList
+      .add("hidden");
+
+    $("loginStep")
+      .classList
+      .remove("hidden");
+
+    $("otp").value =
+      "";
+
+    showMessage(
+      "otpMessage",
+      ""
+    );
+
+  };
+
+
+/* =============================================================
+   LOGOUT
+   ============================================================= */
+
+$("logoutButton").onclick =
+  function () {
+
+    clearSession();
+
+    $("appView")
+      .classList
+      .add("hidden");
+
+    $("authView")
+      .classList
+      .remove("hidden");
+
+    $("password").value =
+      "";
+
+    $("otp").value =
+      "";
+
+    $("otpStep")
+      .classList
+      .add("hidden");
+
+    $("loginStep")
+      .classList
+      .remove("hidden");
+
+  };
+
+
+/* =============================================================
+   MOBILE SIDEBAR
+   ============================================================= */
+
+$("menuButton").onclick =
+  function () {
+
+    $("sidebar")
+      .classList
+      .toggle("open");
+
+  };
+
+
+/* =============================================================
+   START APPLICATION
+   ============================================================= */
+
+async function startApplication() {
+
+  $("authView")
+    .classList
+    .add("hidden");
+
+  $("appView")
+    .classList
+    .remove("hidden");
+
+
+  $("userName")
     .textContent =
-    currentUser.username;
+    state.user.name;
 
 
-  document
-    .getElementById(
-      "sidebarRole"
-    )
+  $("userRole")
     .textContent =
-    "Role: " +
-    currentUser.role;
+    state.user.role;
 
 
-  document
-    .getElementById(
-      "sidebarBranch"
-    )
+  $("avatar")
     .textContent =
-    "Branch: " +
-    currentUser.branch;
+    initials(
+      state.user.name
+    );
+
+
+  await refreshData();
+
+  render();
 
 }
 
 
-/*******************************************************
- * ROLE ACCESS
- *******************************************************/
+/* =============================================================
+   LOAD DATA
+   ============================================================= */
 
-function applyRoleAccess() {
+async function refreshData() {
 
-  if (!currentUser) {
-    return;
-  }
+  try {
+
+    const result =
+      await api(
+        "getAllData",
+        {
+          user:
+            state.user
+        }
+      );
 
 
-  const addProductPanel =
-    document.getElementById(
-      "addProductPanel"
+    state.data.inventory =
+      result.inventory || [];
+
+    state.data.transactions =
+      result.transactions || [];
+
+    state.data.suppliers =
+      result.suppliers || [];
+
+    state.data.audit =
+      result.audit || [];
+
+
+  } catch (error) {
+
+    showToast(
+      error.message
     );
-
-
-  if (
-    currentUser.role ===
-      "ADMIN" ||
-    currentUser.role ===
-      "MANAGER"
-  ) {
-
-    addProductPanel.style.display =
-      "block";
-
-  } else {
-
-    addProductPanel.style.display =
-      "none";
-
-  }
-
-
-  /*
-   * Audit logs are ADMIN only.
-   */
-
-  const auditButton =
-    document.querySelector(
-      '[data-page="audit"]'
-    );
-
-
-  if (
-    currentUser.role !==
-    "ADMIN"
-  ) {
-
-    auditButton.parentElement.style.display =
-      "none";
-
-  } else {
-
-    auditButton.parentElement.style.display =
-      "block";
 
   }
 
 }
 
 
-/*******************************************************
- * NAVIGATION
- *******************************************************/
+/* =============================================================
+   NAVIGATION
+   ============================================================= */
+
+function setPage(page) {
+
+  state.page =
+    page;
+
+  state.query =
+    "";
+
+
+  document
+    .querySelectorAll(
+      "#navigation button, #mobileNavigation button"
+    )
+    .forEach(
+      button =>
+        button.classList.toggle(
+          "active",
+          button.dataset.page === page
+        )
+    );
+
+
+  $("sidebar")
+    .classList
+    .remove("open");
+
+
+  render();
+
+}
+
 
 document
   .querySelectorAll(
-    ".nav-btn"
+    "#navigation button, #mobileNavigation button"
   )
   .forEach(
-    function(button) {
+    button => {
 
-      button.addEventListener(
-        "click",
-        function() {
-
-          const page =
-            button.dataset.page;
-
-
-          document
-            .querySelectorAll(
-              ".page"
-            )
-            .forEach(
-              function(section) {
-
-                section.classList.remove(
-                  "active"
-                );
-
-              }
-            );
-
-
-          const selectedPage =
-            document.getElementById(
-              page
-            );
-
-
-          if (selectedPage) {
-
-            selectedPage.classList.add(
-              "active"
-            );
-
-          }
-
-
-          document
-            .querySelectorAll(
-              ".nav-btn"
-            )
-            .forEach(
-              function(btn) {
-
-                btn.classList.remove(
-                  "active"
-                );
-
-              }
-            );
-
-
-          button.classList.add(
-            "active"
+      button.onclick =
+        () =>
+          setPage(
+            button.dataset.page
           );
 
-
-          document
-            .getElementById(
-              "sidebar"
-            )
-            .classList.remove(
-              "open"
-            );
-
-
-          if (
-            page ===
-            "dashboard"
-          ) {
-
-            loadDashboard();
-
-          }
-
-
-          if (
-            page ===
-            "products" ||
-            page ===
-            "inventory"
-          ) {
-
-            loadProducts();
-
-          }
-
-
-          if (
-            page ===
-            "stock" ||
-            page ===
-            "sales"
-          ) {
-
-            loadProducts();
-
-          }
-
-
-          if (
-            page ===
-            "reports"
-          ) {
-
-            loadSales();
-
-          }
-
-
-          if (
-            page ===
-            "audit"
-          ) {
-
-            loadAuditLogs();
-
-          }
-
-        }
-      );
-
     }
   );
 
 
-/*******************************************************
- * MOBILE MENU
- *******************************************************/
+/* =============================================================
+   RENDER
+   ============================================================= */
 
-document
-  .getElementById(
-    "menuBtn"
-  )
-  .addEventListener(
-    "click",
-    function() {
+function render() {
 
-      document
-        .getElementById(
-          "sidebar"
-        )
-        .classList.toggle(
-          "open"
-        );
+  const pages = {
 
-    }
-  );
+    dashboard:
+      dashboardView,
 
+    inventory:
+      inventoryView,
 
-/*******************************************************
- * DASHBOARD
- *******************************************************/
+    transactions:
+      transactionsView,
 
-async function loadDashboard() {
+    suppliers:
+      suppliersView,
 
-  if (!sessionToken) {
-    return;
-  }
+    reports:
+      reportsView,
 
+    audit:
+      auditView,
 
-  try {
+    settings:
+      settingsView
 
-    const result =
-      await api(
-        "dashboard"
-      );
-
-
-    document
-      .getElementById(
-        "totalProducts"
-      )
-      .textContent =
-      result.totalProducts || 0;
-
-
-    document
-      .getElementById(
-        "totalStock"
-      )
-      .textContent =
-      result.totalStock || 0;
-
-
-    document
-      .getElementById(
-        "lowStock"
-      )
-      .textContent =
-      result.lowStock || 0;
-
-
-    document
-      .getElementById(
-        "inventoryValue"
-      )
-      .textContent =
-      formatMoney(
-        result.inventoryValue
-      );
-
-
-  } catch (error) {
-
-    showToast(
-      error.message
-    );
-
-  }
-
-}
-
-
-/*******************************************************
- * PRODUCTS
- *******************************************************/
-
-async function loadProducts() {
-
-  try {
-
-    const result =
-      await api(
-        "getProducts"
-      );
-
-
-    products =
-      result.products || [];
-
-
-    renderProducts();
-
-    renderInventory();
-
-    populateProductSelects();
-
-
-  } catch (error) {
-
-    showToast(
-      error.message
-    );
-
-  }
-
-}
-
-
-function getProductStatus(
-  product
-) {
-
-  const stock =
-    Number(
-      product.stock || 0
-    );
-
-  const reorder =
-    Number(
-      product.reorderLevel || 0
-    );
-
-
-  if (
-    stock <= 0
-  ) {
-
-    return {
-      text: "Out of Stock",
-      className: "out"
-    };
-
-  }
-
-
-  if (
-    stock <= reorder
-  ) {
-
-    return {
-      text: "Low Stock",
-      className: "low"
-    };
-
-  }
-
-
-  return {
-    text: "Active",
-    className: "active"
   };
 
-}
+
+  $("main").innerHTML =
+    pages[state.page]();
 
 
-function renderProducts() {
-
-  const table =
-    document.getElementById(
-      "productsTable"
-    );
-
-
-  if (!products.length) {
-
-    table.innerHTML =
-      `
-      <tr>
-        <td colspan="6"
-            style="text-align:center;color:#777;">
-          No products found.
-        </td>
-      </tr>
-      `;
-
-    return;
-
-  }
-
-
-  table.innerHTML =
-    products
-      .map(
-        function(product) {
-
-          const status =
-            getProductStatus(
-              product
-            );
-
-
-          return `
-
-            <tr>
-
-              <td>
-                ${escapeHTML(product.name)}
-              </td>
-
-              <td>
-                ${escapeHTML(product.category)}
-              </td>
-
-              <td>
-                ${escapeHTML(product.variant)}
-              </td>
-
-              <td>
-                ${formatMoney(product.price)}
-              </td>
-
-              <td>
-                ${escapeHTML(product.stock)}
-              </td>
-
-              <td>
-
-                <span
-                  class="status ${status.className}"
-                >
-                  ${status.text}
-                </span>
-
-              </td>
-
-            </tr>
-
-          `;
-
-        }
-      )
-      .join("");
+  bindPageEvents();
 
 }
 
 
-function renderInventory() {
+/* =============================================================
+   PAGE HEADER
+   ============================================================= */
 
-  const table =
-    document.getElementById(
-      "inventoryTable"
-    );
+function pageHeader(
+  title,
+  description,
+  actions = ""
+) {
 
+  return `
 
-  if (!products.length) {
+    <div class="page-head">
 
-    table.innerHTML =
-      `
-      <tr>
-        <td colspan="6"
-            style="text-align:center;color:#777;">
-          No inventory data.
-        </td>
-      </tr>
-      `;
+      <div>
 
-    return;
+        <h2>
+          ${title}
+        </h2>
 
-  }
+        <p>
+          ${description}
+        </p>
 
+      </div>
 
-  table.innerHTML =
-    products
-      .map(
-        function(product) {
+      <div class="head-actions">
+        ${actions}
+      </div>
 
-          const status =
-            getProductStatus(
-              product
-            );
+    </div>
 
-
-          return `
-
-            <tr>
-
-              <td>
-                ${escapeHTML(product.name)}
-              </td>
-
-              <td>
-                ${escapeHTML(product.category)}
-              </td>
-
-              <td>
-                ${escapeHTML(product.stock)}
-              </td>
-
-              <td>
-                ${escapeHTML(product.reorderLevel)}
-              </td>
-
-              <td>
-                ${formatMoney(product.price)}
-              </td>
-
-              <td>
-
-                <span
-                  class="status ${status.className}"
-                >
-                  ${status.text}
-                </span>
-
-              </td>
-
-            </tr>
-
-          `;
-
-        }
-      )
-      .join("");
+  `;
 
 }
 
 
-/*******************************************************
- * PRODUCT SELECTS
- *******************************************************/
+/* =============================================================
+   DASHBOARD
+   ============================================================= */
 
-function populateProductSelects() {
+function dashboardView() {
 
-  const stockSelect =
-    document.getElementById(
-      "stockProduct"
+  const inventory =
+    state.data.inventory;
+
+  const transactions =
+    state.data.transactions;
+
+
+  const lowStock =
+    inventory.filter(
+      item =>
+        Number(item.quantity) <=
+        Number(item.minStock)
     );
 
 
-  const saleSelect =
-    document.getElementById(
-      "saleProduct"
+  const inventoryValue =
+    inventory.reduce(
+      (
+        total,
+        item
+      ) =>
+        total +
+        Number(item.quantity || 0) *
+        Number(item.cost || 0),
+      0
     );
 
 
-  const options =
+  const today =
+    new Date()
+      .toDateString();
+
+
+  const todayTransactions =
+    transactions.filter(
+      transaction =>
+        new Date(
+          transaction.date
+        ).toDateString() === today
+    );
+
+
+  return (
+
+    pageHeader(
+      "Dashboard",
+      "A quick overview of ROMA Cafe inventory."
+    )
+
+    +
+
     `
-    <option value="">
-      Select Product
-    </option>
-    ` +
 
-    products
-      .map(
-        function(product) {
+    <div class="grid">
 
-          return `
-            <option
-              value="${escapeHTML(product.id)}"
-            >
-              ${escapeHTML(product.name)}
-              ${product.variant
-                ? " - " +
-                  escapeHTML(product.variant)
-                : ""}
-            </option>
-          `;
+      <div class="card stat">
+
+        <div>
+
+          <small>
+            Total Items
+          </small>
+
+          <strong>
+            ${inventory.length}
+          </strong>
+
+        </div>
+
+        <div class="stat-icon">
+          📦
+        </div>
+
+      </div>
+
+
+      <div class="card stat">
+
+        <div>
+
+          <small>
+            Low Stock
+          </small>
+
+          <strong
+            class="${lowStock.length ? "low-stock" : ""}"
+          >
+            ${lowStock.length}
+          </strong>
+
+        </div>
+
+        <div class="stat-icon">
+          ⚠
+        </div>
+
+      </div>
+
+
+      <div class="card stat">
+
+        <div>
+
+          <small>
+            Stock Value
+          </small>
+
+          <strong>
+            ${money(inventoryValue)}
+          </strong>
+
+        </div>
+
+        <div class="stat-icon">
+          ₱
+        </div>
+
+      </div>
+
+
+      <div class="card stat">
+
+        <div>
+
+          <small>
+            Today's Moves
+          </small>
+
+          <strong>
+            ${todayTransactions.length}
+          </strong>
+
+        </div>
+
+        <div class="stat-icon">
+          ⇄
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <div class="section-grid">
+
+      <div class="card">
+
+        <div class="card-title">
+
+          <h3>
+            Recent Transactions
+          </h3>
+
+          <button
+            class="btn btn-ghost"
+            data-go="transactions"
+          >
+            View All
+          </button>
+
+        </div>
+
+        ${transactionTable(
+          transactions
+            .slice()
+            .reverse()
+            .slice(0, 7)
+        )}
+
+      </div>
+
+
+      <div class="card">
+
+        <div class="card-title">
+
+          <h3>
+            Low Stock Alerts
+          </h3>
+
+        </div>
+
+        ${
+          lowStock.length
+
+            ? lowStock
+                .slice(0, 8)
+                .map(
+                  item => `
+
+                    <div
+                      style="
+                        display:flex;
+                        justify-content:space-between;
+                        gap:10px;
+                        padding:11px 0;
+                        border-bottom:1px solid var(--line)
+                      "
+                    >
+
+                      <div>
+
+                        <strong>
+                          ${escapeHTML(item.name)}
+                        </strong>
+
+                        <div
+                          class="muted"
+                          style="font-size:12px"
+                        >
+                          Minimum:
+                          ${item.minStock}
+                          ${escapeHTML(item.unit)}
+                        </div>
+
+                      </div>
+
+                      <span class="badge badge-red">
+
+                        ${item.quantity}
+                        ${escapeHTML(item.unit)}
+
+                      </span>
+
+                    </div>
+
+                  `
+                )
+                .join("")
+
+            : `
+
+              <div class="empty">
+                All inventory items are
+                above minimum stock.
+              </div>
+
+            `
+        }
+
+      </div>
+
+    </div>
+
+    `
+
+  );
+
+}
+
+
+/* =============================================================
+   INVENTORY
+   ============================================================= */
+
+function inventoryView() {
+
+  const inventory =
+    filtered(
+      state.data.inventory,
+      [
+        "code",
+        "name",
+        "category"
+      ]
+    );
+
+
+  const adminButton =
+    state.user.role === "Admin"
+
+      ? `
+
+        <button
+          class="btn btn-gold"
+          data-action="addInventory"
+        >
+          + Add Item
+        </button>
+
+      `
+
+      : "";
+
+
+  return (
+
+    pageHeader(
+      "Inventory",
+      "Manage items, quantities, costs and minimum stock.",
+      `
+
+        <input
+          id="pageSearch"
+          class="search"
+          placeholder="Search inventory…"
+          value="${escapeHTML(state.query)}"
+        >
+
+        ${adminButton}
+
+      `
+    )
+
+    +
+
+    `
+
+    <div class="card">
+
+      <div class="table-wrap">
+
+        ${
+          inventory.length
+
+            ? `
+
+              <table class="table">
+
+                <thead>
+
+                  <tr>
+
+                    <th>
+                      Code
+                    </th>
+
+                    <th>
+                      Item
+                    </th>
+
+                    <th>
+                      Category
+                    </th>
+
+                    <th>
+                      Unit
+                    </th>
+
+                    <th>
+                      Quantity
+                    </th>
+
+                    <th>
+                      Minimum
+                    </th>
+
+                    <th>
+                      Cost
+                    </th>
+
+                    <th>
+                      Status
+                    </th>
+
+                    <th>
+                      Action
+                    </th>
+
+                  </tr>
+
+                </thead>
+
+                <tbody>
+
+                  ${inventory
+                    .map(
+                      item => `
+
+                        <tr>
+
+                          <td>
+                            ${escapeHTML(item.code)}
+                          </td>
+
+                          <td>
+                            <strong>
+                              ${escapeHTML(item.name)}
+                            </strong>
+                          </td>
+
+                          <td>
+                            ${escapeHTML(item.category)}
+                          </td>
+
+                          <td>
+                            ${escapeHTML(item.unit)}
+                          </td>
+
+                          <td
+                            class="${
+                              Number(item.quantity) <=
+                              Number(item.minStock)
+                                ? "low-stock"
+                                : ""
+                            }"
+                          >
+                            ${item.quantity}
+                          </td>
+
+                          <td>
+                            ${item.minStock}
+                          </td>
+
+                          <td>
+                            ${money(item.cost)}
+                          </td>
+
+                          <td>
+                            ${stockBadge(item)}
+                          </td>
+
+                          <td>
+
+                            ${
+                              state.user.role === "Admin"
+
+                                ? `
+
+                                  <button
+                                    class="btn btn-danger"
+                                    data-delete="${escapeHTML(item.id)}"
+                                  >
+                                    Delete
+                                  </button>
+
+                                `
+
+                                : `<span class="muted">—</span>`
+                            }
+
+                          </td>
+
+                        </tr>
+
+                      `
+                    )
+                    .join("")}
+
+                </tbody>
+
+              </table>
+
+            `
+
+            : `
+
+              <div class="empty">
+                No inventory items found.
+              </div>
+
+            `
+        }
+
+      </div>
+
+    </div>
+
+    `
+
+  );
+
+}
+
+
+/* =============================================================
+   TRANSACTIONS
+   ============================================================= */
+
+function transactionsView() {
+
+  return (
+
+    pageHeader(
+      "Stock Transactions",
+      "Record stock IN and stock OUT movements.",
+      `
+
+        <button
+          class="btn btn-gold"
+          data-action="stock"
+        >
+          + New Transaction
+        </button>
+
+      `
+    )
+
+    +
+
+    `
+
+    <div class="card">
+
+      <div class="filters">
+
+        <select
+          id="typeFilter"
+          class="search"
+        >
+
+          <option value="">
+            All Types
+          </option>
+
+          <option value="IN">
+            Stock In
+          </option>
+
+          <option value="OUT">
+            Stock Out
+          </option>
+
+        </select>
+
+
+        <input
+          id="pageSearch"
+          class="search"
+          placeholder="Search item, supplier, reason…"
+          value="${escapeHTML(state.query)}"
+        >
+
+      </div>
+
+
+      ${transactionTable(
+        filtered(
+          state.data.transactions,
+          [
+            "itemName",
+            "supplier",
+            "reason",
+            "user"
+          ]
+        )
+      )}
+
+    </div>
+
+    `
+
+  );
+
+}
+
+
+/* =============================================================
+   SUPPLIERS
+   ============================================================= */
+
+function suppliersView() {
+
+  const suppliers =
+    filtered(
+      state.data.suppliers,
+      [
+        "name",
+        "contact",
+        "phone",
+        "email",
+        "category"
+      ]
+    );
+
+
+  return (
+
+    pageHeader(
+      "Suppliers",
+      "Manage your cafe supplier directory.",
+      `
+
+        <input
+          id="pageSearch"
+          class="search"
+          placeholder="Search suppliers…"
+          value="${escapeHTML(state.query)}"
+        >
+
+        <button
+          class="btn btn-gold"
+          data-action="supplier"
+        >
+          + Add Supplier
+        </button>
+
+      `
+    )
+
+    +
+
+    `
+
+    <div class="card">
+
+      <div class="table-wrap">
+
+        ${
+          suppliers.length
+
+            ? `
+
+              <table class="table">
+
+                <thead>
+
+                  <tr>
+
+                    <th>
+                      Supplier
+                    </th>
+
+                    <th>
+                      Contact
+                    </th>
+
+                    <th>
+                      Phone
+                    </th>
+
+                    <th>
+                      Email
+                    </th>
+
+                    <th>
+                      Category
+                    </th>
+
+                  </tr>
+
+                </thead>
+
+                <tbody>
+
+                  ${suppliers
+                    .map(
+                      supplier => `
+
+                        <tr>
+
+                          <td>
+                            <strong>
+                              ${escapeHTML(supplier.name)}
+                            </strong>
+                          </td>
+
+                          <td>
+                            ${escapeHTML(supplier.contact)}
+                          </td>
+
+                          <td>
+                            ${escapeHTML(supplier.phone)}
+                          </td>
+
+                          <td>
+                            ${escapeHTML(supplier.email)}
+                          </td>
+
+                          <td>
+                            ${escapeHTML(supplier.category)}
+                          </td>
+
+                        </tr>
+
+                      `
+                    )
+                    .join("")}
+
+                </tbody>
+
+              </table>
+
+            `
+
+            : `
+
+              <div class="empty">
+                No suppliers found.
+              </div>
+
+            `
+        }
+
+      </div>
+
+    </div>
+
+    `
+
+  );
+
+}
+
+
+/* =============================================================
+   REPORTS
+   ============================================================= */
+
+function reportsView() {
+
+  const inventory =
+    state.data.inventory;
+
+  const transactions =
+    state.data.transactions;
+
+
+  const categoryValues =
+    {};
+
+
+  inventory.forEach(
+    item => {
+
+      const category =
+        item.category ||
+        "Uncategorized";
+
+
+      categoryValues[category] =
+        (
+          categoryValues[category] ||
+          0
+        ) +
+
+        Number(item.quantity || 0) *
+        Number(item.cost || 0);
+
+    }
+  );
+
+
+  const unitsIn =
+    transactions
+      .filter(
+        transaction =>
+          transaction.type === "IN"
+      )
+      .reduce(
+        (total, transaction) =>
+          total +
+          Number(
+            transaction.quantity || 0
+          ),
+        0
+      );
+
+
+  const unitsOut =
+    transactions
+      .filter(
+        transaction =>
+          transaction.type === "OUT"
+      )
+      .reduce(
+        (total, transaction) =>
+          total +
+          Number(
+            transaction.quantity || 0
+          ),
+        0
+      );
+
+
+  const totalValue =
+    inventory.reduce(
+      (total, item) =>
+        total +
+        Number(item.quantity || 0) *
+        Number(item.cost || 0),
+      0
+    );
+
+
+  return (
+
+    pageHeader(
+      "Reports",
+      "Inventory health and movement summary."
+    )
+
+    +
+
+    `
+
+    <div class="grid">
+
+      <div class="card stat">
+
+        <div>
+
+          <small>
+            Units In
+          </small>
+
+          <strong>
+            ${unitsIn.toLocaleString()}
+          </strong>
+
+        </div>
+
+        <div class="stat-icon">
+          ↓
+        </div>
+
+      </div>
+
+
+      <div class="card stat">
+
+        <div>
+
+          <small>
+            Units Out
+          </small>
+
+          <strong>
+            ${unitsOut.toLocaleString()}
+          </strong>
+
+        </div>
+
+        <div class="stat-icon">
+          ↑
+        </div>
+
+      </div>
+
+
+      <div class="card stat">
+
+        <div>
+
+          <small>
+            Categories
+          </small>
+
+          <strong>
+            ${Object.keys(categoryValues).length}
+          </strong>
+
+        </div>
+
+        <div class="stat-icon">
+          ▤
+        </div>
+
+      </div>
+
+
+      <div class="card stat">
+
+        <div>
+
+          <small>
+            Inventory Value
+          </small>
+
+          <strong>
+            ${money(totalValue)}
+          </strong>
+
+        </div>
+
+        <div class="stat-icon">
+          ₱
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <div
+      class="card"
+      style="margin-top:15px"
+    >
+
+      <div class="card-title">
+
+        <h3>
+          Inventory Value by Category
+        </h3>
+
+      </div>
+
+      <div class="table-wrap">
+
+        <table class="table">
+
+          <thead>
+
+            <tr>
+
+              <th>
+                Category
+              </th>
+
+              <th>
+                Inventory Value
+              </th>
+
+            </tr>
+
+          </thead>
+
+          <tbody>
+
+            ${
+              Object.entries(
+                categoryValues
+              )
+              .sort(
+                (a,b) =>
+                  b[1] - a[1]
+              )
+              .map(
+                ([category,value]) => `
+
+                  <tr>
+
+                    <td>
+                      ${escapeHTML(category)}
+                    </td>
+
+                    <td>
+                      <strong>
+                        ${money(value)}
+                      </strong>
+                    </td>
+
+                  </tr>
+
+                `
+              )
+              .join("")
+
+              ||
+
+              `
+
+                <tr>
+
+                  <td colspan="2">
+                    <div class="empty">
+                      No report data.
+                    </div>
+                  </td>
+
+                </tr>
+
+              `
+            }
+
+          </tbody>
+
+        </table>
+
+      </div>
+
+    </div>
+
+    `
+
+  );
+
+}
+
+
+/* =============================================================
+   AUDIT LOG
+   ============================================================= */
+
+function auditView() {
+
+  const records =
+    state.data.audit
+      .slice()
+      .reverse();
+
+
+  return (
+
+    pageHeader(
+      "Audit Log",
+      "Activity recorded by the Apps Script backend."
+    )
+
+    +
+
+    `
+
+    <div class="card">
+
+      <div class="table-wrap">
+
+        <table class="table">
+
+          <thead>
+
+            <tr>
+
+              <th>
+                Date
+              </th>
+
+              <th>
+                User
+              </th>
+
+              <th>
+                Action
+              </th>
+
+              <th>
+                Details
+              </th>
+
+            </tr>
+
+          </thead>
+
+          <tbody>
+
+            ${
+              records.length
+
+                ? records
+                    .map(
+                      record => `
+
+                        <tr>
+
+                          <td>
+                            ${formatDate(record.date)}
+                          </td>
+
+                          <td>
+                            ${escapeHTML(record.user)}
+                          </td>
+
+                          <td>
+                            <span class="badge badge-gray">
+                              ${escapeHTML(record.action)}
+                            </span>
+                          </td>
+
+                          <td>
+                            ${escapeHTML(record.details)}
+                          </td>
+
+                        </tr>
+
+                      `
+                    )
+                    .join("")
+
+                : `
+
+                  <tr>
+
+                    <td colspan="4">
+
+                      <div class="empty">
+                        No audit records.
+                      </div>
+
+                    </td>
+
+                  </tr>
+
+                `
+            }
+
+          </tbody>
+
+        </table>
+
+      </div>
+
+    </div>
+
+    `
+
+  );
+
+}
+
+
+/* =============================================================
+   SETTINGS
+   ============================================================= */
+
+function settingsView() {
+
+  return (
+
+    pageHeader(
+      "Settings",
+      "Account and application information."
+    )
+
+    +
+
+    `
+
+    <div class="section-grid">
+
+      <div class="card">
+
+        <div class="card-title">
+
+          <h3>
+            Your Account
+          </h3>
+
+        </div>
+
+        <p>
+
+          <strong>
+            Name
+          </strong>
+
+          <br>
+
+          ${escapeHTML(state.user.name)}
+
+        </p>
+
+        <p>
+
+          <strong>
+            Email
+          </strong>
+
+          <br>
+
+          ${escapeHTML(state.user.email)}
+
+        </p>
+
+        <p>
+
+          <strong>
+            Role
+          </strong>
+
+          <br>
+
+          <span
+            class="badge ${
+              state.user.role === "Admin"
+                ? "badge-orange"
+                : "badge-gray"
+            }"
+          >
+            ${escapeHTML(state.user.role)}
+          </span>
+
+        </p>
+
+        <button
+          class="btn btn-ghost"
+          data-action="refresh"
+        >
+          Refresh Data
+        </button>
+
+      </div>
+
+
+      <div class="card">
+
+        <div class="card-title">
+
+          <h3>
+            Security
+          </h3>
+
+        </div>
+
+        <p class="muted">
+
+          Login uses the Apps Script password
+          verification and time-limited email OTP
+          authentication.
+
+        </p>
+
+        <p class="muted">
+
+          The frontend does not store your password
+          or OTP. The authenticated user profile is
+          kept in sessionStorage for the current
+          browser session.
+
+        </p>
+
+        <div
+          class="alert"
+          style="
+            color:#92400e;
+            background:#fffbeb;
+            border:1px solid #fde68a;
+          "
+        >
+
+          <strong>
+            Security note:
+          </strong>
+
+          Your current Apps Script uses the
+          frontend-supplied user email when checking
+          protected operations. For production use,
+          the backend should be upgraded to issue and
+          validate a server-side session/token.
+
+        </div>
+
+      </div>
+
+    </div>
+
+    `
+
+  );
+
+}
+
+
+/* =============================================================
+   FILTERING
+   ============================================================= */
+
+function filtered(
+  list,
+  fields
+) {
+
+  const query =
+    state.query
+      .toLowerCase();
+
+
+  if (!query) {
+
+    return list;
+
+  }
+
+
+  return list.filter(
+    item =>
+      fields.some(
+        field =>
+          String(
+            item[field] ?? ""
+          )
+          .toLowerCase()
+          .includes(query)
+      )
+  );
+
+}
+
+
+/* =============================================================
+   STOCK BADGE
+   ============================================================= */
+
+function stockBadge(item) {
+
+  const quantity =
+    Number(item.quantity || 0);
+
+  const minimum =
+    Number(item.minStock || 0);
+
+
+  if (quantity <= minimum) {
+
+    return `
+
+      <span class="badge badge-red">
+        Low Stock
+      </span>
+
+    `;
+
+  }
+
+
+  return `
+
+    <span class="badge badge-green">
+      Healthy
+    </span>
+
+  `;
+
+}
+
+
+/* =============================================================
+   TRANSACTION TABLE
+   ============================================================= */
+
+function transactionTable(
+  transactions
+) {
+
+  if (!transactions.length) {
+
+    return `
+
+      <div class="empty">
+        No transactions found.
+      </div>
+
+    `;
+
+  }
+
+
+  return `
+
+    <div class="table-wrap">
+
+      <table class="table">
+
+        <thead>
+
+          <tr>
+
+            <th>
+              Date
+            </th>
+
+            <th>
+              Type
+            </th>
+
+            <th>
+              Item
+            </th>
+
+            <th>
+              Quantity
+            </th>
+
+            <th>
+              Supplier
+            </th>
+
+            <th>
+              Reason
+            </th>
+
+            <th>
+              User
+            </th>
+
+          </tr>
+
+        </thead>
+
+        <tbody>
+
+          ${transactions
+            .map(
+              transaction => `
+
+                <tr>
+
+                  <td>
+                    ${formatDate(transaction.date)}
+                  </td>
+
+                  <td>
+
+                    <span
+                      class="badge ${
+                        transaction.type === "IN"
+                          ? "badge-green"
+                          : "badge-orange"
+                      }"
+                    >
+                      ${escapeHTML(transaction.type)}
+                    </span>
+
+                  </td>
+
+                  <td>
+                    ${escapeHTML(transaction.itemName)}
+                  </td>
+
+                  <td>
+                    ${transaction.quantity}
+                  </td>
+
+                  <td>
+                    ${
+                      escapeHTML(
+                        transaction.supplier
+                      ) || "—"
+                    }
+                  </td>
+
+                  <td>
+                    ${
+                      escapeHTML(
+                        transaction.reason
+                      ) || "—"
+                    }
+                  </td>
+
+                  <td>
+                    ${escapeHTML(transaction.user)}
+                  </td>
+
+                </tr>
+
+              `
+            )
+            .join("")}
+
+        </tbody>
+
+      </table>
+
+    </div>
+
+  `;
+
+}
+
+
+/* =============================================================
+   PAGE EVENTS
+   ============================================================= */
+
+function bindPageEvents() {
+
+  const search =
+    $("pageSearch");
+
+
+  if (search) {
+
+    search.oninput =
+      function () {
+
+        state.query =
+          search.value;
+
+        render();
+
+
+        const newSearch =
+          $("pageSearch");
+
+
+        if (newSearch) {
+
+          newSearch.focus();
+
+          newSearch.setSelectionRange(
+            state.query.length,
+            state.query.length
+          );
 
         }
-      )
-      .join("");
+
+      };
+
+  }
 
 
-  stockSelect.innerHTML =
-    options;
+  document
+    .querySelectorAll(
+      "[data-go]"
+    )
+    .forEach(
+      button => {
 
-  saleSelect.innerHTML =
-    options;
-
-}
-
-
-/*******************************************************
- * ADD PRODUCT
- *******************************************************/
-
-document
-  .getElementById(
-    "productForm"
-  )
-  .addEventListener(
-    "submit",
-    async function(event) {
-
-      event.preventDefault();
-
-
-      try {
-
-        const product = {
-
-          name:
-            document
-              .getElementById(
-                "productName"
-              )
-              .value
-              .trim(),
-
-          category:
-            document
-              .getElementById(
-                "productCategory"
-              )
-              .value,
-
-          variant:
-            document
-              .getElementById(
-                "productVariant"
-              )
-              .value,
-
-          price:
-            Number(
-              document
-                .getElementById(
-                  "productPrice"
-                )
-                .value
-            ),
-
-          stock:
-            Number(
-              document
-                .getElementById(
-                  "productStock"
-                )
-                .value
-            ),
-
-          reorderLevel:
-            Number(
-              document
-                .getElementById(
-                  "reorderLevel"
-                )
-                .value
-            ),
-
-          supplier:
-            document
-              .getElementById(
-                "supplier"
-              )
-              .value
-              .trim(),
-
-          branch:
-            document
-              .getElementById(
-                "productBranch"
-              )
-              .value
-              .trim()
-
-        };
-
-
-        await api(
-          "addProduct",
-          {
-            product:
-              product
-          }
-        );
-
-
-        document
-          .getElementById(
-            "productForm"
-          )
-          .reset();
-
-
-        document
-          .getElementById(
-            "reorderLevel"
-          )
-          .value =
-          "5";
-
-
-        document
-          .getElementById(
-            "productBranch"
-          )
-          .value =
-          "ROMA";
-
-
-        showToast(
-          "Product added successfully."
-        );
-
-
-        await loadProducts();
-
-        await loadDashboard();
-
-
-      } catch (error) {
-
-        showToast(
-          error.message
-        );
+        button.onclick =
+          () =>
+            setPage(
+              button.dataset.go
+            );
 
       }
-
-    }
-  );
+    );
 
 
-/*******************************************************
- * STOCK MOVEMENT
- *******************************************************/
+  document
+    .querySelectorAll(
+      "[data-action]"
+    )
+    .forEach(
+      button => {
 
-document
-  .getElementById(
-    "stockForm"
-  )
-  .addEventListener(
-    "submit",
-    async function(event) {
-
-      event.preventDefault();
-
-
-      try {
-
-        const productId =
-          document
-            .getElementById(
-              "stockProduct"
-            )
-            .value;
-
-
-        const type =
-          document
-            .getElementById(
-              "stockType"
-            )
-            .value;
-
-
-        const quantity =
-          Number(
-            document
-              .getElementById(
-                "stockQuantity"
-              )
-              .value
-          );
-
-
-        const reason =
-          document
-            .getElementById(
-              "stockReason"
-            )
-            .value
-            .trim();
-
-
-        await api(
-          "stockMovement",
-          {
-            productId:
-              productId,
-
-            type:
-              type,
-
-            quantity:
-              quantity,
-
-            reason:
-              reason
-          }
-        );
-
-
-        document
-          .getElementById(
-            "stockForm"
-          )
-          .reset();
-
-
-        showToast(
-          "Stock movement recorded."
-        );
-
-
-        await loadProducts();
-
-        await loadDashboard();
-
-
-      } catch (error) {
-
-        showToast(
-          error.message
-        );
+        button.onclick =
+          () =>
+            openModal(
+              button.dataset.action
+            );
 
       }
-
-    }
-  );
+    );
 
 
-/*******************************************************
- * SALES
- *******************************************************/
+  document
+    .querySelectorAll(
+      "[data-delete]"
+    )
+    .forEach(
+      button => {
 
-document
-  .getElementById(
-    "salesForm"
-  )
-  .addEventListener(
-    "submit",
-    async function(event) {
-
-      event.preventDefault();
-
-
-      try {
-
-        const productId =
-          document
-            .getElementById(
-              "saleProduct"
-            )
-            .value;
-
-
-        const quantity =
-          Number(
-            document
-              .getElementById(
-                "saleQuantity"
-              )
-              .value
-          );
-
-
-        await api(
-          "recordSale",
-          {
-            productId:
-              productId,
-
-            quantity:
-              quantity
-          }
-        );
-
-
-        document
-          .getElementById(
-            "salesForm"
-          )
-          .reset();
-
-
-        showToast(
-          "Sale recorded successfully."
-        );
-
-
-        await loadProducts();
-
-        await loadDashboard();
-
-        await loadSales();
-
-
-      } catch (error) {
-
-        showToast(
-          error.message
-        );
+        button.onclick =
+          () =>
+            deleteInventoryItem(
+              button.dataset.delete
+            );
 
       }
-
-    }
-  );
+    );
 
 
-/*******************************************************
- * SALES REPORT
- *******************************************************/
-
-async function loadSales() {
-
-  try {
-
-    const result =
-      await api(
-        "getSales"
-      );
+  const typeFilter =
+    $("typeFilter");
 
 
-    const sales =
-      result.sales || [];
+  if (typeFilter) {
+
+    typeFilter.onchange =
+      function () {
+
+        const selected =
+          typeFilter.value;
 
 
-    const table =
-      document.getElementById(
-        "salesTable"
-      );
+        const filteredTransactions =
+          state.data.transactions
+            .filter(
+              transaction =>
+                !selected ||
+                transaction.type === selected
+            );
 
 
-    if (!sales.length) {
+        const card =
+          $("main")
+            .querySelector(".card");
 
-      table.innerHTML =
-        `
-        <tr>
-          <td colspan="6"
-              style="text-align:center;color:#777;">
-            No sales records found.
-          </td>
-        </tr>
+
+        if (!card) {
+          return;
+        }
+
+
+        card.innerHTML = `
+
+          <div class="filters">
+
+            <select
+              id="typeFilter"
+              class="search"
+            >
+
+              <option value="">
+                All Types
+              </option>
+
+              <option
+                value="IN"
+                ${
+                  selected === "IN"
+                    ? "selected"
+                    : ""
+                }
+              >
+                Stock In
+              </option>
+
+              <option
+                value="OUT"
+                ${
+                  selected === "OUT"
+                    ? "selected"
+                    : ""
+                }
+              >
+                Stock Out
+              </option>
+
+            </select>
+
+
+            <input
+              id="pageSearch"
+              class="search"
+              placeholder="Search item, supplier, reason…"
+              value="${escapeHTML(state.query)}"
+            >
+
+          </div>
+
+          ${transactionTable(
+            filtered(
+              filteredTransactions,
+              [
+                "itemName",
+                "supplier",
+                "reason",
+                "user"
+              ]
+            )
+          )}
+
         `;
 
-      return;
 
-    }
+        bindPageEvents();
 
-
-    table.innerHTML =
-      sales
-        .map(
-          function(sale) {
-
-            return `
-
-              <tr>
-
-                <td>
-                  ${formatDate(sale.timestamp)}
-                </td>
-
-                <td>
-                  ${escapeHTML(sale.productName || sale.productId)}
-                </td>
-
-                <td>
-                  ${escapeHTML(sale.quantity)}
-                </td>
-
-                <td>
-                  ${formatMoney(sale.total)}
-                </td>
-
-                <td>
-                  ${escapeHTML(sale.cashier)}
-                </td>
-
-                <td>
-                  ${escapeHTML(sale.branch)}
-                </td>
-
-              </tr>
-
-            `;
-
-          }
-        )
-        .join("");
-
-
-  } catch (error) {
-
-    showToast(
-      error.message
-    );
+      };
 
   }
 
 }
 
 
-/*******************************************************
- * AUDIT LOGS
- *******************************************************/
+/* =============================================================
+   MODALS
+   ============================================================= */
 
-async function loadAuditLogs() {
+function openModal(
+  type
+) {
+
+  let title = "";
+
+  let body = "";
+
+
+  /* -----------------------------------------------------------
+     ADD INVENTORY
+     ----------------------------------------------------------- */
 
   if (
-    !currentUser ||
-    currentUser.role !==
-      "ADMIN"
+    type === "addInventory"
   ) {
+
+    title =
+      "Add Inventory Item";
+
+
+    body = `
+
+      <form id="modalForm">
+
+        <div class="form-grid">
+
+          <div class="field">
+
+            <label>
+              Item Code
+            </label>
+
+            <input
+              name="code"
+              required
+              placeholder="INV-001"
+            >
+
+          </div>
+
+
+          <div class="field">
+
+            <label>
+              Item Name
+            </label>
+
+            <input
+              name="name"
+              required
+              placeholder="Arabica Coffee Beans"
+            >
+
+          </div>
+
+
+          <div class="field">
+
+            <label>
+              Category
+            </label>
+
+            <input
+              name="category"
+              required
+              placeholder="Coffee"
+            >
+
+          </div>
+
+
+          <div class="field">
+
+            <label>
+              Unit
+            </label>
+
+            <input
+              name="unit"
+              required
+              placeholder="kg / pcs / bottle"
+            >
+
+          </div>
+
+
+          <div class="field">
+
+            <label>
+              Opening Quantity
+            </label>
+
+            <input
+              name="quantity"
+              type="number"
+              min="0"
+              step="any"
+              value="0"
+              required
+            >
+
+          </div>
+
+
+          <div class="field">
+
+            <label>
+              Minimum Stock
+            </label>
+
+            <input
+              name="minStock"
+              type="number"
+              min="0"
+              step="any"
+              value="0"
+              required
+            >
+
+          </div>
+
+
+          <div class="field full">
+
+            <label>
+              Unit Cost
+            </label>
+
+            <input
+              name="cost"
+              type="number"
+              min="0"
+              step="0.01"
+              value="0"
+              required
+            >
+
+          </div>
+
+        </div>
+
+
+        <div class="modal-actions">
+
+          <button
+            type="button"
+            class="btn btn-ghost"
+            data-close
+          >
+            Cancel
+          </button>
+
+          <button
+            type="submit"
+            class="btn btn-gold"
+          >
+            Save Item
+          </button>
+
+        </div>
+
+      </form>
+
+    `;
+
+  }
+
+
+  /* -----------------------------------------------------------
+     STOCK TRANSACTION
+     ----------------------------------------------------------- */
+
+  if (
+    type === "stock"
+  ) {
+
+    title =
+      "New Stock Transaction";
+
+
+    body = `
+
+      <form id="modalForm">
+
+        <div class="field">
+
+          <label>
+            Transaction Type
+          </label>
+
+          <select name="type">
+
+            <option value="IN">
+              Stock In
+            </option>
+
+            <option value="OUT">
+              Stock Out
+            </option>
+
+          </select>
+
+        </div>
+
+
+        <div class="field">
+
+          <label>
+            Inventory Item
+          </label>
+
+          <select
+            name="itemId"
+            required
+          >
+
+            ${
+              state.data.inventory.length
+
+                ? state.data.inventory
+                    .map(
+                      item => `
+
+                        <option
+                          value="${escapeHTML(item.id)}"
+                        >
+
+                          ${escapeHTML(item.name)}
+                          —
+                          ${item.quantity}
+                          ${escapeHTML(item.unit)}
+
+                        </option>
+
+                      `
+                    )
+                    .join("")
+
+                : `
+
+                    <option value="">
+                      No inventory items
+                    </option>
+
+                  `
+            }
+
+          </select>
+
+        </div>
+
+
+        <div class="field">
+
+          <label>
+            Quantity
+          </label>
+
+          <input
+            name="quantity"
+            type="number"
+            min="0.01"
+            step="any"
+            required
+          >
+
+        </div>
+
+
+        <div class="field">
+
+          <label>
+            Supplier
+          </label>
+
+          <input
+            name="supplier"
+            placeholder="Optional"
+          >
+
+        </div>
+
+
+        <div class="field">
+
+          <label>
+            Reason
+          </label>
+
+          <input
+            name="reason"
+            placeholder="Purchase, sale, spoilage, adjustment…"
+          >
+
+        </div>
+
+
+        <div class="modal-actions">
+
+          <button
+            type="button"
+            class="btn btn-ghost"
+            data-close
+          >
+            Cancel
+          </button>
+
+          <button
+            type="submit"
+            class="btn btn-gold"
+          >
+            Save Transaction
+          </button>
+
+        </div>
+
+      </form>
+
+    `;
+
+  }
+
+
+  /* -----------------------------------------------------------
+     SUPPLIER
+     ----------------------------------------------------------- */
+
+  if (
+    type === "supplier"
+  ) {
+
+    title =
+      "Add Supplier";
+
+
+    body = `
+
+      <form id="modalForm">
+
+        <div class="form-grid">
+
+          <div class="field">
+
+            <label>
+              Supplier Name
+            </label>
+
+            <input
+              name="name"
+              required
+              placeholder="Supplier Company"
+            >
+
+          </div>
+
+
+          <div class="field">
+
+            <label>
+              Contact Person
+            </label>
+
+            <input
+              name="contact"
+              placeholder="Contact name"
+            >
+
+          </div>
+
+
+          <div class="field">
+
+            <label>
+              Phone
+            </label>
+
+            <input
+              name="phone"
+              placeholder="+63..."
+            >
+
+          </div>
+
+
+          <div class="field">
+
+            <label>
+              Email
+            </label>
+
+            <input
+              name="email"
+              type="email"
+              placeholder="supplier@example.com"
+            >
+
+          </div>
+
+
+          <div class="field full">
+
+            <label>
+              Category
+            </label>
+
+            <input
+              name="category"
+              placeholder="Coffee, dairy, produce…"
+            >
+
+          </div>
+
+        </div>
+
+
+        <div class="modal-actions">
+
+          <button
+            type="button"
+            class="btn btn-ghost"
+            data-close
+          >
+            Cancel
+          </button>
+
+          <button
+            type="submit"
+            class="btn btn-gold"
+          >
+            Save Supplier
+          </button>
+
+        </div>
+
+      </form>
+
+    `;
+
+  }
+
+
+  /* -----------------------------------------------------------
+     REFRESH
+     ----------------------------------------------------------- */
+
+  if (
+    type === "refresh"
+  ) {
+
+    refreshData()
+      .then(
+        () => {
+
+          render();
+
+          showToast(
+            "Data refreshed."
+          );
+
+        }
+      );
 
     return;
 
   }
 
 
-  try {
+  $("modalRoot").innerHTML = `
 
-    const result =
-      await api(
-        "getAuditLogs"
-      );
+    <div class="modal-backdrop">
 
+      <div class="modal">
 
-    const logs =
-      result.logs || [];
+        <div class="modal-head">
 
+          <h3>
+            ${title}
+          </h3>
 
-    const table =
-      document.getElementById(
-        "auditTable"
-      );
+          <button
+            class="close-button"
+            data-close
+            aria-label="Close"
+          >
+            ×
+          </button>
 
+        </div>
 
-    if (!logs.length) {
+        ${body}
 
-      table.innerHTML =
-        `
-        <tr>
-          <td colspan="5"
-              style="text-align:center;color:#777;">
-            No audit logs found.
-          </td>
-        </tr>
-        `;
+      </div>
 
-      return;
+    </div>
 
-    }
+  `;
 
 
-    table.innerHTML =
-      logs
-        .map(
-          function(log) {
-
-            return `
-
-              <tr>
-
-                <td>
-                  ${formatDate(log.timestamp)}
-                </td>
-
-                <td>
-                  ${escapeHTML(log.user)}
-                </td>
-
-                <td>
-                  ${escapeHTML(log.action)}
-                </td>
-
-                <td>
-                  ${escapeHTML(log.module)}
-                </td>
-
-                <td>
-                  ${escapeHTML(log.details)}
-                </td>
-
-              </tr>
-
-            `;
-
-          }
-        )
-        .join("");
-
-
-  } catch (error) {
-
-    showToast(
-      error.message
+  $("modalRoot")
+    .querySelectorAll(
+      "[data-close]"
+    )
+    .forEach(
+      button =>
+        button.onclick =
+          closeModal
     );
+
+
+  const form =
+    $("modalForm");
+
+
+  if (form) {
+
+    form.onsubmit =
+      event =>
+        submitModal(
+          event,
+          type
+        );
 
   }
 
 }
 
 
-/*******************************************************
- * AUTO LOGIN CHECK
- *******************************************************/
+/* =============================================================
+   CLOSE MODAL
+   ============================================================= */
 
-async function checkExistingSession() {
+function closeModal() {
 
-  if (
-    !sessionToken ||
-    !currentUser
-  ) {
+  $("modalRoot")
+    .innerHTML = "";
 
-    return;
+}
 
-  }
+
+/* =============================================================
+   SUBMIT MODAL
+   ============================================================= */
+
+async function submitModal(
+  event,
+  type
+) {
+
+  event.preventDefault();
+
+
+  const form =
+    event.target;
+
+
+  const formData =
+    new FormData(form);
+
+
+  const values =
+    Object.fromEntries(
+      formData.entries()
+    );
 
 
   try {
 
-    const result =
-      await api(
-        "validateSession"
-      );
+    let result;
 
+
+    /* ADD INVENTORY */
 
     if (
-      result &&
-      result.ok
+      type === "addInventory"
     ) {
 
-      document
-        .getElementById(
-          "loginPage"
-        )
-        .style.display =
-        "none";
+      result =
+        await api(
+          "addInventory",
+          {
 
+            user:
+              state.user,
 
-      document
-        .getElementById(
-          "app"
-        )
-        .style.display =
-        "block";
+            item: {
 
+              code:
+                values.code,
 
-      updateUserInfo();
+              name:
+                values.name,
 
-      applyRoleAccess();
+              category:
+                values.category,
 
-      await loadDashboard();
+              unit:
+                values.unit,
 
-      await loadProducts();
+              quantity:
+                Number(
+                  values.quantity
+                ),
+
+              minStock:
+                Number(
+                  values.minStock
+                ),
+
+              cost:
+                Number(
+                  values.cost
+                )
+
+            }
+
+          }
+        );
 
     }
 
+
+    /* STOCK TRANSACTION */
+
+    if (
+      type === "stock"
+    ) {
+
+      result =
+        await api(
+          "stockTransaction",
+          {
+
+            user:
+              state.user,
+
+            type:
+              values.type,
+
+            itemId:
+              values.itemId,
+
+            quantity:
+              Number(
+                values.quantity
+              ),
+
+            supplier:
+              values.supplier,
+
+            reason:
+              values.reason
+
+          }
+        );
+
+    }
+
+
+    /* ADD SUPPLIER */
+
+    if (
+      type === "supplier"
+    ) {
+
+      result =
+        await api(
+          "addSupplier",
+          {
+
+            user:
+              state.user,
+
+            supplier: {
+
+              name:
+                values.name,
+
+              contact:
+                values.contact,
+
+              phone:
+                values.phone,
+
+              email:
+                values.email,
+
+              category:
+                values.category
+
+            }
+
+          }
+        );
+
+    }
+
+
+    closeModal();
+
+    await refreshData();
+
+    render();
+
+
+    showToast(
+      result.message ||
+      "Saved successfully."
+    );
+
+
   } catch (error) {
 
-    sessionStorage.removeItem(
-      "roma_token"
+    showToast(
+      error.message
     );
-
-    sessionStorage.removeItem(
-      "roma_user"
-    );
-
-    sessionToken =
-      null;
-
-    currentUser =
-      null;
 
   }
 
 }
 
 
-/*******************************************************
- * START
- *******************************************************/
+/* =============================================================
+   DELETE INVENTORY
+   ============================================================= */
 
-checkExistingSession();
+async function deleteInventoryItem(
+  id
+) {
+
+  if (
+    state.user.role !== "Admin"
+  ) {
+
+    showToast(
+      "Admin permission required."
+    );
+
+    return;
+
+  }
+
+
+  const item =
+    state.data.inventory.find(
+      inventoryItem =>
+        String(
+          inventoryItem.id
+        ) === String(id)
+    );
+
+
+  if (!item) {
+
+    showToast(
+      "Inventory item not found."
+    );
+
+    return;
+
+  }
+
+
+  const confirmed =
+    window.confirm(
+      `Delete "${item.name}"?\n\nThis cannot be undone.`
+    );
+
+
+  if (!confirmed) {
+    return;
+  }
+
+
+  try {
+
+    await api(
+      "deleteInventory",
+      {
+
+        user:
+          state.user,
+
+        id
+
+      }
+    );
+
+
+    await refreshData();
+
+    render();
+
+
+    showToast(
+      "Inventory item deleted."
+    );
+
+
+  } catch (error) {
+
+    showToast(
+      error.message
+    );
+
+  }
+
+}
+
+
+/* =============================================================
+   INITIALIZATION
+   ============================================================= */
+
+(async function () {
+
+  const savedUser =
+    getSessionUser();
+
+
+  if (
+    savedUser
+  ) {
+
+    state.user =
+      savedUser;
+
+
+    await startApplication();
+
+  }
+
+})();
 
 </script>
 
 </body>
 </html>
+```
