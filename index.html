@@ -1,1345 +1,1334 @@
-```html
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
 
-  <meta charset="UTF-8">
+<meta charset="UTF-8">
 
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
-  >
+<meta
+  name="viewport"
+  content="width=device-width, initial-scale=1.0"
+>
 
-  <meta
-    name="theme-color"
-    content="#6f4e37"
-  >
+<meta
+  name="description"
+  content="ROMA Cafe Inventory Management System"
+>
 
-  <meta
-    name="description"
-    content="ROMA Cafe Inventory Management System"
-  >
+<title>ROMA Cafe | Inventory Management System</title>
 
-  <title>ROMA Cafe | Inventory System</title>
 
+<style>
 
-  <!-- =====================================================
-       CSS
-  ====================================================== -->
+/* =====================================================
+   ROOT
+===================================================== */
 
-  <style>
+:root {
+  --brown: #795338;
+  --brown-dark: #5f3f2a;
+  --brown-light: #967054;
 
-    :root {
+  --cream: #f7f2ed;
+  --cream-dark: #eee5dd;
 
-      --brown: #6f4e37;
-      --brown-dark: #4b3325;
+  --white: #ffffff;
 
-      --cream: #faf7f2;
+  --navy: #132238;
+  --text: #263238;
+  --muted: #718096;
 
-      --white: #ffffff;
+  --border: #e5ddd5;
 
-      --text: #29231f;
+  --green: #2e7d32;
+  --green-bg: #e9f6eb;
 
-      --muted: #776e67;
+  --red: #c62828;
+  --red-bg: #fdecec;
 
-      --border: #e8e0d8;
+  --orange: #ef8a17;
+  --orange-bg: #fff3df;
 
-      --danger: #b42318;
+  --shadow:
+    0 12px 30px rgba(51, 38, 27, 0.08);
 
-      --success: #16834b;
+  --radius: 16px;
+}
 
-      --warning: #b56b00;
 
-      --info: #2563eb;
+/* =====================================================
+   RESET
+===================================================== */
 
-      --shadow:
-        0 8px 30px rgba(52, 38, 28, .08);
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
 
-      --radius: 16px;
 
-    }
+body {
+  font-family:
+    Inter,
+    Arial,
+    Helvetica,
+    sans-serif;
 
+  background: var(--cream);
 
-    * {
+  color: var(--text);
 
-      box-sizing: border-box;
+  min-height: 100vh;
+}
 
-      margin: 0;
 
-      padding: 0;
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
 
-    }
 
+button {
+  cursor: pointer;
+}
 
-    body {
 
-      font-family:
-        Inter,
-        ui-sans-serif,
-        system-ui,
-        -apple-system,
-        BlinkMacSystemFont,
-        "Segoe UI",
-        sans-serif;
+.hidden {
+  display: none !important;
+}
 
-      background:
-        var(--cream);
 
-      color:
-        var(--text);
+/* =====================================================
+   AUTH
+===================================================== */
 
-    }
+.auth-screen {
+  min-height: 100vh;
 
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
-    button,
-    input,
-    select,
-    textarea {
+  padding: 24px;
 
-      font: inherit;
+  background:
+    linear-gradient(
+      135deg,
+      #68462f,
+      #896044
+    );
+}
 
-    }
 
+.login-card {
+  width: 100%;
+  max-width: 525px;
 
-    button {
+  background: var(--white);
 
-      cursor: pointer;
+  border-radius: 30px;
 
-    }
+  padding: 44px;
 
+  box-shadow:
+    0 30px 70px rgba(0, 0, 0, 0.18);
+}
 
-    .hidden {
 
-      display: none !important;
+.brand-logo {
+  width: 72px;
+  height: 72px;
 
-    }
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
+  border-radius: 20px;
 
-    .muted {
+  background: var(--brown);
 
-      color: var(--muted);
+  color: white;
 
-    }
+  font-family: Georgia, serif;
 
+  font-size: 34px;
 
-    /* =====================================================
-       AUTHENTICATION
-    ====================================================== */
+  font-weight: bold;
 
-    .auth-screen {
+  margin-bottom: 28px;
+}
 
-      min-height: 100vh;
 
-      display: grid;
+.login-card h1 {
+  font-size: 40px;
 
-      place-items: center;
+  color: var(--navy);
 
-      padding: 24px;
+  margin-bottom: 6px;
+}
 
-      background:
-        linear-gradient(
-          135deg,
-          #4b3325,
-          #8a6548
-        );
 
-    }
+.login-subtitle {
+  color: var(--muted);
 
+  font-size: 18px;
 
-    .auth-card {
+  margin-bottom: 36px;
+}
 
-      width: min(420px, 100%);
 
-      background:
-        var(--white);
+.form-group {
+  margin-bottom: 20px;
+}
 
-      border-radius: 24px;
 
-      padding: 36px;
+.form-group label {
+  display: block;
 
-      box-shadow:
-        0 25px 70px
-        rgba(0, 0, 0, .25);
+  font-weight: 700;
 
-    }
+  font-size: 14px;
 
+  margin-bottom: 8px;
+}
 
-    .brand-mark {
 
-      width: 58px;
+.form-control {
+  width: 100%;
 
-      height: 58px;
+  border: 1px solid var(--border);
 
-      border-radius: 16px;
+  background: white;
 
-      background:
-        var(--brown);
+  border-radius: 12px;
 
-      color:
-        white;
+  padding: 15px 16px;
 
-      display: grid;
+  outline: none;
 
-      place-items: center;
+  transition: 0.2s;
+}
 
-      font-size: 30px;
 
-      font-weight: 800;
+.form-control:focus {
+  border-color: var(--brown);
 
-      margin-bottom: 18px;
+  box-shadow:
+    0 0 0 3px rgba(121, 83, 56, 0.12);
+}
 
-    }
 
+.btn {
+  border: 0;
 
-    .brand-mark.small {
+  border-radius: 12px;
 
-      width: 42px;
+  padding: 13px 18px;
 
-      height: 42px;
+  font-weight: 700;
 
-      border-radius: 12px;
+  transition: 0.2s;
+}
 
-      font-size: 22px;
 
-      margin: 0;
+.btn:hover {
+  transform: translateY(-1px);
+}
 
-    }
 
+.btn-primary {
+  background: var(--brown);
 
-    .auth-card h1 {
+  color: white;
+}
 
-      margin-bottom: 4px;
 
-    }
+.btn-primary:hover {
+  background: var(--brown-dark);
+}
 
 
-    .auth-card form {
+.btn-secondary {
+  background: var(--cream-dark);
 
-      margin-top: 26px;
+  color: var(--brown-dark);
+}
 
-    }
 
+.btn-danger {
+  background: var(--red);
 
-    label {
+  color: white;
+}
 
-      display: block;
 
-      font-size: 13px;
+.btn-success {
+  background: var(--green);
 
-      font-weight: 700;
+  color: white;
+}
 
-      margin:
-        15px 0 7px;
 
-    }
+.btn-full {
+  width: 100%;
 
+  padding: 16px;
 
-    input,
-    select,
-    textarea {
+  font-size: 17px;
+}
 
-      width: 100%;
 
-      padding:
-        12px 13px;
+.otp-info {
+  background: var(--cream);
 
-      border:
-        1px solid var(--border);
+  border-radius: 12px;
 
-      border-radius: 10px;
+  padding: 15px;
 
-      background:
-        white;
+  margin-bottom: 20px;
 
-      color:
-        var(--text);
+  font-size: 14px;
 
-      outline: none;
+  color: var(--muted);
+}
 
-    }
 
+.back-login {
+  width: 100%;
 
-    input:focus,
-    select:focus,
-    textarea:focus {
+  background: transparent;
 
-      border-color:
-        var(--brown);
+  border: 0;
 
-      box-shadow:
-        0 0 0 3px
-        rgba(111, 78, 55, .1);
+  margin-top: 12px;
 
-    }
+  color: var(--brown);
 
+  font-weight: 700;
+}
 
-    .btn {
 
-      border: 0;
+/* =====================================================
+   APP LAYOUT
+===================================================== */
 
-      border-radius: 10px;
+.app {
+  min-height: 100vh;
 
-      padding:
-        11px 15px;
+  display: flex;
+}
 
-      font-weight: 700;
 
-      transition:
-        .2s;
+.sidebar {
+  width: 255px;
 
-    }
+  background: #fff;
 
+  border-right: 1px solid var(--border);
 
-    .btn.primary {
+  position: fixed;
 
-      background:
-        var(--brown);
+  left: 0;
+  top: 0;
+  bottom: 0;
 
-      color:
-        white;
+  display: flex;
 
-    }
+  flex-direction: column;
 
+  z-index: 100;
+}
 
-    .btn.primary:hover {
 
-      background:
-        var(--brown-dark);
+.sidebar-brand {
+  padding: 25px 22px;
 
-    }
+  display: flex;
 
+  align-items: center;
 
-    .btn.ghost {
+  gap: 12px;
 
-      background:
-        #f3eee9;
+  border-bottom: 1px solid var(--border);
+}
 
-      color:
-        var(--brown-dark);
 
-    }
+.sidebar-logo {
+  width: 44px;
+  height: 44px;
 
+  display: flex;
 
-    .btn.danger {
+  align-items: center;
+  justify-content: center;
 
-      background:
-        #fff0ee;
+  background: var(--brown);
 
-      color:
-        var(--danger);
+  color: white;
 
-    }
+  border-radius: 12px;
 
+  font-family: Georgia, serif;
 
-    .btn.success {
+  font-size: 22px;
 
-      background:
-        #eaf8f0;
+  font-weight: bold;
+}
 
-      color:
-        var(--success);
 
-    }
+.sidebar-brand-text strong {
+  display: block;
 
+  font-size: 17px;
 
-    .btn.full {
+  color: var(--navy);
+}
 
-      width: 100%;
 
-      margin-top: 16px;
+.sidebar-brand-text span {
+  font-size: 12px;
 
-    }
+  color: var(--muted);
+}
 
 
-    .otp-info {
+.nav {
+  padding: 20px 12px;
 
-      padding:
-        12px;
+  flex: 1;
+}
 
-      background:
-        #f5f0eb;
 
-      border-radius:
-        10px;
+.nav-section {
+  font-size: 11px;
 
-      font-size:
-        13px;
+  font-weight: 800;
 
-      color:
-        #5c4d42;
+  color: #9b8d82;
 
-    }
+  text-transform: uppercase;
 
+  letter-spacing: 1px;
 
-    /* =====================================================
-       APPLICATION
-    ====================================================== */
+  padding: 8px 12px;
 
-    .app {
+  margin-bottom: 6px;
+}
 
-      min-height:
-        100vh;
 
-      display:
-        flex;
+.nav-item {
+  width: 100%;
 
-    }
+  border: 0;
 
+  background: transparent;
 
-    /* =====================================================
-       SIDEBAR
-    ====================================================== */
+  color: #6b625d;
 
-    .sidebar {
+  padding: 13px 14px;
 
-      width:
-        250px;
+  border-radius: 11px;
 
-      background:
-        white;
+  display: flex;
 
-      border-right:
-        1px solid var(--border);
+  align-items: center;
 
-      position:
-        fixed;
+  gap: 12px;
 
-      inset:
-        0 auto 0 0;
+  margin-bottom: 4px;
 
-      z-index:
-        20;
+  text-align: left;
 
-      padding:
-        22px 14px;
+  font-weight: 600;
 
-      display:
-        flex;
+  transition: 0.2s;
+}
 
-      flex-direction:
-        column;
 
-    }
+.nav-item:hover {
+  background: var(--cream);
 
+  color: var(--brown);
+}
 
-    .sidebar-brand {
 
-      display:
-        flex;
+.nav-item.active {
+  background: #f0e7df;
 
-      align-items:
-        center;
+  color: var(--brown);
 
-      gap:
-        10px;
+  font-weight: 800;
+}
 
-      padding:
-        0 8px 22px;
 
-      border-bottom:
-        1px solid var(--border);
+.nav-icon {
+  width: 22px;
 
-    }
+  text-align: center;
 
+  font-size: 17px;
+}
 
-    .sidebar-brand small {
 
-      display:
-        block;
+.sidebar-user {
+  padding: 18px;
 
-      color:
-        var(--muted);
+  border-top: 1px solid var(--border);
+}
 
-      font-size:
-        11px;
 
-      margin-top:
-        2px;
+.user-name {
+  font-weight: 800;
 
-    }
+  color: var(--navy);
+}
 
 
-    nav {
+.user-role {
+  font-size: 12px;
 
-      padding-top:
-        18px;
+  color: var(--muted);
 
-      display:
-        grid;
+  margin-top: 3px;
+}
 
-      gap:
-        6px;
 
-    }
+.logout-btn {
+  width: 100%;
 
+  margin-top: 12px;
+}
 
-    .nav-link {
 
-      border:
-        0;
+/* =====================================================
+   MAIN
+===================================================== */
 
-      background:
-        transparent;
+.main {
+  margin-left: 255px;
 
-      text-align:
-        left;
+  width: calc(100% - 255px);
 
-      padding:
-        12px 13px;
+  min-height: 100vh;
+}
 
-      border-radius:
-        10px;
 
-      color:
-        #5e554e;
+.topbar {
+  height: 78px;
 
-      font-weight:
-        700;
+  background: white;
 
-      display:
-        flex;
+  border-bottom: 1px solid var(--border);
 
-      gap:
-        12px;
+  display: flex;
 
-      align-items:
-        center;
+  align-items: center;
 
-    }
+  justify-content: space-between;
 
+  padding: 0 32px;
 
-    .nav-link:hover,
-    .nav-link.active {
+  position: sticky;
 
-      background:
-        #f2ebe4;
+  top: 0;
 
-      color:
-        var(--brown);
+  z-index: 50;
+}
 
-    }
 
+.topbar-title h2 {
+  color: var(--navy);
 
-    .sidebar-footer {
+  font-size: 22px;
+}
 
-      margin-top:
-        auto;
 
-      border-top:
-        1px solid var(--border);
+.topbar-title p {
+  color: var(--muted);
 
-      padding-top:
-        15px;
+  font-size: 13px;
 
-    }
+  margin-top: 2px;
+}
 
 
-    #user-chip {
+.content {
+  padding: 30px;
+}
 
-      font-size:
-        12px;
 
-      margin-bottom:
-        8px;
+/* =====================================================
+   MOBILE HEADER
+===================================================== */
 
-      padding:
-        8px;
+.mobile-header {
+  display: none;
+}
 
-      border-radius:
-        10px;
 
-      background:
-        #f8f5f2;
+/* =====================================================
+   CARDS
+===================================================== */
 
-    }
+.stats-grid {
+  display: grid;
 
+  grid-template-columns:
+    repeat(4, minmax(0, 1fr));
 
-    /* =====================================================
-       MAIN
-    ====================================================== */
+  gap: 18px;
 
-    .main {
+  margin-bottom: 25px;
+}
 
-      margin-left:
-        250px;
 
-      width:
-        calc(100% - 250px);
+.stat-card {
+  background: white;
 
-      padding:
-        25px;
+  border: 1px solid var(--border);
 
-    }
+  border-radius: var(--radius);
 
+  padding: 22px;
 
-    .topbar {
+  box-shadow: var(--shadow);
+}
 
-      display:
-        flex;
 
-      align-items:
-        center;
+.stat-label {
+  color: var(--muted);
 
-      gap:
-        16px;
+  font-size: 13px;
 
-      margin-bottom:
-        24px;
+  font-weight: 700;
+}
 
-    }
 
+.stat-value {
+  color: var(--navy);
 
-    .topbar h2 {
+  font-size: 30px;
 
-      margin:
-        0;
+  font-weight: 800;
 
-    }
+  margin-top: 8px;
+}
 
 
-    .topbar p {
+.stat-description {
+  margin-top: 5px;
 
-      margin:
-        3px 0 0;
+  color: var(--muted);
 
-    }
+  font-size: 12px;
+}
 
 
-    .topbar .btn {
+/* =====================================================
+   PAGE HEADER
+===================================================== */
 
-      margin-left:
-        auto;
+.page-header {
+  display: flex;
 
-    }
+  align-items: center;
 
+  justify-content: space-between;
 
-    .icon-btn {
+  gap: 15px;
 
-      display:
-        none;
+  margin-bottom: 22px;
+}
 
-      border:
-        0;
 
-      background:
-        white;
+.page-header h3 {
+  color: var(--navy);
 
-      border-radius:
-        10px;
+  font-size: 24px;
+}
 
-      padding:
-        10px;
 
-    }
+.page-header p {
+  color: var(--muted);
 
+  font-size: 13px;
 
-    /* =====================================================
-       CARDS
-    ====================================================== */
+  margin-top: 3px;
+}
 
-    .cards {
 
-      display:
-        grid;
+.page-actions {
+  display: flex;
 
-      grid-template-columns:
-        repeat(4, 1fr);
+  gap: 10px;
 
-      gap:
-        16px;
+  flex-wrap: wrap;
+}
 
-      margin-bottom:
-        18px;
 
-    }
+/* =====================================================
+   PANELS
+===================================================== */
 
+.panel {
+  background: white;
 
-    .card {
+  border: 1px solid var(--border);
 
-      background:
-        var(--white);
+  border-radius: var(--radius);
 
-      border:
-        1px solid var(--border);
+  box-shadow: var(--shadow);
 
-      border-radius:
-        var(--radius);
+  overflow: hidden;
+}
 
-      padding:
-        19px;
 
-      box-shadow:
-        var(--shadow);
+.panel-header {
+  padding: 19px 22px;
 
-    }
+  border-bottom: 1px solid var(--border);
 
+  display: flex;
 
-    .metric {
+  justify-content: space-between;
 
-      font-size:
-        28px;
+  align-items: center;
 
-      font-weight:
-        800;
+  gap: 15px;
+}
 
-      margin-top:
-        7px;
 
-    }
+.panel-header h4 {
+  color: var(--navy);
 
+  font-size: 17px;
+}
 
-    .metric-label {
 
-      font-size:
-        13px;
+.panel-body {
+  padding: 22px;
+}
 
-      color:
-        var(--muted);
 
-    }
+/* =====================================================
+   TABLE
+===================================================== */
 
+.table-wrapper {
+  overflow-x: auto;
+}
 
-    .grid-2 {
 
-      display:
-        grid;
+table {
+  width: 100%;
 
-      grid-template-columns:
-        1.2fr .8fr;
+  border-collapse: collapse;
 
-      gap:
-        18px;
+  min-width: 700px;
+}
 
-    }
 
+th {
+  text-align: left;
 
-    .section-head {
+  background: #faf8f6;
 
-      display:
-        flex;
+  color: #776b62;
 
-      justify-content:
-        space-between;
+  font-size: 12px;
 
-      align-items:
-        center;
+  text-transform: uppercase;
 
-      gap:
-        12px;
+  letter-spacing: 0.5px;
 
-      margin-bottom:
-        15px;
+  padding: 13px 15px;
 
-    }
+  border-bottom: 1px solid var(--border);
+}
 
 
-    .section-head h3 {
+td {
+  padding: 15px;
 
-      margin:
-        0;
+  border-bottom: 1px solid #eee8e3;
 
-    }
+  font-size: 14px;
+}
 
 
-    .toolbar {
+tr:last-child td {
+  border-bottom: 0;
+}
 
-      display:
-        flex;
 
-      gap:
-        9px;
+.item-name {
+  font-weight: 800;
 
-      flex-wrap:
-        wrap;
+  color: var(--navy);
+}
 
-      margin-bottom:
-        15px;
 
-    }
+.muted {
+  color: var(--muted);
+}
 
 
-    .toolbar input {
+.badge {
+  display: inline-flex;
 
-      max-width:
-        300px;
+  align-items: center;
 
-    }
+  border-radius: 999px;
 
+  padding: 5px 10px;
 
-    /* =====================================================
-       TABLE
-    ====================================================== */
+  font-size: 11px;
 
-    .table-wrap {
+  font-weight: 800;
+}
 
-      overflow:
-        auto;
 
-      border:
-        1px solid var(--border);
+.badge-green {
+  background: var(--green-bg);
 
-      border-radius:
-        12px;
+  color: var(--green);
+}
 
-    }
 
+.badge-red {
+  background: var(--red-bg);
 
-    table {
+  color: var(--red);
+}
 
-      width:
-        100%;
 
-      border-collapse:
-        collapse;
+.badge-orange {
+  background: var(--orange-bg);
 
-      min-width:
-        760px;
+  color: var(--orange);
+}
 
-      background:
-        white;
 
-    }
+.badge-brown {
+  background: #f1e8e0;
 
+  color: var(--brown-dark);
+}
 
-    th,
-    td {
 
-      text-align:
-        left;
+/* =====================================================
+   TOOLBAR
+===================================================== */
 
-      padding:
-        12px 13px;
+.toolbar {
+  display: flex;
 
-      border-bottom:
-        1px solid var(--border);
+  align-items: center;
 
-      font-size:
-        13px;
+  gap: 10px;
 
-    }
+  flex-wrap: wrap;
 
+  margin-bottom: 18px;
+}
 
-    th {
 
-      background:
-        #faf8f6;
+.search-box {
+  flex: 1;
 
-      color:
-        #5f574f;
+  min-width: 220px;
+}
 
-      font-size:
-        12px;
 
-      text-transform:
-        uppercase;
+.search-box input {
+  width: 100%;
+}
 
-      letter-spacing:
-        .03em;
 
-    }
+/* =====================================================
+   GRID
+===================================================== */
 
+.two-column {
+  display: grid;
 
-    tr:last-child td {
+  grid-template-columns:
+    repeat(2, minmax(0, 1fr));
 
-      border-bottom:
-        0;
+  gap: 22px;
+}
 
-    }
 
+.three-column {
+  display: grid;
 
-    .low-row {
+  grid-template-columns:
+    repeat(3, minmax(0, 1fr));
 
-      background:
-        #fffaf4;
+  gap: 18px;
+}
 
-    }
 
+/* =====================================================
+   EMPTY STATE
+===================================================== */
 
-    /* =====================================================
-       BADGES
-    ====================================================== */
+.empty {
+  text-align: center;
 
-    .badge {
+  padding: 45px 20px;
 
-      display:
-        inline-flex;
+  color: var(--muted);
+}
 
-      padding:
-        5px 8px;
 
-      border-radius:
-        999px;
+.empty strong {
+  display: block;
 
-      font-size:
-        11px;
+  color: var(--navy);
 
-      font-weight:
-        800;
+  margin-bottom: 5px;
+}
 
-    }
 
+/* =====================================================
+   MODAL
+===================================================== */
 
-    .badge.success {
+.modal-backdrop {
+  position: fixed;
 
-      background:
-        #eaf8f0;
+  inset: 0;
 
-      color:
-        var(--success);
+  background: rgba(18, 23, 28, 0.55);
 
-    }
+  display: flex;
 
+  align-items: center;
 
-    .badge.warning {
+  justify-content: center;
 
-      background:
-        #fff4df;
+  padding: 20px;
 
-      color:
-        var(--warning);
+  z-index: 500;
+}
 
-    }
 
+.modal {
+  width: 100%;
 
-    .badge.danger {
+  max-width: 600px;
 
-      background:
-        #fff0ee;
+  background: white;
 
-      color:
-        var(--danger);
+  border-radius: 20px;
 
-    }
+  box-shadow:
+    0 30px 80px rgba(0,0,0,0.25);
 
+  max-height: 90vh;
 
-    /* =====================================================
-       MODAL
-    ====================================================== */
+  overflow-y: auto;
+}
 
-    .modal-backdrop {
 
-      position:
-        fixed;
+.modal-header {
+  padding: 20px 22px;
 
-      inset:
-        0;
+  border-bottom: 1px solid var(--border);
 
-      background:
-        rgba(22, 16, 11, .55);
+  display: flex;
 
-      display:
-        grid;
+  justify-content: space-between;
 
-      place-items:
-        center;
+  align-items: center;
+}
 
-      padding:
-        20px;
 
-      z-index:
-        50;
+.modal-header h3 {
+  color: var(--navy);
+}
 
-    }
 
+.close-btn {
+  width: 35px;
+  height: 35px;
 
-    .modal {
+  border: 0;
 
-      background:
-        white;
+  border-radius: 9px;
 
-      border-radius:
-        18px;
+  background: var(--cream);
 
-      width:
-        min(560px, 100%);
+  color: var(--brown);
 
-      max-height:
-        90vh;
+  font-size: 20px;
+}
 
-      overflow:
-        auto;
 
-      padding:
-        24px;
+.modal-body {
+  padding: 22px;
+}
 
-    }
 
+.form-grid {
+  display: grid;
 
-    .modal-head {
+  grid-template-columns:
+    repeat(2, minmax(0, 1fr));
 
-      display:
-        flex;
+  gap: 16px;
+}
 
-      justify-content:
-        space-between;
 
-      align-items:
-        center;
+.full {
+  grid-column: 1 / -1;
+}
 
-    }
 
+.modal-footer {
+  padding: 18px 22px;
 
-    .modal-head h3 {
+  border-top: 1px solid var(--border);
 
-      margin:
-        0;
+  display: flex;
 
-    }
+  justify-content: flex-end;
 
+  gap: 10px;
+}
 
-    .close {
 
-      border:
-        0;
+/* =====================================================
+   REPORT
+===================================================== */
 
-      background:
-        #f3eee9;
+.report-card {
+  background: white;
 
-      border-radius:
-        8px;
+  border: 1px solid var(--border);
 
-      padding:
-        7px 10px;
+  border-radius: var(--radius);
 
-    }
+  padding: 22px;
+}
 
 
-    .form-grid {
+.report-card h4 {
+  color: var(--navy);
 
-      display:
-        grid;
+  margin-bottom: 10px;
+}
 
-      grid-template-columns:
-        1fr 1fr;
 
-      gap:
-        0 14px;
+.report-number {
+  font-size: 28px;
 
-    }
+  font-weight: 800;
 
+  color: var(--brown);
+}
 
-    .form-actions {
 
-      display:
-        flex;
+.progress {
+  width: 100%;
 
-      gap:
-        10px;
+  height: 8px;
 
-      justify-content:
-        flex-end;
+  background: #eee8e3;
 
-      margin-top:
-        20px;
+  border-radius: 99px;
 
-    }
+  overflow: hidden;
 
+  margin-top: 12px;
+}
 
-    .form-actions .btn {
 
-      margin:
-        0;
+.progress-bar {
+  height: 100%;
 
-    }
+  background: var(--brown);
 
+  border-radius: inherit;
+}
 
-    /* =====================================================
-       REPORTS
-    ====================================================== */
 
-    .report-grid {
+/* =====================================================
+   LOADING
+===================================================== */
 
-      display:
-        grid;
+.loading {
+  padding: 50px;
 
-      grid-template-columns:
-        repeat(3, 1fr);
+  text-align: center;
 
-      gap:
-        15px;
+  color: var(--muted);
+}
 
-    }
 
+.spinner {
+  width: 30px;
 
-    .stat-line {
+  height: 30px;
 
-      display:
-        flex;
+  border: 3px solid #eadfd5;
 
-      justify-content:
-        space-between;
+  border-top-color: var(--brown);
 
-      padding:
-        10px 0;
+  border-radius: 50%;
 
-      border-bottom:
-        1px solid var(--border);
+  animation: spin 0.8s linear infinite;
 
-    }
+  margin: 0 auto 12px;
+}
 
 
-    .empty {
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
 
-      text-align:
-        center;
 
-      padding:
-        35px;
+/* =====================================================
+   TOAST
+===================================================== */
 
-      color:
-        var(--muted);
+.toast {
+  position: fixed;
 
-    }
+  right: 25px;
 
+  bottom: 25px;
 
-    /* =====================================================
-       TOAST
-    ====================================================== */
+  max-width: 360px;
 
-    .toast {
+  background: white;
 
-      position:
-        fixed;
+  border: 1px solid var(--border);
 
-      right:
-        18px;
+  border-left: 5px solid var(--brown);
 
-      bottom:
-        18px;
+  border-radius: 12px;
 
-      z-index:
-        100;
+  padding: 15px 18px;
 
-      padding:
-        13px 16px;
+  box-shadow:
+    0 15px 40px rgba(0,0,0,0.15);
 
-      min-width:
-        240px;
+  z-index: 1000;
 
-      animation:
-        toastIn .25s ease;
+  animation: toastIn 0.25s ease;
+}
 
-    }
 
+.toast.error {
+  border-left-color: var(--red);
+}
 
-    @keyframes toastIn {
 
-      from {
+.toast.success {
+  border-left-color: var(--green);
+}
 
-        opacity:
-          0;
 
-        transform:
-          translateY(10px);
+@keyframes toastIn {
+  from {
+    transform: translateY(20px);
 
-      }
+    opacity: 0;
+  }
 
-      to {
+  to {
+    transform: translateY(0);
 
-        opacity:
-          1;
+    opacity: 1;
+  }
+}
 
-        transform:
-          translateY(0);
 
-      }
+/* =====================================================
+   RESPONSIVE
+===================================================== */
 
-    }
+@media (max-width: 1100px) {
 
+  .stats-grid {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+  }
 
-    /* =====================================================
-       MOBILE
-    ====================================================== */
+}
 
-    @media (max-width: 1000px) {
 
-      .cards {
+@media (max-width: 800px) {
 
-        grid-template-columns:
-          repeat(2, 1fr);
+  .sidebar {
+    transform: translateX(-100%);
 
-      }
+    transition: 0.25s;
 
+    box-shadow:
+      10px 0 40px rgba(0,0,0,0.1);
+  }
 
-      .grid-2 {
 
-        grid-template-columns:
-          1fr;
+  .sidebar.open {
+    transform: translateX(0);
+  }
 
-      }
 
+  .main {
+    margin-left: 0;
 
-      .report-grid {
+    width: 100%;
+  }
 
-        grid-template-columns:
-          1fr 1fr;
 
-      }
+  .mobile-header {
+    display: flex;
 
-    }
+    position: sticky;
 
+    top: 0;
 
-    @media (max-width: 760px) {
+    z-index: 90;
 
-      .sidebar {
+    height: 65px;
 
-        transform:
-          translateX(-100%);
+    background: white;
 
-        transition:
-          .2s;
+    border-bottom: 1px solid var(--border);
 
-        box-shadow:
-          0 0 30px
-          rgba(0, 0, 0, .15);
+    align-items: center;
 
-      }
+    justify-content: space-between;
 
+    padding: 0 17px;
+  }
 
-      .sidebar.open {
 
-        transform:
-          translateX(0);
+  .mobile-brand {
+    font-weight: 900;
 
-      }
+    color: var(--navy);
+  }
 
 
-      .main {
+  .menu-btn {
+    width: 40px;
+    height: 40px;
 
-        margin-left:
-          0;
+    border: 0;
 
-        width:
-          100%;
+    border-radius: 10px;
 
-        padding:
-          16px;
+    background: var(--cream);
 
-      }
+    color: var(--brown);
 
+    font-size: 20px;
+  }
 
-      .icon-btn {
 
-        display:
-          block;
+  .topbar {
+    display: none;
+  }
 
-      }
 
+  .content {
+    padding: 20px 15px 30px;
+  }
 
-      .topbar {
 
-        align-items:
-          flex-start;
+  .two-column {
+    grid-template-columns: 1fr;
+  }
 
-      }
 
+  .three-column {
+    grid-template-columns: 1fr;
+  }
 
-      .topbar h2 {
 
-        font-size:
-          20px;
+  .page-header {
+    align-items: flex-start;
 
-      }
+    flex-direction: column;
+  }
 
 
-      .topbar .btn {
+  .login-card {
+    padding: 30px 24px;
 
-        padding:
-          9px 11px;
+    border-radius: 22px;
+  }
 
-      }
 
+  .login-card h1 {
+    font-size: 32px;
+  }
 
-      .cards {
+}
 
-        grid-template-columns:
-          1fr 1fr;
 
-        gap:
-          10px;
+@media (max-width: 560px) {
 
-      }
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
 
 
-      .card {
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
 
-        padding:
-          14px;
 
-      }
+  .full {
+    grid-column: auto;
+  }
 
 
-      .metric {
+  .page-actions {
+    width: 100%;
+  }
 
-        font-size:
-          23px;
 
-      }
+  .page-actions .btn {
+    flex: 1;
+  }
 
 
-      .form-grid {
+  .panel-body {
+    padding: 16px;
+  }
 
-        grid-template-columns:
-          1fr;
 
-      }
+  .modal-footer {
+    flex-direction: column;
+  }
 
 
-      .auth-card {
+  .modal-footer .btn {
+    width: 100%;
+  }
 
-        padding:
-          27px;
 
-      }
+  .toast {
+    left: 15px;
 
+    right: 15px;
 
-      .report-grid {
+    bottom: 15px;
 
-        grid-template-columns:
-          1fr;
+    max-width: none;
+  }
 
-      }
+}
 
-    }
-
-
-    @media (max-width: 430px) {
-
-      .cards {
-
-        grid-template-columns:
-          1fr;
-
-      }
-
-
-      .toolbar input {
-
-        max-width:
-          none;
-
-      }
-
-
-      .topbar p {
-
-        font-size:
-          12px;
-
-      }
-
-
-      .topbar .btn {
-
-        font-size:
-          12px;
-
-      }
-
-    }
-
-  </style>
+</style>
 
 </head>
 
@@ -1347,1339 +1336,1422 @@
 <body>
 
 
-  <!-- =====================================================
-       TOAST
-  ====================================================== -->
+<!-- ===================================================
+     LOGIN
+=================================================== -->
 
-  <div id="toast-container"></div>
+<section id="authScreen" class="auth-screen">
 
+  <div class="login-card">
 
+    <div class="brand-logo">R</div>
 
-  <!-- =====================================================
-       LOGIN
-  ====================================================== -->
+    <h1>ROMA Cafe</h1>
 
-  <section
-    id="login-screen"
-    class="auth-screen"
-  >
-
-    <div class="auth-card">
-
-      <div class="brand-mark">
-        R
-      </div>
+    <p class="login-subtitle">
+      Inventory Management System
+    </p>
 
 
-      <h1>
-        ROMA Cafe
-      </h1>
+    <!-- LOGIN FORM -->
 
+    <form id="loginForm">
 
-      <p class="muted">
-        Inventory Management System
-      </p>
+      <div class="form-group">
 
-
-      <!-- LOGIN -->
-
-      <form id="login-form">
-
-        <label for="login-email">
+        <label for="loginEmail">
           Email
         </label>
 
         <input
-          id="login-email"
+          id="loginEmail"
+          class="form-control"
           type="email"
-          autocomplete="username"
-          placeholder="admin@romacafe.com"
+          placeholder="Enter your email"
+          autocomplete="email"
           required
         >
 
+      </div>
 
-        <label for="login-password">
+
+      <div class="form-group">
+
+        <label for="loginPassword">
           Password
         </label>
 
         <input
-          id="login-password"
+          id="loginPassword"
+          class="form-control"
           type="password"
-          autocomplete="current-password"
           placeholder="Enter your password"
+          autocomplete="current-password"
           required
         >
 
-
-        <button
-          class="btn primary full"
-          type="submit"
-        >
-          Continue
-        </button>
-
-      </form>
+      </div>
 
 
-
-      <!-- OTP -->
-
-      <form
-        id="otp-form"
-        class="hidden"
+      <button
+        id="loginButton"
+        class="btn btn-primary btn-full"
+        type="submit"
       >
+        Continue
+      </button>
 
-        <div class="otp-info">
-
-          A verification code has been
-          sent to your email.
-
-        </div>
+    </form>
 
 
-        <label for="otp-code">
-          6-digit OTP
+    <!-- OTP FORM -->
+
+    <form
+      id="otpForm"
+      class="hidden"
+    >
+
+      <div class="otp-info">
+
+        A verification code has been sent to:
+
+        <strong id="otpEmail"></strong>
+
+        <br><br>
+
+        Enter the 6-digit code to continue.
+
+      </div>
+
+
+      <div class="form-group">
+
+        <label for="otpInput">
+          Verification Code
         </label>
 
-
         <input
-          id="otp-code"
+          id="otpInput"
+          class="form-control"
           type="text"
           inputmode="numeric"
-          autocomplete="one-time-code"
           maxlength="6"
-          pattern="[0-9]{6}"
-          placeholder="000000"
+          placeholder="Enter 6-digit OTP"
+          autocomplete="one-time-code"
           required
         >
 
-
-        <button
-          class="btn primary full"
-          type="submit"
-        >
-          Verify & Login
-        </button>
+      </div>
 
 
-        <button
-          id="back-login"
-          class="btn ghost full"
-          type="button"
-        >
-          Back
-        </button>
+      <button
+        id="otpButton"
+        class="btn btn-primary btn-full"
+        type="submit"
+      >
+        Verify & Login
+      </button>
 
-      </form>
+
+      <button
+        type="button"
+        id="backLogin"
+        class="back-login"
+      >
+        Back to login
+      </button>
+
+    </form>
+
+  </div>
+
+</section>
+
+
+
+<!-- ===================================================
+     APPLICATION
+=================================================== -->
+
+<section
+  id="appScreen"
+  class="app hidden"
+>
+
+
+  <!-- SIDEBAR -->
+
+  <aside
+    id="sidebar"
+    class="sidebar"
+  >
+
+    <div class="sidebar-brand">
+
+      <div class="sidebar-logo">
+        R
+      </div>
+
+      <div class="sidebar-brand-text">
+
+        <strong>ROMA Cafe</strong>
+
+        <span>Inventory System</span>
+
+      </div>
 
     </div>
 
-  </section>
 
+    <nav class="nav">
 
-
-  <!-- =====================================================
-       APPLICATION
-  ====================================================== -->
-
-  <section
-    id="app"
-    class="app hidden"
-  >
-
-
-    <!-- ===================================================
-         SIDEBAR
-    ==================================================== -->
-
-    <aside
-      id="sidebar"
-      class="sidebar"
-    >
-
-      <div class="sidebar-brand">
-
-        <div class="brand-mark small">
-          R
-        </div>
-
-
-        <div>
-
-          <strong>
-            ROMA Cafe
-          </strong>
-
-          <small>
-            Inventory
-          </small>
-
-        </div>
-
+      <div class="nav-section">
+        Main Menu
       </div>
 
 
+      <!-- FEATURE 1 -->
 
-      <!-- =================================================
-           7 FEATURES
-      ================================================== -->
+      <button
+        class="nav-item active"
+        data-page="dashboard"
+      >
+        <span class="nav-icon">⌂</span>
+        <span>Dashboard</span>
+      </button>
 
-      <nav>
+
+      <!-- FEATURE 2 -->
+
+      <button
+        class="nav-item"
+        data-page="inventory"
+      >
+        <span class="nav-icon">▣</span>
+        <span>Inventory</span>
+      </button>
 
 
-        <!-- FEATURE 1 -->
+      <!-- FEATURE 3 -->
 
-        <button
-          class="nav-link active"
-          data-page="dashboard"
-        >
+      <button
+        class="nav-item"
+        data-page="stock"
+      >
+        <span class="nav-icon">↕</span>
+        <span>Stock In / Out</span>
+      </button>
 
-          <span>
-            ▦
-          </span>
 
+      <!-- FEATURE 4 -->
+
+      <button
+        class="nav-item"
+        data-page="suppliers"
+      >
+        <span class="nav-icon">♙</span>
+        <span>Suppliers</span>
+      </button>
+
+
+      <!-- FEATURE 5 -->
+
+      <button
+        class="nav-item"
+        data-page="transactions"
+      >
+        <span class="nav-icon">▤</span>
+        <span>Transactions</span>
+      </button>
+
+
+      <!-- FEATURE 6 -->
+
+      <button
+        class="nav-item"
+        data-page="reports"
+      >
+        <span class="nav-icon">▥</span>
+        <span>Reports</span>
+      </button>
+
+
+      <!-- FEATURE 7 -->
+
+      <button
+        class="nav-item"
+        data-page="audit"
+      >
+        <span class="nav-icon">✓</span>
+        <span>Audit Log</span>
+      </button>
+
+    </nav>
+
+
+    <div class="sidebar-user">
+
+      <div
+        id="sidebarUserName"
+        class="user-name"
+      >
+        User
+      </div>
+
+      <div
+        id="sidebarUserRole"
+        class="user-role"
+      >
+        Staff
+      </div>
+
+
+      <button
+        id="logoutButton"
+        class="btn btn-secondary logout-btn"
+      >
+        Logout
+      </button>
+
+    </div>
+
+  </aside>
+
+
+
+  <!-- MAIN -->
+
+  <main class="main">
+
+
+    <!-- MOBILE HEADER -->
+
+    <header class="mobile-header">
+
+      <button
+        id="menuButton"
+        class="menu-btn"
+      >
+        ☰
+      </button>
+
+      <div class="mobile-brand">
+        ROMA Cafe
+      </div>
+
+      <div style="width:40px"></div>
+
+    </header>
+
+
+    <!-- DESKTOP TOPBAR -->
+
+    <header class="topbar">
+
+      <div class="topbar-title">
+
+        <h2 id="pageTitle">
           Dashboard
+        </h2>
 
-        </button>
-
-
-
-        <!-- FEATURE 2 -->
-
-        <button
-          class="nav-link"
-          data-page="inventory"
-        >
-
-          <span>
-            ▤
-          </span>
-
-          Inventory
-
-        </button>
-
-
-
-        <!-- FEATURE 3 -->
-
-        <button
-          class="nav-link"
-          data-page="stock"
-        >
-
-          <span>
-            ↕
-          </span>
-
-          Stock In/Out
-
-        </button>
-
-
-
-        <!-- FEATURE 4 -->
-
-        <button
-          class="nav-link"
-          data-page="suppliers"
-        >
-
-          <span>
-            ♙
-          </span>
-
-          Suppliers
-
-        </button>
-
-
-
-        <!-- FEATURE 5 -->
-
-        <button
-          class="nav-link"
-          data-page="transactions"
-        >
-
-          <span>
-            ◷
-          </span>
-
-          Transactions
-
-        </button>
-
-
-
-        <!-- FEATURE 6 -->
-
-        <button
-          class="nav-link"
-          data-page="reports"
-        >
-
-          <span>
-            ▥
-          </span>
-
-          Reports
-
-        </button>
-
-
-
-        <!-- FEATURE 7 -->
-
-        <button
-          class="nav-link"
-          data-page="audit"
-        >
-
-          <span>
-            ✓
-          </span>
-
-          Audit Log
-
-        </button>
-
-      </nav>
-
-
-
-      <!-- USER -->
-
-      <div class="sidebar-footer">
-
-        <div id="user-chip"></div>
-
-
-        <button
-          id="logout-btn"
-          class="btn ghost full"
-        >
-          Log out
-        </button>
+        <p id="pageSubtitle">
+          Overview of your cafe inventory
+        </p>
 
       </div>
 
-    </aside>
-
-
-
-    <!-- ===================================================
-         MAIN
-    ==================================================== -->
-
-    <main class="main">
-
-
-      <header class="topbar">
-
-
-        <button
-          id="menu-btn"
-          class="icon-btn"
-          aria-label="Open navigation"
-        >
-          ☰
-        </button>
-
-
-        <div>
-
-          <h2 id="page-title">
-            Dashboard
-          </h2>
-
-
-          <p
-            id="page-subtitle"
-            class="muted"
-          >
-            Overview of your cafe inventory
-          </p>
-
-        </div>
-
-
-        <button
-          id="refresh-btn"
-          class="btn ghost"
-        >
-          Refresh
-        </button>
-
-      </header>
-
-
-
-      <!-- PAGE 1 -->
 
       <div
-        id="page-dashboard"
-        class="page"
-      ></div>
+        id="topbarUser"
+        class="muted"
+      >
+        Admin
+      </div>
 
+    </header>
 
 
-      <!-- PAGE 2 -->
+    <!-- PAGE CONTENT -->
 
-      <div
-        id="page-inventory"
-        class="page hidden"
-      ></div>
+    <div
+      id="content"
+      class="content"
+    >
+    </div>
 
+  </main>
 
+</section>
 
-      <!-- PAGE 3 -->
 
-      <div
-        id="page-stock"
-        class="page hidden"
-      ></div>
 
+<!-- ===================================================
+     MODAL
+=================================================== -->
 
+<div
+  id="modalContainer"
+  class="hidden"
+></div>
 
-      <!-- PAGE 4 -->
 
-      <div
-        id="page-suppliers"
-        class="page hidden"
-      ></div>
 
+<!-- TOAST -->
 
+<div
+  id="toastContainer"
+></div>
 
-      <!-- PAGE 5 -->
 
-      <div
-        id="page-transactions"
-        class="page hidden"
-      ></div>
 
+<script>
 
+/* =====================================================
+   CONFIGURATION
+===================================================== */
 
-      <!-- PAGE 6 -->
+/*
+ * IMPORTANT:
+ * Replace this with your deployed Apps Script
+ * Web App /exec URL.
+ */
 
-      <div
-        id="page-reports"
-        class="page hidden"
-      ></div>
+const API_URL =
+  "https://script.google.com/macros/s/AKfycbzNNtT83ZF0lnoMi0YsaNcmoCr_IGNS2p026eeIjt7QXpL7IHeg1mD2mBYr2_OVUME3/exec";
 
 
+/* =====================================================
+   STATE
+===================================================== */
 
-      <!-- PAGE 7 -->
+let currentUser = null;
 
-      <div
-        id="page-audit"
-        class="page hidden"
-      ></div>
+let sessionToken = null;
 
+let sessionExpires = null;
 
-    </main>
+let appData = {
+  inventory: [],
+  transactions: [],
+  suppliers: [],
+  audit: []
+};
 
-  </section>
+let currentPage = "dashboard";
 
+let otpEmail = "";
 
 
-  <!-- =====================================================
-       MODALS
-  ====================================================== -->
+/* =====================================================
+   DOM
+===================================================== */
 
-  <div id="modal-root"></div>
+const authScreen =
+  document.getElementById("authScreen");
 
+const appScreen =
+  document.getElementById("appScreen");
 
+const loginForm =
+  document.getElementById("loginForm");
 
-  <!-- =====================================================
-       JAVASCRIPT
-  ====================================================== -->
+const otpForm =
+  document.getElementById("otpForm");
 
-  <script>
+const loginButton =
+  document.getElementById("loginButton");
 
-    /* =====================================================
-       CONFIGURATION
-    ====================================================== */
+const otpButton =
+  document.getElementById("otpButton");
 
-    const CONFIG = {
+const content =
+  document.getElementById("content");
 
-      /*
-       * REPLACE THIS WITH YOUR
-       * GOOGLE APPS SCRIPT /exec URL
-       */
+const modalContainer =
+  document.getElementById("modalContainer");
 
-      API_URL:
-        "https://script.google.com/macros/s/AKfycbxqc3p44YPOSCK5kg0Wn0lKHskBmGdNkF3HS2vPllVJMsQ-aYJLzgYEG_mtGfF-Ckok/exec",
+const toastContainer =
+  document.getElementById("toastContainer");
 
-      APP_NAME:
-        "ROMA Cafe Inventory System"
 
-    };
+/* =====================================================
+   API
+===================================================== */
 
+async function api(action, data = {}) {
 
+  if (
+    !API_URL ||
+    API_URL.includes("PASTE_YOUR")
+  ) {
 
-    /* =====================================================
-       STATE
-    ====================================================== */
+    throw new Error(
+      "Please add your Apps Script Web App URL in index.html."
+    );
+  }
 
-    const state = {
 
-      user:
-        JSON.parse(
-          sessionStorage.getItem(
-            "roma_user"
-          ) || "null"
-        ),
+  const payload = {
+    action: action,
 
-      token:
-        sessionStorage.getItem(
-          "roma_token"
-        ),
-
-      inventory: [],
-
-      transactions: [],
-
-      suppliers: [],
-
-      audit: [],
-
-      pendingEmail: ""
-
-    };
-
-
-
-    /* =====================================================
-       HELPERS
-    ====================================================== */
-
-    const $ =
-      id =>
-        document.getElementById(id);
-
-
-    function esc(value) {
-
-      return String(
-        value ?? ""
-      ).replace(
-        /[&<>"']/g,
-        character => ({
-
-          "&":
-            "&amp;",
-
-          "<":
-            "&lt;",
-
-          ">":
-            "&gt;",
-
-          '"':
-            "&quot;",
-
-          "'":
-            "&#039;"
-
-        }[character])
-      );
-
+    data: {
+      ...data
     }
+  };
 
 
-    function money(number) {
+  if (sessionToken) {
 
-      return `₱${Number(
-        number || 0
-      ).toLocaleString(
-        "en-PH",
-        {
-          minimumFractionDigits:
-            2,
+    payload.data.token =
+      sessionToken;
+  }
 
-          maximumFractionDigits:
-            2
-        }
-      )}`;
 
+  const response = await fetch(
+    API_URL,
+    {
+      method: "POST",
+
+      body: JSON.stringify(payload)
     }
+  );
 
 
-    function dateFmt(value) {
+  const text =
+    await response.text();
 
-      if (!value) {
-        return "—";
+
+  let result;
+
+
+  try {
+
+    result = JSON.parse(text);
+
+  } catch (error) {
+
+    throw new Error(
+      "The server returned an invalid response."
+    );
+  }
+
+
+  if (
+    result.unauthorized
+  ) {
+
+    clearSession();
+
+    throw new Error(
+      "Your session has expired. Please login again."
+    );
+  }
+
+
+  if (
+    result.success === false
+  ) {
+
+    throw new Error(
+      result.message || "Request failed."
+    );
+  }
+
+
+  return result;
+}
+
+
+/* =====================================================
+   SESSION
+===================================================== */
+
+function saveSession(result) {
+
+  sessionToken =
+    result.token;
+
+  sessionExpires =
+    result.expires;
+
+  currentUser =
+    result.user;
+
+
+  sessionStorage.setItem(
+    "roma_token",
+    sessionToken
+  );
+
+  sessionStorage.setItem(
+    "roma_expires",
+    String(sessionExpires)
+  );
+
+  sessionStorage.setItem(
+    "roma_user",
+    JSON.stringify(currentUser)
+  );
+}
+
+
+function restoreSession() {
+
+  const token =
+    sessionStorage.getItem(
+      "roma_token"
+    );
+
+  const expires =
+    Number(
+      sessionStorage.getItem(
+        "roma_expires"
+      ) || 0
+    );
+
+  const user =
+    sessionStorage.getItem(
+      "roma_user"
+    );
+
+
+  if (
+    !token ||
+    !user ||
+    !expires ||
+    Date.now() >= expires
+  ) {
+
+    clearSession();
+
+    return false;
+  }
+
+
+  try {
+
+    sessionToken = token;
+
+    sessionExpires = expires;
+
+    currentUser =
+      JSON.parse(user);
+
+    return true;
+
+  } catch (error) {
+
+    clearSession();
+
+    return false;
+  }
+}
+
+
+function clearSession() {
+
+  sessionToken = null;
+
+  sessionExpires = null;
+
+  currentUser = null;
+
+
+  sessionStorage.removeItem(
+    "roma_token"
+  );
+
+  sessionStorage.removeItem(
+    "roma_expires"
+  );
+
+  sessionStorage.removeItem(
+    "roma_user"
+  );
+}
+
+
+/* =====================================================
+   UTILITIES
+===================================================== */
+
+function esc(value) {
+
+  return String(
+    value === null ||
+    value === undefined
+      ? ""
+      : value
+  )
+  .replace(/&/g, "&amp;")
+  .replace(/</g, "&lt;")
+  .replace(/>/g, "&gt;")
+  .replace(/"/g, "&quot;")
+  .replace(/'/g, "&#039;");
+}
+
+
+function money(value) {
+
+  const amount =
+    Number(value || 0);
+
+  return "₱" +
+    amount.toLocaleString(
+      "en-PH",
+      {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
       }
+    );
+}
 
-      const date =
-        new Date(value);
 
-      if (
-        isNaN(date.getTime())
-      ) {
-        return String(value);
-      }
+function number(value) {
 
-      return date.toLocaleString(
-        "en-PH",
-        {
-          dateStyle:
-            "medium",
+  return Number(
+    value || 0
+  ).toLocaleString(
+    "en-PH"
+  );
+}
 
-          timeStyle:
-            "short"
-        }
-      );
 
+function formatDate(value) {
+
+  if (!value) {
+    return "-";
+  }
+
+
+  const date =
+    new Date(value);
+
+
+  if (isNaN(date.getTime())) {
+    return esc(value);
+  }
+
+
+  return date.toLocaleString(
+    "en-PH",
+    {
+      year: "numeric",
+      month: "short",
+      day: "numeric",
+      hour: "2-digit",
+      minute: "2-digit"
     }
+  );
+}
 
 
-    /* =====================================================
-       TOAST
-    ====================================================== */
+function showToast(
+  message,
+  type = "success"
+) {
 
-    function toast(
-      message,
-      type = "success"
-    ) {
-
-      const element =
-        document.createElement(
-          "div"
-        );
+  const toast =
+    document.createElement("div");
 
 
-      element.className =
-        "card toast";
+  toast.className =
+    "toast " + type;
 
 
-      if (
-        type === "danger"
-      ) {
-
-        element.style.borderColor =
-          "#f0b7b1";
-
-      }
+  toast.textContent =
+    message;
 
 
-      element.textContent =
-        message;
+  toastContainer.appendChild(
+    toast
+  );
 
 
-      $("toast-container")
-        .appendChild(
-          element
-        );
+  setTimeout(
+    () => toast.remove(),
+    4000
+  );
+}
 
 
-      setTimeout(
-        () =>
-          element.remove(),
-        3200
-      );
+function loading() {
 
-    }
-
-
-
-    /* =====================================================
-       API
-    ====================================================== */
-
-    const API = {
+  content.innerHTML = `
+    <div class="loading">
+      <div class="spinner"></div>
+      Loading...
+    </div>
+  `;
+}
 
 
-      async post(
-        action,
-        data = {}
-      ) {
+function pageTitle(
+  title,
+  subtitle
+) {
 
-        if (
-          !CONFIG.API_URL ||
-          CONFIG.API_URL.includes(
-            "PASTE_YOUR"
-          )
-        ) {
-
-          throw new Error(
-            "Please configure your Apps Script Web App URL."
-          );
-
-        }
+  document.getElementById(
+    "pageTitle"
+  ).textContent = title;
 
 
-        const response =
-          await fetch(
-            CONFIG.API_URL,
-            {
-
-              method:
-                "POST",
-
-              headers:
-                {
-                  "Content-Type":
-                    "text/plain;charset=utf-8"
-                },
-
-              body:
-                JSON.stringify({
-                  action,
-                  data
-                })
-
-            }
-          );
+  document.getElementById(
+    "pageSubtitle"
+  ).textContent = subtitle;
+}
 
 
-        if (
-          !response.ok
-        ) {
+/* =====================================================
+   AUTH
+===================================================== */
 
-          throw new Error(
-            `Server returned ${response.status}.`
-          );
+loginForm.addEventListener(
+  "submit",
+  async function(event) {
 
-        }
-
-
-        return await response.json();
-
-      },
+    event.preventDefault();
 
 
-      requestOTP(
-        email,
-        password
-      ) {
+    const email =
+      document.getElementById(
+        "loginEmail"
+      ).value.trim();
 
-        return this.post(
+
+    const password =
+      document.getElementById(
+        "loginPassword"
+      ).value;
+
+
+    loginButton.disabled = true;
+
+    loginButton.textContent =
+      "Sending OTP...";
+
+
+    try {
+
+      const result =
+        await api(
           "requestOTP",
           {
-            email,
-            password
+            email: email,
+            password: password
           }
         );
 
-      },
+
+      otpEmail = email;
 
 
-      verifyOTP(
-        email,
-        otp
-      ) {
+      document.getElementById(
+        "otpEmail"
+      ).textContent =
+        email;
 
-        return this.post(
+
+      loginForm.classList.add(
+        "hidden"
+      );
+
+      otpForm.classList.remove(
+        "hidden"
+      );
+
+
+      document.getElementById(
+        "otpInput"
+      ).focus();
+
+
+      showToast(
+        result.message,
+        "success"
+      );
+
+    } catch (error) {
+
+      showToast(
+        error.message,
+        "error"
+      );
+
+    } finally {
+
+      loginButton.disabled = false;
+
+      loginButton.textContent =
+        "Continue";
+    }
+  }
+);
+
+
+otpForm.addEventListener(
+  "submit",
+  async function(event) {
+
+    event.preventDefault();
+
+
+    const otp =
+      document.getElementById(
+        "otpInput"
+      ).value.trim();
+
+
+    otpButton.disabled = true;
+
+    otpButton.textContent =
+      "Verifying...";
+
+
+    try {
+
+      const result =
+        await api(
           "verifyOTP",
           {
-            email,
-            otp
+            email: otpEmail,
+            otp: otp
           }
         );
 
-      },
+
+      saveSession(result);
 
 
-      allData(
-        token
-      ) {
-
-        return this.post(
-          "getAllData",
-          {
-            token
-          }
-        );
-
-      },
+      showApplication();
 
 
-      addInventory(
-        token,
-        item
-      ) {
-
-        return this.post(
-          "addInventory",
-          {
-            token,
-            item
-          }
-        );
-
-      },
+      await refreshData();
 
 
-      deleteInventory(
-        token,
-        id
-      ) {
+      showToast(
+        "Welcome to ROMA Cafe, " +
+        currentUser.name + "!",
+        "success"
+      );
 
-        return this.post(
-          "deleteInventory",
-          {
-            token,
-            id
-          }
-        );
+    } catch (error) {
 
-      },
+      showToast(
+        error.message,
+        "error"
+      );
 
+    } finally {
 
-      stockTransaction(
-        token,
-        payload
-      ) {
+      otpButton.disabled = false;
 
-        return this.post(
-          "stockTransaction",
-          {
-            token,
-            ...payload
-          }
-        );
-
-      },
-
-
-      addSupplier(
-        token,
-        supplier
-      ) {
-
-        return this.post(
-          "addSupplier",
-          {
-            token,
-            supplier
-          }
-        );
-
-      },
-
-
-      logout(
-        token
-      ) {
-
-        return this.post(
-          "logout",
-          {
-            token
-          }
-        );
-
-      }
-
-    };
-
-
-
-    /* =====================================================
-       AUTH UI
-    ====================================================== */
-
-    function showAuth() {
-
-      $("login-screen")
-        .classList
-        .remove("hidden");
-
-
-      $("app")
-        .classList
-        .add("hidden");
-
+      otpButton.textContent =
+        "Verify & Login";
     }
+  }
+);
 
 
-    function showApp() {
+document.getElementById(
+  "backLogin"
+).addEventListener(
+  "click",
+  function() {
 
-      $("login-screen")
-        .classList
-        .add("hidden");
+    otpForm.classList.add(
+      "hidden"
+    );
 
+    loginForm.classList.remove(
+      "hidden"
+    );
 
-      $("app")
-        .classList
-        .remove("hidden");
-
-
-      $("user-chip")
-        .innerHTML = `
-
-          <strong>
-            ${esc(state.user.name)}
-          </strong>
-
-          <br>
-
-          ${esc(state.user.role)}
-
-          ·
-
-          ${esc(state.user.email)}
-
-        `;
-
-    }
+    document.getElementById(
+      "otpInput"
+    ).value = "";
+  }
+);
 
 
+/* =====================================================
+   APPLICATION
+===================================================== */
 
-    /* =====================================================
-       LOAD DATA
-    ====================================================== */
+function showApplication() {
 
-    async function loadData() {
+  authScreen.classList.add(
+    "hidden"
+  );
 
-      if (
-        !state.token
-      ) {
-
-        showAuth();
-
-        return;
-
-      }
+  appScreen.classList.remove(
+    "hidden"
+  );
 
 
-      $("refresh-btn")
-        .disabled = true;
+  document.getElementById(
+    "sidebarUserName"
+  ).textContent =
+    currentUser.name;
 
 
-      try {
+  document.getElementById(
+    "sidebarUserRole"
+  ).textContent =
+    currentUser.role;
 
-        const result =
-          await API.allData(
-            state.token
+
+  document.getElementById(
+    "topbarUser"
+  ).textContent =
+    currentUser.role;
+
+
+  navigate("dashboard");
+}
+
+
+/* =====================================================
+   NAVIGATION
+===================================================== */
+
+document
+  .querySelectorAll(".nav-item")
+  .forEach(
+    button => {
+
+      button.addEventListener(
+        "click",
+        function() {
+
+          navigate(
+            this.dataset.page
           );
 
 
-        if (
-          !result.success
-        ) {
-
-          if (
-            result.message &&
-            result.message
-              .toLowerCase()
-              .includes(
-                "unauthorized"
-              )
-          ) {
-
-            sessionExpired();
-
-            return;
-
-          }
-
-          throw new Error(
-            result.message ||
-            "Unable to load data."
-          );
-
+          document
+            .getElementById(
+              "sidebar"
+            )
+            .classList.remove(
+              "open"
+            );
         }
+      );
+    }
+  );
 
 
-        state.inventory =
-          result.inventory || [];
+async function navigate(page) {
+
+  currentPage = page;
 
 
-        state.transactions =
-          result.transactions || [];
+  document
+    .querySelectorAll(".nav-item")
+    .forEach(
+      button => {
 
-
-        state.suppliers =
-          result.suppliers || [];
-
-
-        state.audit =
-          result.audit || [];
-
-
-        renderCurrent();
-
-      }
-
-      catch (error) {
-
-        toast(
-          error.message,
-          "danger"
+        button.classList.toggle(
+          "active",
+          button.dataset.page === page
         );
-
       }
-
-      finally {
-
-        $("refresh-btn")
-          .disabled = false;
-
-      }
-
-    }
+    );
 
 
+  switch (page) {
 
-    /* =====================================================
-       SESSION EXPIRED
-    ====================================================== */
+    case "dashboard":
+      renderDashboard();
+      break;
 
-    function sessionExpired() {
+    case "inventory":
+      renderInventory();
+      break;
 
-      sessionStorage.removeItem(
-        "roma_token"
+    case "stock":
+      renderStock();
+      break;
+
+    case "suppliers":
+      renderSuppliers();
+      break;
+
+    case "transactions":
+      renderTransactions();
+      break;
+
+    case "reports":
+      renderReports();
+      break;
+
+    case "audit":
+      renderAudit();
+      break;
+
+    default:
+      renderDashboard();
+  }
+}
+
+
+/* =====================================================
+   REFRESH
+===================================================== */
+
+async function refreshData() {
+
+  try {
+
+    const result =
+      await api(
+        "getAllData"
       );
 
-      sessionStorage.removeItem(
-        "roma_user"
-      );
 
+    appData.inventory =
+      result.inventory || [];
 
-      state.token =
-        null;
+    appData.transactions =
+      result.transactions || [];
 
-      state.user =
-        null;
+    appData.suppliers =
+      result.suppliers || [];
 
+    appData.audit =
+      result.audit || [];
 
-      toast(
-        "Your session has expired. Please log in again.",
-        "danger"
-      );
 
+    currentUser =
+      result.user || currentUser;
 
-      setTimeout(
-        () =>
-          location.reload(),
-        1200
-      );
 
-    }
+    sessionStorage.setItem(
+      "roma_user",
+      JSON.stringify(currentUser)
+    );
 
 
+    renderCurrentPage();
 
-    /* =====================================================
-       PAGE ROUTING
-    ====================================================== */
+  } catch (error) {
 
-    function renderCurrent() {
+    showToast(
+      error.message,
+      "error"
+    );
+  }
+}
 
-      const active =
-        document
-          .querySelector(
-            ".nav-link.active"
-          )
-          ?.dataset.page ||
-        "dashboard";
 
+function renderCurrentPage() {
 
-      renderPage(
-        active
-      );
+  navigate(currentPage);
+}
 
-    }
 
+/* =====================================================
+   DASHBOARD
+===================================================== */
 
-    function renderPage(
-      page
-    ) {
+function renderDashboard() {
 
-      document
-        .querySelectorAll(
-          ".page"
-        )
-        .forEach(
-          element =>
-            element
-              .classList
-              .add("hidden")
-        );
+  pageTitle(
+    "Dashboard",
+    "Overview of your cafe inventory"
+  );
 
 
-      $(`page-${page}`)
-        .classList
-        .remove("hidden");
+  const inventory =
+    appData.inventory;
 
 
-      const titles = {
+  const suppliers =
+    appData.suppliers;
 
-        dashboard: [
-          "Dashboard",
-          "Overview of your cafe inventory"
-        ],
 
-        inventory: [
-          "Inventory",
-          "Manage cafe ingredients, supplies and stock levels"
-        ],
+  const transactions =
+    appData.transactions;
 
-        stock: [
-          "Stock In/Out",
-          "Record incoming and outgoing stock"
-        ],
 
-        suppliers: [
-          "Suppliers",
-          "Manage supplier information"
-        ],
+  const totalItems =
+    inventory.length;
 
-        transactions: [
-          "Transactions",
-          "View stock movement history"
-        ],
 
-        reports: [
-          "Reports",
-          "Inventory summaries and stock valuation"
-        ],
+  const lowStock =
+    inventory.filter(
+      item =>
+        Number(item.quantity) <=
+        Number(item.minStock)
+    ).length;
 
-        audit: [
-          "Audit Log",
-          "Review system activity"
-        ]
 
-      };
+  const inventoryValue =
+    inventory.reduce(
+      (total, item) =>
+        total +
+        (
+          Number(item.quantity || 0) *
+          Number(item.cost || 0)
+        ),
+      0
+    );
 
 
-      $("page-title")
-        .textContent =
-          titles[page][0];
+  const recent =
+    [...transactions]
+      .reverse()
+      .slice(0, 6);
 
 
-      $("page-subtitle")
-        .textContent =
-          titles[page][1];
+  content.innerHTML = `
 
+    <div class="stats-grid">
 
-      const renderers = {
+      <div class="stat-card">
+        <div class="stat-label">
+          Total Items
+        </div>
 
-        dashboard:
-          renderDashboard,
+        <div class="stat-value">
+          ${number(totalItems)}
+        </div>
 
-        inventory:
-          renderInventory,
+        <div class="stat-description">
+          Registered inventory products
+        </div>
+      </div>
 
-        stock:
-          renderStock,
 
-        suppliers:
-          renderSuppliers,
+      <div class="stat-card">
+        <div class="stat-label">
+          Low Stock
+        </div>
 
-        transactions:
-          renderTransactions,
+        <div
+          class="stat-value"
+          style="color:${
+            lowStock > 0
+              ? "var(--red)"
+              : "var(--green)"
+          }"
+        >
+          ${number(lowStock)}
+        </div>
 
-        reports:
-          renderReports,
+        <div class="stat-description">
+          Items at or below minimum stock
+        </div>
+      </div>
 
-        audit:
-          renderAudit
 
-      };
+      <div class="stat-card">
+        <div class="stat-label">
+          Inventory Value
+        </div>
 
+        <div class="stat-value">
+          ${money(inventoryValue)}
+        </div>
 
-      renderers[page]();
+        <div class="stat-description">
+          Current estimated inventory value
+        </div>
+      </div>
 
-    }
 
+      <div class="stat-card">
+        <div class="stat-label">
+          Suppliers
+        </div>
 
+        <div class="stat-value">
+          ${number(suppliers.length)}
+        </div>
 
-    /* =====================================================
-       1. DASHBOARD
-    ====================================================== */
+        <div class="stat-description">
+          Registered suppliers
+        </div>
+      </div>
 
-    function renderDashboard() {
+    </div>
 
-      const low =
-        state.inventory
-          .filter(
-            item =>
-              Number(item.quantity) <=
-              Number(item.minStock)
-          );
 
+    <div class="two-column">
 
-      const totalValue =
-        state.inventory
-          .reduce(
-            (
-              total,
-              item
-            ) =>
-              total +
-              Number(
-                item.quantity || 0
-              ) *
-              Number(
-                item.cost || 0
-              ),
-            0
-          );
+      <div class="panel">
 
+        <div class="panel-header">
 
-      $("page-dashboard")
-        .innerHTML = `
+          <h4>
+            Recent Transactions
+          </h4>
 
-          <div class="cards">
+          <button
+            class="btn btn-secondary"
+            onclick="navigate('transactions')"
+          >
+            View All
+          </button>
 
+        </div>
 
-            <div class="card">
 
-              <div class="metric-label">
-                Total Items
-              </div>
+        <div class="panel-body">
 
-              <div class="metric">
-                ${state.inventory.length}
-              </div>
+          ${
+            recent.length
+              ? `
+                <div class="table-wrapper">
 
-            </div>
+                  <table>
 
+                    <thead>
+                      <tr>
+                        <th>Item</th>
+                        <th>Type</th>
+                        <th>Qty</th>
+                        <th>Date</th>
+                      </tr>
+                    </thead>
 
-            <div class="card">
+                    <tbody>
 
-              <div class="metric-label">
-                Low Stock
-              </div>
+                      ${recent.map(t => `
 
-              <div class="metric">
-                ${low.length}
-              </div>
+                        <tr>
 
-            </div>
+                          <td>
+                            <span class="item-name">
+                              ${esc(t.itemName)}
+                            </span>
+                          </td>
 
+                          <td>
+                            <span class="badge ${
+                              String(t.type) === "IN"
+                                ? "badge-green"
+                                : "badge-red"
+                            }">
+                              ${esc(t.type)}
+                            </span>
+                          </td>
 
-            <div class="card">
+                          <td>
+                            ${number(t.quantity)}
+                          </td>
 
-              <div class="metric-label">
-                Suppliers
-              </div>
+                          <td>
+                            ${formatDate(t.date)}
+                          </td>
 
-              <div class="metric">
-                ${state.suppliers.length}
-              </div>
+                        </tr>
 
-            </div>
+                      `).join("")}
 
+                    </tbody>
 
-            <div class="card">
+                  </table>
 
-              <div class="metric-label">
-                Stock Value
-              </div>
+                </div>
+              `
+              : `
+                <div class="empty">
+                  <strong>No transactions yet</strong>
+                  Stock transactions will appear here.
+                </div>
+              `
+          }
 
-              <div class="metric">
-                ${money(totalValue)}
-              </div>
+        </div>
 
-            </div>
+      </div>
 
-          </div>
 
+      <div class="panel">
 
+        <div class="panel-header">
 
-          <div class="grid-2">
+          <h4>
+            Low Stock Alert
+          </h4>
 
+          <button
+            class="btn btn-secondary"
+            onclick="navigate('inventory')"
+          >
+            Inventory
+          </button>
 
-            <div class="card">
+        </div>
 
-              <div class="section-head">
 
-                <h3>
-                  Low Stock Alerts
-                </h3>
+        <div class="panel-body">
 
-                <button
-                  class="btn ghost"
-                  onclick="activatePage('inventory')"
-                >
-                  View inventory
-                </button>
-
-              </div>
-
-
-              ${
-                low.length
-
-                ?
-
-                `
-
-                <div class="table-wrap">
+          ${
+            inventory.filter(
+              item =>
+                Number(item.quantity) <=
+                Number(item.minStock)
+            ).length
+              ? `
+                <div class="table-wrapper">
 
                   <table>
 
                     <thead>
 
                       <tr>
-
-                        <th>
-                          Item
-                        </th>
-
-                        <th>
-                          Quantity
-                        </th>
-
-                        <th>
-                          Minimum
-                        </th>
-
-                        <th>
-                          Status
-                        </th>
-
+                        <th>Item</th>
+                        <th>Stock</th>
+                        <th>Minimum</th>
                       </tr>
 
                     </thead>
 
-
                     <tbody>
 
                       ${
-
-                        low
-                          .slice(0, 8)
-                          .map(
-                            item => `
-
-                              <tr
-                                class="low-row"
-                              >
-
-                                <td>
-                                  ${esc(item.name)}
-                                </td>
-
-                                <td>
-                                  ${item.quantity}
-                                  ${esc(item.unit)}
-                                </td>
-
-                                <td>
-                                  ${item.minStock}
-                                </td>
-
-                                <td>
-
-                                  <span
-                                    class="badge danger"
-                                  >
-                                    Low
-                                  </span>
-
-                                </td>
-
-                              </tr>
-
-                            `
+                        inventory
+                          .filter(
+                            item =>
+                              Number(item.quantity) <=
+                              Number(item.minStock)
                           )
-                          .join("")
+                          .slice(0, 8)
+                          .map(item => `
 
+                            <tr>
+
+                              <td>
+                                <span class="item-name">
+                                  ${esc(item.name)}
+                                </span>
+
+                                <br>
+
+                                <small class="muted">
+                                  ${esc(item.code)}
+                                </small>
+                              </td>
+
+                              <td>
+                                <span class="badge badge-red">
+                                  ${number(item.quantity)}
+                                  ${esc(item.unit)}
+                                </span>
+                              </td>
+
+                              <td>
+                                ${number(item.minStock)}
+                                ${esc(item.unit)}
+                              </td>
+
+                            </tr>
+
+                          `)
+                          .join("")
                       }
 
                     </tbody>
@@ -2687,1521 +2759,2255 @@
                   </table>
 
                 </div>
+              `
+              : `
+                <div class="empty">
+                  <strong>Stock levels are healthy</strong>
+                  No items currently require restocking.
+                </div>
+              `
+          }
 
-                `
+        </div>
 
-                :
+      </div>
 
-                `
+    </div>
 
-                  <div class="empty">
-
-                    All inventory items
-                    are above minimum stock.
-
-                  </div>
-
-                `
-
-              }
-
-            </div>
+  `;
+}
 
 
+/* =====================================================
+   INVENTORY
+===================================================== */
 
-            <div class="card">
+function renderInventory() {
 
-              <div class="section-head">
-
-                <h3>
-                  Recent Activity
-                </h3>
-
-              </div>
+  pageTitle(
+    "Inventory",
+    "Manage ROMA Cafe products and stock levels"
+  );
 
 
-              ${
+  content.innerHTML = `
 
-                state.transactions
-                  .slice(-7)
-                  .reverse()
-                  .map(
-                    transaction => `
+    <div class="page-header">
 
-                      <div
-                        class="stat-line"
-                      >
+      <div>
+        <h3>Inventory</h3>
 
-                        <span>
+        <p>
+          Add, monitor and manage cafe inventory.
+        </p>
+      </div>
 
-                          <strong>
-                            ${esc(transaction.type)}
-                          </strong>
 
-                          ${esc(transaction.itemName)}
+      <div class="page-actions">
 
-                        </span>
+        <button
+          class="btn btn-primary"
+          onclick="openInventoryModal()"
+        >
+          + Add Item
+        </button>
 
-                        <span>
-                          ${transaction.quantity}
-                        </span>
+      </div>
 
-                      </div>
+    </div>
 
-                    `
-                  )
-                  .join("")
 
-                ||
+    <div class="panel">
 
-                `
+      <div class="panel-body">
 
-                  <div class="empty">
-                    No transactions yet.
-                  </div>
+        <div class="toolbar">
 
-                `
+          <div class="search-box">
 
-              }
-
-            </div>
+            <input
+              id="inventorySearch"
+              class="form-control"
+              type="search"
+              placeholder="Search item, code or category..."
+              oninput="filterInventory()"
+            >
 
           </div>
 
-        `;
+        </div>
 
-    }
 
+        <div
+          id="inventoryTable"
+        ></div>
 
+      </div>
 
-    /* =====================================================
-       2. INVENTORY
-    ====================================================== */
+    </div>
 
-    function renderInventory() {
+  `;
 
-      $("page-inventory")
-        .innerHTML = `
 
-          <div class="card">
+  renderInventoryTable();
+}
 
 
-            <div class="section-head">
+function filterInventory() {
 
-              <h3>
-                Inventory Items
-              </h3>
+  renderInventoryTable(
+    document
+      .getElementById(
+        "inventorySearch"
+      )
+      .value
+      .toLowerCase()
+  );
+}
 
 
-              <button
-                class="btn primary"
-                onclick="openInventoryModal()"
-              >
-                + Add Item
-              </button>
+function renderInventoryTable(
+  search = ""
+) {
 
-            </div>
+  let items =
+    appData.inventory.filter(
+      item => {
 
+        const text =
+          (
+            String(item.name) +
+            " " +
+            String(item.code) +
+            " " +
+            String(item.category)
+          ).toLowerCase();
 
-            <div class="toolbar">
+        return text.includes(search);
+      }
+    );
 
-              <input
-                id="inventory-search"
-                placeholder="Search item, code or category..."
-                oninput="filterInventory()"
-              >
 
-            </div>
+  const container =
+    document.getElementById(
+      "inventoryTable"
+    );
 
 
-            <div class="table-wrap">
+  if (!container) {
+    return;
+  }
 
-              <table>
 
-                <thead>
+  if (!items.length) {
 
-                  <tr>
+    container.innerHTML = `
+      <div class="empty">
+        <strong>No inventory items found</strong>
+        Add your first inventory item.
+      </div>
+    `;
 
-                    <th>
-                      Code
-                    </th>
+    return;
+  }
 
-                    <th>
-                      Item
-                    </th>
 
-                    <th>
-                      Category
-                    </th>
+  container.innerHTML = `
 
-                    <th>
-                      Unit
-                    </th>
+    <div class="table-wrapper">
 
-                    <th>
-                      Qty
-                    </th>
+      <table>
 
-                    <th>
-                      Min
-                    </th>
-
-                    <th>
-                      Cost
-                    </th>
-
-                    <th>
-                      Status
-                    </th>
-
-                    <th>
-                      Action
-                    </th>
-
-                  </tr>
-
-                </thead>
-
-
-                <tbody
-                  id="inventory-body"
-                ></tbody>
-
-              </table>
-
-            </div>
-
-          </div>
-
-        `;
-
-
-      filterInventory();
-
-    }
-
-
-    function filterInventory() {
-
-      const search =
-        (
-          $("inventory-search")
-            ?.value ||
-          ""
-        )
-          .toLowerCase();
-
-
-      const rows =
-        state.inventory
-          .filter(
-            item =>
-              [
-                item.code,
-                item.name,
-                item.category
-              ]
-                .join(" ")
-                .toLowerCase()
-                .includes(search)
-          );
-
-
-      $("inventory-body")
-        .innerHTML =
-
-        rows.length
-
-        ?
-
-        rows
-          .map(
-            item => {
-
-              const low =
-                Number(
-                  item.quantity
-                ) <=
-                Number(
-                  item.minStock
-                );
-
-
-              return `
-
-                <tr
-                  class="${low ? "low-row" : ""}"
-                >
-
-                  <td>
-                    ${esc(item.code)}
-                  </td>
-
-                  <td>
-                    <strong>
-                      ${esc(item.name)}
-                    </strong>
-                  </td>
-
-                  <td>
-                    ${esc(item.category)}
-                  </td>
-
-                  <td>
-                    ${esc(item.unit)}
-                  </td>
-
-                  <td>
-                    ${item.quantity}
-                  </td>
-
-                  <td>
-                    ${item.minStock}
-                  </td>
-
-                  <td>
-                    ${money(item.cost)}
-                  </td>
-
-                  <td>
-
-                    <span
-                      class="badge
-                      ${low ? "danger" : "success"}"
-                    >
-                      ${low ? "Low" : "Good"}
-                    </span>
-
-                  </td>
-
-                  <td>
-
-                    ${
-                      state.user.role === "Admin"
-
-                      ?
-
-                      `
-
-                        <button
-                          class="btn danger"
-                          onclick="deleteItem('${esc(item.id)}')"
-                        >
-                          Delete
-                        </button>
-
-                      `
-
-                      :
-
-                      `<span class="muted">
-                        Admin only
-                      </span>`
-
-                    }
-
-                  </td>
-
-                </tr>
-
-              `;
-
-            }
-          )
-          .join("")
-
-        :
-
-        `
+        <thead>
 
           <tr>
 
-            <td
-              colspan="9"
-              class="empty"
-            >
-              No inventory items found.
-            </td>
+            <th>Code</th>
+            <th>Item</th>
+            <th>Category</th>
+            <th>Stock</th>
+            <th>Cost</th>
+            <th>Status</th>
+            <th>Action</th>
 
           </tr>
 
-        `;
+        </thead>
 
-    }
 
+        <tbody>
 
+          ${items.map(item => {
 
-    /* =====================================================
-       3. STOCK IN / OUT
-    ====================================================== */
+            const quantity =
+              Number(item.quantity || 0);
 
-    function renderStock() {
+            const minimum =
+              Number(item.minStock || 0);
 
-      const options =
-        state.inventory
-          .map(
-            item => `
 
-              <option
-                value="${esc(item.id)}"
-              >
+            let status =
+              "In Stock";
 
-                ${esc(item.name)}
-                (${item.quantity}
-                ${esc(item.unit)})
+            let badge =
+              "badge-green";
 
-              </option>
 
-            `
-          )
-          .join("");
+            if (quantity <= 0) {
 
+              status =
+                "Out of Stock";
 
-      $("page-stock")
-        .innerHTML = `
+              badge =
+                "badge-red";
 
-          <div class="card">
+            } else if (
+              quantity <= minimum
+            ) {
 
+              status =
+                "Low Stock";
 
-            <div class="section-head">
+              badge =
+                "badge-orange";
+            }
 
-              <h3>
-                Stock Transaction
-              </h3>
 
-            </div>
-
-
-            <form
-              id="stock-form"
-            >
-
-              <div class="form-grid">
-
-
-                <div>
-
-                  <label>
-                    Transaction Type
-                  </label>
-
-                  <select
-                    id="stock-type"
-                  >
-
-                    <option value="IN">
-                      Stock In
-                    </option>
-
-                    <option value="OUT">
-                      Stock Out
-                    </option>
-
-                  </select>
-
-                </div>
-
-
-                <div>
-
-                  <label>
-                    Inventory Item
-                  </label>
-
-                  <select
-                    id="stock-item"
-                    required
-                  >
-
-                    ${
-                      options ||
-
-                      `<option value="">
-                        No items available
-                      </option>`
-                    }
-
-                  </select>
-
-                </div>
-
-
-                <div>
-
-                  <label>
-                    Quantity
-                  </label>
-
-                  <input
-                    id="stock-qty"
-                    type="number"
-                    min="0.01"
-                    step="0.01"
-                    required
-                  >
-
-                </div>
-
-
-                <div>
-
-                  <label>
-                    Supplier
-                    (optional)
-                  </label>
-
-                  <input
-                    id="stock-supplier"
-                    placeholder="Supplier name"
-                  >
-
-                </div>
-
-
-                <div
-                  style="grid-column:1/-1"
-                >
-
-                  <label>
-                    Reason / Notes
-                  </label>
-
-                  <textarea
-                    id="stock-reason"
-                    rows="3"
-                    placeholder="e.g. New delivery, daily usage, damaged item..."
-                  ></textarea>
-
-                </div>
-
-              </div>
-
-
-              <button
-                class="btn primary"
-                type="submit"
-              >
-                Record Transaction
-              </button>
-
-            </form>
-
-          </div>
-
-
-
-          <div
-            class="card"
-            style="margin-top:18px"
-          >
-
-            <h3>
-              Stock Management
-            </h3>
-
-            <p
-              class="muted"
-              style="margin-top:8px"
-            >
-
-              Stock In increases the
-              inventory quantity.
-
-              Stock Out decreases
-              inventory quantity.
-
-              The system will not allow
-              stock to become negative.
-
-            </p>
-
-          </div>
-
-        `;
-
-
-      $("stock-form")
-        .onsubmit =
-          submitStock;
-
-    }
-
-
-
-    /* =====================================================
-       4. SUPPLIERS
-    ====================================================== */
-
-    function renderSuppliers() {
-
-      $("page-suppliers")
-        .innerHTML = `
-
-          <div class="card">
-
-
-            <div class="section-head">
-
-              <h3>
-                Suppliers
-              </h3>
-
-
-              <button
-                class="btn primary"
-                onclick="openSupplierModal()"
-              >
-                + Add Supplier
-              </button>
-
-            </div>
-
-
-            <div class="table-wrap">
-
-              <table>
-
-                <thead>
-
-                  <tr>
-
-                    <th>
-                      Name
-                    </th>
-
-                    <th>
-                      Contact
-                    </th>
-
-                    <th>
-                      Phone
-                    </th>
-
-                    <th>
-                      Email
-                    </th>
-
-                    <th>
-                      Category
-                    </th>
-
-                  </tr>
-
-                </thead>
-
-
-                <tbody>
-
-                  ${
-
-                    state.suppliers.length
-
-                    ?
-
-                    state.suppliers
-                      .map(
-                        supplier => `
-
-                          <tr>
-
-                            <td>
-
-                              <strong>
-                                ${esc(supplier.name)}
-                              </strong>
-
-                            </td>
-
-                            <td>
-                              ${esc(supplier.contact)}
-                            </td>
-
-                            <td>
-                              ${esc(supplier.phone)}
-                            </td>
-
-                            <td>
-                              ${esc(supplier.email)}
-                            </td>
-
-                            <td>
-                              ${esc(supplier.category)}
-                            </td>
-
-                          </tr>
-
-                        `
-                      )
-                      .join("")
-
-                    :
-
-                    `
-
-                      <tr>
-
-                        <td
-                          colspan="5"
-                          class="empty"
-                        >
-                          No suppliers yet.
-                        </td>
-
-                      </tr>
-
-                    `
-
-                  }
-
-                </tbody>
-
-              </table>
-
-            </div>
-
-          </div>
-
-        `;
-
-    }
-
-
-
-    /* =====================================================
-       5. TRANSACTIONS
-    ====================================================== */
-
-    function renderTransactions() {
-
-      $("page-transactions")
-        .innerHTML = `
-
-          <div class="card">
-
-
-            <div class="section-head">
-
-              <h3>
-                Stock Transactions
-              </h3>
-
-            </div>
-
-
-            <div class="toolbar">
-
-              <input
-                id="transaction-search"
-                placeholder="Search item, type or user..."
-                oninput="filterTransactions()"
-              >
-
-            </div>
-
-
-            <div class="table-wrap">
-
-              <table>
-
-                <thead>
-
-                  <tr>
-
-                    <th>
-                      Date
-                    </th>
-
-                    <th>
-                      Type
-                    </th>
-
-                    <th>
-                      Item
-                    </th>
-
-                    <th>
-                      Qty
-                    </th>
-
-                    <th>
-                      Supplier
-                    </th>
-
-                    <th>
-                      Reason
-                    </th>
-
-                    <th>
-                      User
-                    </th>
-
-                  </tr>
-
-                </thead>
-
-
-                <tbody
-                  id="transaction-body"
-                ></tbody>
-
-              </table>
-
-            </div>
-
-          </div>
-
-        `;
-
-
-      filterTransactions();
-
-    }
-
-
-    function filterTransactions() {
-
-      const search =
-        (
-          $("transaction-search")
-            ?.value ||
-          ""
-        )
-          .toLowerCase();
-
-
-      const rows =
-        state.transactions
-          .filter(
-            transaction =>
-              [
-                transaction.itemName,
-                transaction.type,
-                transaction.user,
-                transaction.supplier,
-                transaction.reason
-              ]
-                .join(" ")
-                .toLowerCase()
-                .includes(search)
-          )
-          .slice()
-          .reverse();
-
-
-      $("transaction-body")
-        .innerHTML =
-
-        rows.length
-
-        ?
-
-        rows
-          .map(
-            transaction => `
+            return `
 
               <tr>
 
                 <td>
-                  ${dateFmt(transaction.date)}
+                  <strong>
+                    ${esc(item.code)}
+                  </strong>
                 </td>
+
 
                 <td>
 
-                  <span
-                    class="badge
-                    ${
-                      transaction.type === "IN"
-                      ? "success"
-                      : "warning"
-                    }"
-                  >
+                  <span class="item-name">
+                    ${esc(item.name)}
+                  </span>
 
-                    ${esc(transaction.type)}
+                  <br>
 
+                  <small class="muted">
+                    ${esc(item.unit)}
+                  </small>
+
+                </td>
+
+
+                <td>
+                  ${esc(item.category)}
+                </td>
+
+
+                <td>
+                  <strong>
+                    ${number(quantity)}
+                  </strong>
+                  ${esc(item.unit)}
+                </td>
+
+
+                <td>
+                  ${money(item.cost)}
+                </td>
+
+
+                <td>
+
+                  <span class="badge ${badge}">
+                    ${status}
                   </span>
 
                 </td>
 
-                <td>
-                  ${esc(transaction.itemName)}
-                </td>
 
                 <td>
-                  ${transaction.quantity}
-                </td>
 
-                <td>
-                  ${esc(transaction.supplier)}
-                </td>
+                  ${
+                    currentUser.role === "Admin"
+                      ? `
+                        <button
+                          class="btn btn-danger"
+                          style="padding:7px 10px;font-size:12px"
+                          onclick="deleteItem('${esc(item.id)}')"
+                        >
+                          Delete
+                        </button>
+                      `
+                      : `
+                        <span class="muted">
+                          Staff
+                        </span>
+                      `
+                  }
 
-                <td>
-                  ${esc(transaction.reason)}
-                </td>
-
-                <td>
-                  ${esc(transaction.user)}
                 </td>
 
               </tr>
 
-            `
-          )
-          .join("")
+            `;
 
-        :
+          }).join("")}
 
-        `
+        </tbody>
 
-          <tr>
+      </table>
 
-            <td
-              colspan="7"
-              class="empty"
-            >
-              No transactions found.
-            </td>
+    </div>
 
-          </tr>
-
-        `;
-
-    }
+  `;
+}
 
 
+/* =====================================================
+   INVENTORY MODAL
+===================================================== */
 
-    /* =====================================================
-       6. REPORTS
-    ====================================================== */
+function openInventoryModal() {
 
-    function renderReports() {
-
-      const totalQuantity =
-        state.inventory
-          .reduce(
-            (
-              total,
-              item
-            ) =>
-              total +
-              Number(
-                item.quantity || 0
-              ),
-            0
-          );
+  modalContainer.classList.remove(
+    "hidden"
+  );
 
 
-      const totalValue =
-        state.inventory
-          .reduce(
-            (
-              total,
-              item
-            ) =>
-              total +
-              Number(
-                item.quantity || 0
-              ) *
-              Number(
-                item.cost || 0
-              ),
-            0
-          );
+  modalContainer.innerHTML = `
 
+    <div class="modal-backdrop">
 
-      const categories = {};
+      <div class="modal">
 
+        <div class="modal-header">
 
-      state.inventory
-        .forEach(
-          item => {
+          <h3>
+            Add Inventory Item
+          </h3>
 
-            const category =
-              item.category ||
-              "Uncategorized";
-
-
-            categories[category] =
-              (
-                categories[category] ||
-                0
-              ) + 1;
-
-          }
-        );
-
-
-      $("page-reports")
-        .innerHTML = `
-
-          <div class="report-grid">
-
-
-            <div class="card">
-
-              <div class="metric-label">
-                Inventory Value
-              </div>
-
-              <div class="metric">
-                ${money(totalValue)}
-              </div>
-
-            </div>
-
-
-            <div class="card">
-
-              <div class="metric-label">
-                Total Quantity
-              </div>
-
-              <div class="metric">
-                ${totalQuantity.toLocaleString()}
-              </div>
-
-            </div>
-
-
-            <div class="card">
-
-              <div class="metric-label">
-                Categories
-              </div>
-
-              <div class="metric">
-                ${Object.keys(categories).length}
-              </div>
-
-            </div>
-
-          </div>
-
-
-
-          <div
-            class="card"
-            style="margin-top:18px"
+          <button
+            class="close-btn"
+            onclick="closeModal()"
           >
+            ×
+          </button>
 
-            <div class="section-head">
+        </div>
 
-              <h3>
-                Category Summary
-              </h3>
 
-            </div>
+        <form
+          id="inventoryForm"
+        >
 
-
-            ${
-
-              Object.keys(categories).length
-
-              ?
-
-              Object
-                .entries(categories)
-                .map(
-                  ([name, count]) => `
-
-                    <div
-                      class="stat-line"
-                    >
-
-                      <span>
-                        ${esc(name)}
-                      </span>
-
-                      <strong>
-                        ${count} item(s)
-                      </strong>
-
-                    </div>
-
-                  `
-                )
-                .join("")
-
-              :
-
-              `
-
-                <div class="empty">
-
-                  No data available.
-
-                </div>
-
-              `
-
-            }
-
-          </div>
-
-        `;
-
-    }
-
-
-
-    /* =====================================================
-       7. AUDIT LOG
-    ====================================================== */
-
-    function renderAudit() {
-
-      $("page-audit")
-        .innerHTML = `
-
-          <div class="card">
-
-
-            <div class="section-head">
-
-              <h3>
-                Audit Log
-              </h3>
-
-            </div>
-
-
-            <div class="table-wrap">
-
-              <table>
-
-                <thead>
-
-                  <tr>
-
-                    <th>
-                      Date
-                    </th>
-
-                    <th>
-                      User
-                    </th>
-
-                    <th>
-                      Action
-                    </th>
-
-                    <th>
-                      Details
-                    </th>
-
-                  </tr>
-
-                </thead>
-
-
-                <tbody>
-
-                  ${
-
-                    state.audit
-                      .slice()
-                      .reverse()
-                      .map(
-                        audit => `
-
-                          <tr>
-
-                            <td>
-                              ${dateFmt(audit.date)}
-                            </td>
-
-                            <td>
-                              ${esc(audit.user)}
-                            </td>
-
-                            <td>
-
-                              <span
-                                class="badge success"
-                              >
-
-                                ${esc(audit.action)}
-
-                              </span>
-
-                            </td>
-
-                            <td>
-                              ${esc(audit.details)}
-                            </td>
-
-                          </tr>
-
-                        `
-                      )
-                      .join("")
-
-                    ||
-
-                    `
-
-                      <tr>
-
-                        <td
-                          colspan="4"
-                          class="empty"
-                        >
-
-                          No audit records yet.
-
-                        </td>
-
-                      </tr>
-
-                    `
-
-                  }
-
-                </tbody>
-
-              </table>
-
-            </div>
-
-          </div>
-
-        `;
-
-    }
-
-
-
-    /* =====================================================
-       PAGE ACTIVATION
-    ====================================================== */
-
-    function activatePage(
-      page
-    ) {
-
-      document
-        .querySelectorAll(
-          ".nav-link"
-        )
-        .forEach(
-          button =>
-            button
-              .classList
-              .remove("active")
-        );
-
-
-      const button =
-        document.querySelector(
-          `.nav-link[data-page="${page}"]`
-        );
-
-
-      if (button) {
-
-        button
-          .classList
-          .add("active");
-
-      }
-
-
-      renderPage(page);
-
-    }
-
-
-
-    /* =====================================================
-       INVENTORY MODAL
-    ====================================================== */
-
-    function openInventoryModal() {
-
-      modal(
-        "Add Inventory Item",
-
-        `
-
-          <form
-            id="inventory-form"
-          >
+          <div class="modal-body">
 
             <div class="form-grid">
 
 
-              <div>
+              <div class="form-group">
 
                 <label>
-                  Item Code
+                  Item Code *
                 </label>
 
                 <input
-                  id="item-code"
+                  id="itemCode"
+                  class="form-control"
+                  placeholder="e.g. CAF-001"
                   required
-                  placeholder="RM-001"
                 >
 
               </div>
 
 
-              <div>
+              <div class="form-group">
 
                 <label>
-                  Item Name
+                  Item Name *
                 </label>
 
                 <input
-                  id="item-name"
+                  id="itemName"
+                  class="form-control"
+                  placeholder="e.g. Coffee Beans"
                   required
-                  placeholder="Coffee Beans"
                 >
 
               </div>
 
 
-              <div>
+              <div class="form-group">
+
+                <label>
+                  Category *
+                </label>
+
+                <select
+                  id="itemCategory"
+                  class="form-control"
+                  required
+                >
+
+                  <option value="">
+                    Select category
+                  </option>
+
+                  <option>Coffee</option>
+                  <option>Pastry</option>
+                  <option>Food</option>
+                  <option>Beverage</option>
+                  <option>Ingredients</option>
+                  <option>Packaging</option>
+                  <option>Supplies</option>
+                  <option>Other</option>
+
+                </select>
+
+              </div>
+
+
+              <div class="form-group">
+
+                <label>
+                  Unit *
+                </label>
+
+                <select
+                  id="itemUnit"
+                  class="form-control"
+                  required
+                >
+
+                  <option value="">
+                    Select unit
+                  </option>
+
+                  <option>pcs</option>
+                  <option>pack</option>
+                  <option>box</option>
+                  <option>kg</option>
+                  <option>g</option>
+                  <option>L</option>
+                  <option>ml</option>
+                  <option>bottle</option>
+                  <option>can</option>
+
+                </select>
+
+              </div>
+
+
+              <div class="form-group">
+
+                <label>
+                  Initial Quantity *
+                </label>
+
+                <input
+                  id="itemQuantity"
+                  class="form-control"
+                  type="number"
+                  min="0"
+                  value="0"
+                  required
+                >
+
+              </div>
+
+
+              <div class="form-group">
+
+                <label>
+                  Minimum Stock *
+                </label>
+
+                <input
+                  id="itemMinStock"
+                  class="form-control"
+                  type="number"
+                  min="0"
+                  value="5"
+                  required
+                >
+
+              </div>
+
+
+              <div class="form-group full">
+
+                <label>
+                  Unit Cost *
+                </label>
+
+                <input
+                  id="itemCost"
+                  class="form-control"
+                  type="number"
+                  min="0"
+                  step="0.01"
+                  value="0"
+                  required
+                >
+
+              </div>
+
+            </div>
+
+          </div>
+
+
+          <div class="modal-footer">
+
+            <button
+              type="button"
+              class="btn btn-secondary"
+              onclick="closeModal()"
+            >
+              Cancel
+            </button>
+
+
+            <button
+              type="submit"
+              class="btn btn-primary"
+            >
+              Add Item
+            </button>
+
+          </div>
+
+        </form>
+
+      </div>
+
+    </div>
+
+  `;
+
+
+  document
+    .getElementById(
+      "inventoryForm"
+    )
+    .addEventListener(
+      "submit",
+      addInventory
+    );
+}
+
+
+async function addInventory(event) {
+
+  event.preventDefault();
+
+
+  const data = {
+
+    code:
+      document.getElementById(
+        "itemCode"
+      ).value.trim(),
+
+    name:
+      document.getElementById(
+        "itemName"
+      ).value.trim(),
+
+    category:
+      document.getElementById(
+        "itemCategory"
+      ).value,
+
+    unit:
+      document.getElementById(
+        "itemUnit"
+      ).value,
+
+    quantity:
+      Number(
+        document.getElementById(
+          "itemQuantity"
+        ).value
+      ),
+
+    minStock:
+      Number(
+        document.getElementById(
+          "itemMinStock"
+        ).value
+      ),
+
+    cost:
+      Number(
+        document.getElementById(
+          "itemCost"
+        ).value
+      )
+  };
+
+
+  try {
+
+    const result =
+      await api(
+        "addInventory",
+        data
+      );
+
+
+    closeModal();
+
+
+    showToast(
+      result.message,
+      "success"
+    );
+
+
+    await refreshData();
+
+  } catch (error) {
+
+    showToast(
+      error.message,
+      "error"
+    );
+  }
+}
+
+
+async function deleteItem(
+  itemId
+) {
+
+  const item =
+    appData.inventory.find(
+      x =>
+        String(x.id) ===
+        String(itemId)
+    );
+
+
+  if (!item) {
+    return;
+  }
+
+
+  const confirmed =
+    confirm(
+      "Delete \"" +
+      item.name +
+      "\" from inventory?"
+    );
+
+
+  if (!confirmed) {
+    return;
+  }
+
+
+  try {
+
+    const result =
+      await api(
+        "deleteInventory",
+        {
+          itemId: itemId
+        }
+      );
+
+
+    showToast(
+      result.message,
+      "success"
+    );
+
+
+    await refreshData();
+
+  } catch (error) {
+
+    showToast(
+      error.message,
+      "error"
+    );
+  }
+}
+
+
+/* =====================================================
+   STOCK IN / OUT
+===================================================== */
+
+function renderStock() {
+
+  pageTitle(
+    "Stock In / Out",
+    "Record incoming and outgoing inventory"
+  );
+
+
+  content.innerHTML = `
+
+    <div class="page-header">
+
+      <div>
+        <h3>Stock In / Out</h3>
+
+        <p>
+          Record stock additions and releases.
+        </p>
+      </div>
+
+    </div>
+
+
+    <div class="two-column">
+
+
+      <div class="panel">
+
+        <div class="panel-header">
+
+          <h4>
+            New Stock Transaction
+          </h4>
+
+        </div>
+
+
+        <form id="stockForm">
+
+          <div class="panel-body">
+
+            <div class="form-group">
+
+              <label>
+                Inventory Item *
+              </label>
+
+              <select
+                id="stockItem"
+                class="form-control"
+                required
+              >
+
+                <option value="">
+                  Select item
+                </option>
+
+                ${
+                  appData.inventory
+                    .map(item => `
+                      <option value="${esc(item.id)}">
+                        ${esc(item.name)}
+                        (${number(item.quantity)}
+                        ${esc(item.unit)})
+                      </option>
+                    `)
+                    .join("")
+                }
+
+              </select>
+
+            </div>
+
+
+            <div class="form-group">
+
+              <label>
+                Transaction Type *
+              </label>
+
+              <select
+                id="stockType"
+                class="form-control"
+                required
+              >
+
+                <option value="IN">
+                  Stock IN
+                </option>
+
+                <option value="OUT">
+                  Stock OUT
+                </option>
+
+              </select>
+
+            </div>
+
+
+            <div class="form-group">
+
+              <label>
+                Quantity *
+              </label>
+
+              <input
+                id="stockQuantity"
+                class="form-control"
+                type="number"
+                min="1"
+                required
+              >
+
+            </div>
+
+
+            <div class="form-group">
+
+              <label>
+                Supplier
+              </label>
+
+              <input
+                id="stockSupplier"
+                class="form-control"
+                placeholder="Supplier name"
+              >
+
+            </div>
+
+
+            <div class="form-group">
+
+              <label>
+                Reason / Notes
+              </label>
+
+              <textarea
+                id="stockReason"
+                class="form-control"
+                rows="3"
+                placeholder="Optional notes"
+              ></textarea>
+
+            </div>
+
+          </div>
+
+
+          <div class="modal-footer">
+
+            <button
+              type="submit"
+              class="btn btn-primary"
+            >
+              Record Transaction
+            </button>
+
+          </div>
+
+        </form>
+
+      </div>
+
+
+      <div class="panel">
+
+        <div class="panel-header">
+
+          <h4>
+            Current Stock
+          </h4>
+
+        </div>
+
+
+        <div class="panel-body">
+
+          ${
+            appData.inventory.length
+              ? `
+                <div class="table-wrapper">
+
+                  <table>
+
+                    <thead>
+
+                      <tr>
+                        <th>Item</th>
+                        <th>Stock</th>
+                        <th>Status</th>
+                      </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                      ${appData.inventory.map(item => {
+
+                        const qty =
+                          Number(item.quantity || 0);
+
+                        const min =
+                          Number(item.minStock || 0);
+
+
+                        const low =
+                          qty <= min;
+
+
+                        return `
+
+                          <tr>
+
+                            <td>
+                              <span class="item-name">
+                                ${esc(item.name)}
+                              </span>
+
+                              <br>
+
+                              <small class="muted">
+                                ${esc(item.category)}
+                              </small>
+                            </td>
+
+                            <td>
+                              <strong>
+                                ${number(qty)}
+                              </strong>
+                              ${esc(item.unit)}
+                            </td>
+
+                            <td>
+                              <span class="badge ${
+                                qty <= 0
+                                  ? "badge-red"
+                                  : low
+                                    ? "badge-orange"
+                                    : "badge-green"
+                              }">
+                                ${
+                                  qty <= 0
+                                    ? "Out"
+                                    : low
+                                      ? "Low"
+                                      : "Good"
+                                }
+                              </span>
+                            </td>
+
+                          </tr>
+
+                        `;
+
+                      }).join("")}
+
+                    </tbody>
+
+                  </table>
+
+                </div>
+              `
+              : `
+                <div class="empty">
+                  <strong>No inventory items</strong>
+                  Add inventory items first.
+                </div>
+              `
+          }
+
+        </div>
+
+      </div>
+
+    </div>
+
+  `;
+
+
+  document
+    .getElementById(
+      "stockForm"
+    )
+    .addEventListener(
+      "submit",
+      submitStockTransaction
+    );
+}
+
+
+async function submitStockTransaction(
+  event
+) {
+
+  event.preventDefault();
+
+
+  const data = {
+
+    itemId:
+      document.getElementById(
+        "stockItem"
+      ).value,
+
+    type:
+      document.getElementById(
+        "stockType"
+      ).value,
+
+    quantity:
+      Number(
+        document.getElementById(
+          "stockQuantity"
+        ).value
+      ),
+
+    supplier:
+      document.getElementById(
+        "stockSupplier"
+      ).value.trim(),
+
+    reason:
+      document.getElementById(
+        "stockReason"
+      ).value.trim()
+  };
+
+
+  try {
+
+    const result =
+      await api(
+        "stockTransaction",
+        data
+      );
+
+
+    showToast(
+      result.message,
+      "success"
+    );
+
+
+    document
+      .getElementById(
+        "stockForm"
+      )
+      .reset();
+
+
+    await refreshData();
+
+  } catch (error) {
+
+    showToast(
+      error.message,
+      "error"
+    );
+  }
+}
+
+
+/* =====================================================
+   SUPPLIERS
+===================================================== */
+
+function renderSuppliers() {
+
+  pageTitle(
+    "Suppliers",
+    "Manage cafe suppliers and contacts"
+  );
+
+
+  content.innerHTML = `
+
+    <div class="page-header">
+
+      <div>
+        <h3>Suppliers</h3>
+
+        <p>
+          Maintain your supplier records.
+        </p>
+      </div>
+
+
+      <button
+        class="btn btn-primary"
+        onclick="openSupplierModal()"
+      >
+        + Add Supplier
+      </button>
+
+    </div>
+
+
+    <div class="panel">
+
+      <div class="panel-body">
+
+        <div class="toolbar">
+
+          <div class="search-box">
+
+            <input
+              id="supplierSearch"
+              class="form-control"
+              placeholder="Search suppliers..."
+              oninput="filterSuppliers()"
+            >
+
+          </div>
+
+        </div>
+
+
+        <div
+          id="supplierTable"
+        ></div>
+
+      </div>
+
+    </div>
+
+  `;
+
+
+  renderSupplierTable();
+}
+
+
+function filterSuppliers() {
+
+  const search =
+    document.getElementById(
+      "supplierSearch"
+    ).value.toLowerCase();
+
+
+  renderSupplierTable(
+    search
+  );
+}
+
+
+function renderSupplierTable(
+  search = ""
+) {
+
+  const container =
+    document.getElementById(
+      "supplierTable"
+    );
+
+
+  if (!container) {
+    return;
+  }
+
+
+  const suppliers =
+    appData.suppliers.filter(
+      supplier => {
+
+        const text =
+          (
+            String(supplier.name) +
+            " " +
+            String(supplier.contact) +
+            " " +
+            String(supplier.category)
+          ).toLowerCase();
+
+
+        return text.includes(search);
+      }
+    );
+
+
+  if (!suppliers.length) {
+
+    container.innerHTML = `
+      <div class="empty">
+        <strong>No suppliers found</strong>
+        Add a supplier to get started.
+      </div>
+    `;
+
+    return;
+  }
+
+
+  container.innerHTML = `
+
+    <div class="table-wrapper">
+
+      <table>
+
+        <thead>
+
+          <tr>
+            <th>Supplier</th>
+            <th>Contact Person</th>
+            <th>Phone</th>
+            <th>Email</th>
+            <th>Category</th>
+          </tr>
+
+        </thead>
+
+
+        <tbody>
+
+          ${suppliers.map(supplier => `
+
+            <tr>
+
+              <td>
+                <span class="item-name">
+                  ${esc(supplier.name)}
+                </span>
+              </td>
+
+              <td>
+                ${esc(supplier.contact || "-")}
+              </td>
+
+              <td>
+                ${esc(supplier.phone || "-")}
+              </td>
+
+              <td>
+                ${esc(supplier.email || "-")}
+              </td>
+
+              <td>
+                ${
+                  supplier.category
+                    ? `
+                      <span class="badge badge-brown">
+                        ${esc(supplier.category)}
+                      </span>
+                    `
+                    : "-"
+                }
+              </td>
+
+            </tr>
+
+          `).join("")}
+
+        </tbody>
+
+      </table>
+
+    </div>
+
+  `;
+}
+
+
+function openSupplierModal() {
+
+  modalContainer.classList.remove(
+    "hidden"
+  );
+
+
+  modalContainer.innerHTML = `
+
+    <div class="modal-backdrop">
+
+      <div class="modal">
+
+        <div class="modal-header">
+
+          <h3>
+            Add Supplier
+          </h3>
+
+          <button
+            class="close-btn"
+            onclick="closeModal()"
+          >
+            ×
+          </button>
+
+        </div>
+
+
+        <form
+          id="supplierForm"
+        >
+
+          <div class="modal-body">
+
+            <div class="form-grid">
+
+
+              <div class="form-group full">
+
+                <label>
+                  Supplier Name *
+                </label>
+
+                <input
+                  id="supplierName"
+                  class="form-control"
+                  placeholder="Supplier company/name"
+                  required
+                >
+
+              </div>
+
+
+              <div class="form-group">
+
+                <label>
+                  Contact Person
+                </label>
+
+                <input
+                  id="supplierContact"
+                  class="form-control"
+                  placeholder="Contact person"
+                >
+
+              </div>
+
+
+              <div class="form-group">
+
+                <label>
+                  Phone
+                </label>
+
+                <input
+                  id="supplierPhone"
+                  class="form-control"
+                  placeholder="09XXXXXXXXX"
+                >
+
+              </div>
+
+
+              <div class="form-group">
+
+                <label>
+                  Email
+                </label>
+
+                <input
+                  id="supplierEmail"
+                  class="form-control"
+                  type="email"
+                  placeholder="supplier@email.com"
+                >
+
+              </div>
+
+
+              <div class="form-group">
 
                 <label>
                   Category
                 </label>
 
                 <input
-                  id="item-category"
-                  required
-                  placeholder="Ingredients"
+                  id="supplierCategory"
+                  class="form-control"
+                  placeholder="Coffee, Pastry, etc."
                 >
 
               </div>
-
-
-              <div>
-
-                <label>
-                  Unit
-                </label>
-
-                <input
-                  id="item-unit"
-                  required
-                  placeholder="kg, pcs, box"
-                >
-
-              </div>
-
-
-              <div>
-
-                <label>
-                  Opening Quantity
-                </label>
-
-                <input
-                  id="item-qty"
-                  type="number"
-                  min="0"
-                  step="0.01"
-                  value="0"
-                >
-
-              </div>
-
-
-              <div>
-
-                <label>
-                  Minimum Stock
-                </label>
-
-                <input
-                  id="item-min"
-                  type="number"
-                  min="0"
-                  step="0.01"
-                  value="0"
-                >
-
-              </div>
-
-
-              <div>
-
-                <label>
-                  Unit Cost
-                </label>
-
-                <input
-                  id="item-cost"
-                  type="number"
-                  min="0"
-                  step="0.01"
-                  value="0"
-                >
-
-              </div>
-
 
             </div>
 
-
-            <div class="form-actions">
-
-
-              <button
-                type="button"
-                class="btn ghost"
-                onclick="closeModal()"
-              >
-                Cancel
-              </button>
+          </div>
 
 
-              <button
-                class="btn primary"
-                type="submit"
-              >
-                Save Item
-              </button>
+          <div class="modal-footer">
+
+            <button
+              type="button"
+              class="btn btn-secondary"
+              onclick="closeModal()"
+            >
+              Cancel
+            </button>
 
 
-            </div>
+            <button
+              type="submit"
+              class="btn btn-primary"
+            >
+              Save Supplier
+            </button>
 
-          </form>
+          </div>
 
-        `
+        </form>
+
+      </div>
+
+    </div>
+
+  `;
+
+
+  document
+    .getElementById(
+      "supplierForm"
+    )
+    .addEventListener(
+      "submit",
+      submitSupplier
+    );
+}
+
+
+async function submitSupplier(
+  event
+) {
+
+  event.preventDefault();
+
+
+  const data = {
+
+    name:
+      document.getElementById(
+        "supplierName"
+      ).value.trim(),
+
+    contact:
+      document.getElementById(
+        "supplierContact"
+      ).value.trim(),
+
+    phone:
+      document.getElementById(
+        "supplierPhone"
+      ).value.trim(),
+
+    email:
+      document.getElementById(
+        "supplierEmail"
+      ).value.trim(),
+
+    category:
+      document.getElementById(
+        "supplierCategory"
+      ).value.trim()
+  };
+
+
+  try {
+
+    const result =
+      await api(
+        "addSupplier",
+        data
       );
 
 
-      $("inventory-form")
-        .onsubmit =
-          async event => {
-
-            event.preventDefault();
+    closeModal();
 
 
-            try {
-
-              const item = {
-
-                code:
-                  $("item-code")
-                    .value
-                    .trim(),
-
-                name:
-                  $("item-name")
-                    .value
-                    .trim(),
-
-                category:
-                  $("item-category")
-                    .value
-                    .trim(),
-
-                unit:
-                  $("item-unit")
-                    .value
-                    .trim(),
-
-                quantity:
-                  $("item-qty")
-                    .value,
-
-                minStock:
-                  $("item-min")
-                    .value,
-
-                cost:
-                  $("item-cost")
-                    .value
-
-              };
+    showToast(
+      result.message,
+      "success"
+    );
 
 
-              const result =
-                await API.addInventory(
-                  state.token,
-                  item
-                );
+    await refreshData();
+
+  } catch (error) {
+
+    showToast(
+      error.message,
+      "error"
+    );
+  }
+}
 
 
-              if (
-                !result.success
-              ) {
+/* =====================================================
+   TRANSACTIONS
+===================================================== */
 
-                throw new Error(
-                  result.message ||
-                  "Unable to add item."
-                );
+function renderTransactions() {
 
-              }
-
-
-              closeModal();
+  pageTitle(
+    "Transactions",
+    "View all recorded stock movements"
+  );
 
 
-              toast(
-                "Inventory item added."
-              );
+  content.innerHTML = `
+
+    <div class="page-header">
+
+      <div>
+        <h3>Transactions</h3>
+
+        <p>
+          History of stock IN and OUT transactions.
+        </p>
+      </div>
+
+    </div>
 
 
-              await loadData();
+    <div class="panel">
 
-            }
+      <div class="panel-body">
 
-            catch (error) {
+        <div class="toolbar">
 
-              toast(
-                error.message,
-                "danger"
-              );
+          <div class="search-box">
 
-            }
+            <input
+              id="transactionSearch"
+              class="form-control"
+              placeholder="Search transaction..."
+              oninput="filterTransactions()"
+            >
 
-          };
+          </div>
 
+
+          <select
+            id="transactionType"
+            class="form-control"
+            style="max-width:180px"
+            onchange="filterTransactions()"
+          >
+
+            <option value="">
+              All Types
+            </option>
+
+            <option value="IN">
+              Stock IN
+            </option>
+
+            <option value="OUT">
+              Stock OUT
+            </option>
+
+          </select>
+
+        </div>
+
+
+        <div
+          id="transactionTable"
+        ></div>
+
+      </div>
+
+    </div>
+
+  `;
+
+
+  renderTransactionTable();
+}
+
+
+function filterTransactions() {
+
+  const search =
+    document.getElementById(
+      "transactionSearch"
+    ).value.toLowerCase();
+
+
+  const type =
+    document.getElementById(
+      "transactionType"
+    ).value;
+
+
+  renderTransactionTable(
+    search,
+    type
+  );
+}
+
+
+function renderTransactionTable(
+  search = "",
+  type = ""
+) {
+
+  const container =
+    document.getElementById(
+      "transactionTable"
+    );
+
+
+  if (!container) {
+    return;
+  }
+
+
+  const transactions =
+    [...appData.transactions]
+      .reverse()
+      .filter(transaction => {
+
+        const text =
+          (
+            String(transaction.itemName) +
+            " " +
+            String(transaction.supplier) +
+            " " +
+            String(transaction.reason) +
+            " " +
+            String(transaction.user)
+          ).toLowerCase();
+
+
+        const matchesSearch =
+          text.includes(search);
+
+
+        const matchesType =
+          !type ||
+          String(transaction.type) === type;
+
+
+        return matchesSearch &&
+          matchesType;
+      });
+
+
+  if (!transactions.length) {
+
+    container.innerHTML = `
+      <div class="empty">
+        <strong>No transactions found</strong>
+        Stock movements will appear here.
+      </div>
+    `;
+
+    return;
+  }
+
+
+  container.innerHTML = `
+
+    <div class="table-wrapper">
+
+      <table>
+
+        <thead>
+
+          <tr>
+            <th>Date</th>
+            <th>Item</th>
+            <th>Type</th>
+            <th>Quantity</th>
+            <th>Supplier</th>
+            <th>Reason</th>
+            <th>User</th>
+          </tr>
+
+        </thead>
+
+
+        <tbody>
+
+          ${transactions.map(transaction => `
+
+            <tr>
+
+              <td>
+                ${formatDate(transaction.date)}
+              </td>
+
+
+              <td>
+                <span class="item-name">
+                  ${esc(transaction.itemName)}
+                </span>
+              </td>
+
+
+              <td>
+
+                <span class="badge ${
+                  transaction.type === "IN"
+                    ? "badge-green"
+                    : "badge-red"
+                }">
+
+                  ${
+                    transaction.type === "IN"
+                      ? "STOCK IN"
+                      : "STOCK OUT"
+                  }
+
+                </span>
+
+              </td>
+
+
+              <td>
+                <strong>
+                  ${number(transaction.quantity)}
+                </strong>
+              </td>
+
+
+              <td>
+                ${esc(transaction.supplier || "-")}
+              </td>
+
+
+              <td>
+                ${esc(transaction.reason || "-")}
+              </td>
+
+
+              <td>
+                ${esc(transaction.user || "-")}
+              </td>
+
+            </tr>
+
+          `).join("")}
+
+        </tbody>
+
+      </table>
+
+    </div>
+
+  `;
+}
+
+
+/* =====================================================
+   REPORTS
+===================================================== */
+
+function renderReports() {
+
+  pageTitle(
+    "Reports",
+    "Inventory summaries and stock analysis"
+  );
+
+
+  const inventory =
+    appData.inventory;
+
+
+  const totalValue =
+    inventory.reduce(
+      (total, item) =>
+        total +
+        (
+          Number(item.quantity || 0) *
+          Number(item.cost || 0)
+        ),
+      0
+    );
+
+
+  const lowStock =
+    inventory.filter(
+      item =>
+        Number(item.quantity) <=
+        Number(item.minStock)
+    );
+
+
+  const outOfStock =
+    inventory.filter(
+      item =>
+        Number(item.quantity) <= 0
+    );
+
+
+  const categoryMap = {};
+
+
+  inventory.forEach(item => {
+
+    const category =
+      item.category || "Other";
+
+
+    if (!categoryMap[category]) {
+
+      categoryMap[category] = {
+        items: 0,
+        value: 0
+      };
     }
 
 
+    categoryMap[category].items++;
 
-    /* =====================================================
-       DELETE INVENTORY
-    ====================================================== */
-
-    async function deleteItem(
-      id
-    ) {
-
-      if (
-        state.user.role !==
-        "Admin"
-      ) {
-
-        toast(
-          "Admin permission required.",
-          "danger"
-        );
-
-        return;
-
-      }
+    categoryMap[category].value +=
+      Number(item.quantity || 0) *
+      Number(item.cost || 0);
+  });
 
 
-      const item =
-        state.inventory.find(
-          value =>
-            String(value.id) ===
-            String(id)
-        );
+  const categories =
+    Object.entries(categoryMap);
 
 
-      if (!item) {
-        return;
-      }
+  content.innerHTML = `
 
+    <div class="page-header">
+
+      <div>
+
+        <h3>
+          Inventory Reports
+        </h3>
+
+        <p>
+          Summary of inventory condition and value.
+        </p>
+
+      </div>
+
+
+      <button
+        class="btn btn-primary"
+        onclick="window.print()"
+      >
+        Print Report
+      </button>
+
+    </div>
+
+
+    <div class="three-column">
+
+
+      <div class="report-card">
+
+        <h4>
+          Inventory Value
+        </h4>
+
+        <div class="report-number">
+          ${money(totalValue)}
+        </div>
+
+        <p class="muted">
+          Estimated current value
+        </p>
+
+      </div>
+
+
+      <div class="report-card">
+
+        <h4>
+          Low Stock Items
+        </h4>
+
+        <div
+          class="report-number"
+          style="color:var(--orange)"
+        >
+          ${number(lowStock.length)}
+        </div>
+
+        <p class="muted">
+          Items requiring attention
+        </p>
+
+      </div>
+
+
+      <div class="report-card">
+
+        <h4>
+          Out of Stock
+        </h4>
+
+        <div
+          class="report-number"
+          style="color:var(--red)"
+        >
+          ${number(outOfStock.length)}
+        </div>
+
+        <p class="muted">
+          Items with zero stock
+        </p>
+
+      </div>
+
+    </div>
+
+
+    <br>
+
+
+    <div class="two-column">
+
+
+      <div class="panel">
+
+        <div class="panel-header">
+
+          <h4>
+            Category Summary
+          </h4>
+
+        </div>
+
+
+        <div class="panel-body">
+
+          ${
+            categories.length
+              ? `
+                ${categories.map(
+                  ([category, info]) => {
+
+                    const percentage =
+                      totalValue > 0
+                        ? Math.min(
+                            100,
+                            (
+                              info.value /
+                              totalValue
+                            ) * 100
+                          )
+                        : 0;
+
+
+                    return `
+
+                      <div
+                        style="margin-bottom:22px"
+                      >
+
+                        <div
+                          style="
+                            display:flex;
+                            justify-content:space-between;
+                            gap:10px;
+                          "
+                        >
+
+                          <strong>
+                            ${esc(category)}
+                          </strong>
+
+                          <span class="muted">
+                            ${number(info.items)}
+                            items
+                          </span>
+
+                        </div>
+
+
+                        <div class="progress">
+
+                          <div
+                            class="progress-bar"
+                            style="width:${percentage}%"
+                          ></div>
+
+                        </div>
+
+
+                        <div
+                          style="
+                            margin-top:5px;
+                            font-size:12px;
+                            color:var(--muted);
+                          "
+                        >
+                          ${money(info.value)}
+                        </div>
+
+                      </div>
+
+                    `;
+                  }
+                ).join("")}
+              `
+              : `
+                <div class="empty">
+                  <strong>No report data</strong>
+                  Add inventory items first.
+                </div>
+              `
+          }
+
+        </div>
+
+      </div>
+
+
+      <div class="panel">
+
+        <div class="panel-header">
+
+          <h4>
+            Low Stock Details
+          </h4>
+
+        </div>
+
+
+        <div class="panel-body">
+
+          ${
+            lowStock.length
+              ? `
+                <div class="table-wrapper">
+
+                  <table>
+
+                    <thead>
+
+                      <tr>
+                        <th>Item</th>
+                        <th>Current</th>
+                        <th>Minimum</th>
+                      </tr>
+
+                    </thead>
+
+
+                    <tbody>
+
+                      ${lowStock.map(item => `
+
+                        <tr>
+
+                          <td>
+                            <span class="item-name">
+                              ${esc(item.name)}
+                            </span>
+                          </td>
+
+                          <td>
+                            <span class="badge badge-orange">
+                              ${number(item.quantity)}
+                              ${esc(item.unit)}
+                            </span>
+                          </td>
+
+                          <td>
+                            ${number(item.minStock)}
+                            ${esc(item.unit)}
+                          </td>
+
+                        </tr>
+
+                      `).join("")}
+
+                    </tbody>
+
+                  </table>
+
+                </div>
+              `
+              : `
+                <div class="empty">
+                  <strong>No low stock items</strong>
+                  Inventory levels are currently healthy.
+                </div>
+              `
+          }
+
+        </div>
+
+      </div>
+
+    </div>
+
+  `;
+}
+
+
+/* =====================================================
+   AUDIT LOG
+===================================================== */
+
+function renderAudit() {
+
+  pageTitle(
+    "Audit Log",
+    "Administrative activity monitoring"
+  );
+
+
+  if (
+    !currentUser ||
+    currentUser.role !== "Admin"
+  ) {
+
+    content.innerHTML = `
+
+      <div class="panel">
+
+        <div class="empty">
+
+          <strong>
+            Administrator Access Required
+          </strong>
+
+          Only administrators can view the audit log.
+
+        </div>
+
+      </div>
+
+    `;
+
+    return;
+  }
+
+
+  content.innerHTML = `
+
+    <div class="page-header">
+
+      <div>
+
+        <h3>
+          Audit Log
+        </h3>
+
+        <p>
+          Track important system activities.
+        </p>
+
+      </div>
+
+    </div>
+
+
+    <div class="panel">
+
+      <div class="panel-body">
+
+        ${
+          appData.audit.length
+            ? `
+
+              <div class="table-wrapper">
+
+                <table>
+
+                  <thead>
+
+                    <tr>
+                      <th>Date</th>
+                      <th>User</th>
+                      <th>Action</th>
+                      <th>Details</th>
+                    </tr>
+
+                  </thead>
+
+
+                  <tbody>
+
+                    ${[
+                      ...appData.audit
+                    ]
+                    .reverse()
+                    .map(log => `
+
+                      <tr>
+
+                        <td>
+                          ${formatDate(log.date)}
+                        </td>
+
+                        <td>
+                          ${esc(log.user)}
+                        </td>
+
+                        <td>
+
+                          <span class="badge badge-brown">
+                            ${esc(log.action)}
+                          </span>
+
+                        </td>
+
+                        <td>
+                          ${esc(log.details)}
+                        </td>
+
+                      </tr>
+
+                    `)
+                    .join("")}
+
+                  </tbody>
+
+                </table>
+
+              </div>
+
+            `
+            : `
+              <div class="empty">
+
+                <strong>
+                  No audit records
+                </strong>
+
+                System activities will appear here.
+
+              </div>
+            `
+        }
+
+      </div>
+
+    </div>
+
+  `;
+}
+
+
+/* =====================================================
+   MODAL
+===================================================== */
+
+function closeModal() {
+
+  modalContainer.classList.add(
+    "hidden"
+  );
+
+  modalContainer.innerHTML = "";
+}
+
+
+/* =====================================================
+   LOGOUT
+===================================================== */
+
+document
+  .getElementById(
+    "logoutButton"
+  )
+  .addEventListener(
+    "click",
+    async function() {
 
       const confirmed =
         confirm(
-          `Delete "${item.name}"? This cannot be undone.`
+          "Are you sure you want to logout?"
         );
 
 
@@ -4212,736 +5018,158 @@
 
       try {
 
-        const result =
-          await API.deleteInventory(
-            state.token,
-            id
-          );
-
-
-        if (
-          !result.success
-        ) {
-
-          throw new Error(
-            result.message ||
-            "Unable to delete item."
-          );
-
-        }
-
-
-        toast(
-          "Item deleted."
+        await api(
+          "logout"
         );
 
+      } catch (error) {
 
-        await loadData();
-
-      }
-
-      catch (error) {
-
-        toast(
-          error.message,
-          "danger"
+        console.warn(
+          error.message
         );
-
       }
 
-    }
+
+      clearSession();
 
 
+      appScreen.classList.add(
+        "hidden"
+      );
 
-    /* =====================================================
-       SUPPLIER MODAL
-    ====================================================== */
-
-    function openSupplierModal() {
-
-      modal(
-        "Add Supplier",
-
-        `
-
-          <form
-            id="supplier-form"
-          >
-
-            <div class="form-grid">
-
-
-              <div>
-
-                <label>
-                  Supplier Name
-                </label>
-
-                <input
-                  id="sup-name"
-                  required
-                >
-
-              </div>
-
-
-              <div>
-
-                <label>
-                  Contact Person
-                </label>
-
-                <input
-                  id="sup-contact"
-                >
-
-              </div>
-
-
-              <div>
-
-                <label>
-                  Phone
-                </label>
-
-                <input
-                  id="sup-phone"
-                  type="tel"
-                >
-
-              </div>
-
-
-              <div>
-
-                <label>
-                  Email
-                </label>
-
-                <input
-                  id="sup-email"
-                  type="email"
-                >
-
-              </div>
-
-
-              <div>
-
-                <label>
-                  Category
-                </label>
-
-                <input
-                  id="sup-category"
-                  placeholder="Ingredients / Supplies"
-                >
-
-              </div>
-
-
-            </div>
-
-
-            <div class="form-actions">
-
-
-              <button
-                type="button"
-                class="btn ghost"
-                onclick="closeModal()"
-              >
-                Cancel
-              </button>
-
-
-              <button
-                class="btn primary"
-              >
-                Save Supplier
-              </button>
-
-
-            </div>
-
-          </form>
-
-        `
+      authScreen.classList.remove(
+        "hidden"
       );
 
 
-      $("supplier-form")
-        .onsubmit =
-          async event => {
-
-            event.preventDefault();
-
-
-            try {
-
-              const supplier = {
-
-                name:
-                  $("sup-name")
-                    .value
-                    .trim(),
-
-                contact:
-                  $("sup-contact")
-                    .value
-                    .trim(),
-
-                phone:
-                  $("sup-phone")
-                    .value
-                    .trim(),
-
-                email:
-                  $("sup-email")
-                    .value
-                    .trim(),
-
-                category:
-                  $("sup-category")
-                    .value
-                    .trim()
-
-              };
-
-
-              const result =
-                await API.addSupplier(
-                  state.token,
-                  supplier
-                );
-
-
-              if (
-                !result.success
-              ) {
-
-                throw new Error(
-                  result.message ||
-                  "Unable to add supplier."
-                );
-
-              }
-
-
-              closeModal();
-
-
-              toast(
-                "Supplier added."
-              );
-
-
-              await loadData();
-
-            }
-
-            catch (error) {
-
-              toast(
-                error.message,
-                "danger"
-              );
-
-            }
-
-          };
-
-    }
-
-
-
-    /* =====================================================
-       STOCK TRANSACTION
-    ====================================================== */
-
-    async function submitStock(
-      event
-    ) {
-
-      event.preventDefault();
-
-
-      try {
-
-        const payload = {
-
-          type:
-            $("stock-type")
-              .value,
-
-          itemId:
-            $("stock-item")
-              .value,
-
-          quantity:
-            $("stock-qty")
-              .value,
-
-          supplier:
-            $("stock-supplier")
-              .value
-              .trim(),
-
-          reason:
-            $("stock-reason")
-              .value
-              .trim()
-
-        };
-
-
-        const result =
-          await API.stockTransaction(
-            state.token,
-            payload
-          );
-
-
-        if (
-          !result.success
-        ) {
-
-          throw new Error(
-            result.message ||
-            "Unable to record transaction."
-          );
-
-        }
-
-
-        toast(
-          "Stock transaction recorded."
-        );
-
-
-        event.target.reset();
-
-
-        await loadData();
-
-      }
-
-      catch (error) {
-
-        toast(
-          error.message,
-          "danger"
-        );
-
-      }
-
-    }
-
-
-
-    /* =====================================================
-       MODAL
-    ====================================================== */
-
-    function modal(
-      title,
-      body
-    ) {
-
-      $("modal-root")
-        .innerHTML = `
-
-          <div
-            class="modal-backdrop"
-            onclick="
-              if(event.target === this)
-                closeModal()
-            "
-          >
-
-            <div class="modal">
-
-
-              <div class="modal-head">
-
-                <h3>
-                  ${title}
-                </h3>
-
-
-                <button
-                  class="close"
-                  onclick="closeModal()"
-                >
-                  ✕
-                </button>
-
-              </div>
-
-
-              ${body}
-
-            </div>
-
-          </div>
-
-        `;
-
-    }
-
-
-    function closeModal() {
-
-      $("modal-root")
-        .innerHTML = "";
-
-    }
-
-
-
-    /* =====================================================
-       LOGIN
-    ====================================================== */
-
-    $("login-form")
-      .onsubmit =
-        async event => {
-
-          event.preventDefault();
-
-
-          const email =
-            $("login-email")
-              .value
-              .trim()
-              .toLowerCase();
-
-
-          const password =
-            $("login-password")
-              .value;
-
-
-          try {
-
-            const result =
-              await API.requestOTP(
-                email,
-                password
-              );
-
-
-            if (
-              !result.success
-            ) {
-
-              throw new Error(
-                result.message ||
-                "Login failed."
-              );
-
-            }
-
-
-            state.pendingEmail =
-              email;
-
-
-            $("login-form")
-              .classList
-              .add("hidden");
-
-
-            $("otp-form")
-              .classList
-              .remove("hidden");
-
-
-            $("otp-code")
-              .focus();
-
-
-            toast(
-              "OTP sent to your email."
-            );
-
-          }
-
-          catch (error) {
-
-            toast(
-              error.message,
-              "danger"
-            );
-
-          }
-
-        };
-
-
-
-    /* =====================================================
-       OTP
-    ====================================================== */
-
-    $("otp-form")
-      .onsubmit =
-        async event => {
-
-          event.preventDefault();
-
-
-          const otp =
-            $("otp-code")
-              .value
-              .trim();
-
-
-          try {
-
-            const result =
-              await API.verifyOTP(
-                state.pendingEmail,
-                otp
-              );
-
-
-            if (
-              !result.success
-            ) {
-
-              throw new Error(
-                result.message ||
-                "OTP verification failed."
-              );
-
-            }
-
-
-            /*
-             * SERVER-GENERATED TOKEN
-             */
-
-            state.user =
-              result.user;
-
-
-            state.token =
-              result.token;
-
-
-            sessionStorage.setItem(
-              "roma_user",
-              JSON.stringify(
-                result.user
-              )
-            );
-
-
-            sessionStorage.setItem(
-              "roma_token",
-              result.token
-            );
-
-
-            showApp();
-
-
-            await loadData();
-
-          }
-
-          catch (error) {
-
-            toast(
-              error.message,
-              "danger"
-            );
-
-          }
-
-        };
-
-
-
-    /* =====================================================
-       BACK TO LOGIN
-    ====================================================== */
-
-    $("back-login")
-      .onclick = () => {
-
-        $("otp-form")
-          .classList
-          .add("hidden");
-
-
-        $("login-form")
-          .classList
-          .remove("hidden");
-
-
-        $("otp-code")
-          .value = "";
-
-      };
-
-
-
-    /* =====================================================
-       LOGOUT
-    ====================================================== */
-
-    $("logout-btn")
-      .onclick =
-        async () => {
-
-          try {
-
-            if (
-              state.token
-            ) {
-
-              await API.logout(
-                state.token
-              );
-
-            }
-
-          }
-
-          catch (error) {
-
-            console.warn(
-              error
-            );
-
-          }
-
-
-          sessionStorage.removeItem(
-            "roma_token"
-          );
-
-
-          sessionStorage.removeItem(
-            "roma_user"
-          );
-
-
-          state.token =
-            null;
-
-
-          state.user =
-            null;
-
-
-          location.reload();
-
-        };
-
-
-
-    /* =====================================================
-       REFRESH
-    ====================================================== */
-
-    $("refresh-btn")
-      .onclick =
-        loadData;
-
-
-
-    /* =====================================================
-       MOBILE MENU
-    ====================================================== */
-
-    $("menu-btn")
-      .onclick =
-        () =>
-          $("sidebar")
-            .classList
-            .toggle("open");
-
-
-
-    /* =====================================================
-       NAVIGATION
-    ====================================================== */
-
-    document
-      .querySelectorAll(
-        ".nav-link"
-      )
-      .forEach(
-        button => {
-
-          button.onclick = () => {
-
-            document
-              .querySelectorAll(
-                ".nav-link"
-              )
-              .forEach(
-                item =>
-                  item
-                    .classList
-                    .remove(
-                      "active"
-                    )
-              );
-
-
-            button
-              .classList
-              .add(
-                "active"
-              );
-
-
-            renderPage(
-              button.dataset.page
-            );
-
-
-            $("sidebar")
-              .classList
-              .remove(
-                "open"
-              );
-
-          };
-
-        }
+      loginForm.classList.remove(
+        "hidden"
+      );
+
+      otpForm.classList.add(
+        "hidden"
       );
 
 
+      document.getElementById(
+        "loginPassword"
+      ).value = "";
 
-    /* =====================================================
-       START APPLICATION
-    ====================================================== */
+
+      document.getElementById(
+        "otpInput"
+      ).value = "";
+
+
+      showToast(
+        "You have been logged out.",
+        "success"
+      );
+    }
+  );
+
+
+/* =====================================================
+   MOBILE MENU
+===================================================== */
+
+document
+  .getElementById(
+    "menuButton"
+  )
+  .addEventListener(
+    "click",
+    function() {
+
+      document
+        .getElementById(
+          "sidebar"
+        )
+        .classList.toggle(
+          "open"
+        );
+    }
+  );
+
+
+/* =====================================================
+   SESSION CHECK
+===================================================== */
+
+setInterval(
+  function() {
 
     if (
-      state.user &&
-      state.token
+      sessionToken &&
+      sessionExpires &&
+      Date.now() >= sessionExpires
     ) {
 
-      showApp();
+      clearSession();
 
-      loadData();
 
+      appScreen.classList.add(
+        "hidden"
+      );
+
+      authScreen.classList.remove(
+        "hidden"
+      );
+
+
+      loginForm.classList.remove(
+        "hidden"
+      );
+
+      otpForm.classList.add(
+        "hidden"
+      );
+
+
+      showToast(
+        "Your session has expired. Please login again.",
+        "error"
+      );
     }
 
-    else {
+  },
+  30000
+);
 
-      showAuth();
 
-    }
+/* =====================================================
+   START APPLICATION
+===================================================== */
 
-  </script>
+async function startApplication() {
+
+  if (
+    restoreSession()
+  ) {
+
+    showApplication();
+
+    loading();
+
+    await refreshData();
+
+    return;
+  }
+
+
+  authScreen.classList.remove(
+    "hidden"
+  );
+
+  appScreen.classList.add(
+    "hidden"
+  );
+}
+
+
+startApplication();
+
+</script>
 
 </body>
-
 </html>
-```
